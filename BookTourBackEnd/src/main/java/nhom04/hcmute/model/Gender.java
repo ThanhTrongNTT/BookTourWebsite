@@ -5,16 +5,16 @@ import lombok.*;
 /**
  * Create by: IntelliJ IDEA
  * User     : trongnt
- * Date     : Fri, 9/9/2022
- * Time     : 11:54
- * Filename : Role
+ * Date     : Sun, 9/11/2022
+ * Time     : 12:07
+ * Filename : Gender
  */
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Role {
+@ToString
+public class Gender {
     private String id;
-    private String roleName;
+    private String genderName;
 }
