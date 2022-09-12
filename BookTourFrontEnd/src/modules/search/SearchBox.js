@@ -1,4 +1,6 @@
 import React from "react";
+import { IconBedRegular } from "~/components/icon";
+import IconText from "~/components/icon/IconText";
 const SearchBox = () => {
   const handleClick = (navName) => {
     let navItems = document.getElementsByClassName("navSearchBox");
@@ -11,16 +13,18 @@ const SearchBox = () => {
   return (
     <div className="py-7 px-16">
       <div className="">
-        <button
-          id="hotel"
+        <IconText
+          left
+          icon={<IconBedRegular />}
+          // id="hotel"
+          // margin="mr-2"
+          text="vinh"
           className="navSearchBox"
           onClick={() => {
             handleClick("hotel");
           }}
-        >
-          Hotel
-        </button>
-        <span
+        />
+        {/* <span
           id="flight"
           className="navSearchBox"
           onClick={() => {
@@ -37,7 +41,7 @@ const SearchBox = () => {
           }}
         >
           Car
-        </span>
+        </span> */}
       </div>
     </div>
   );
