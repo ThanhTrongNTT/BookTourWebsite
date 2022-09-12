@@ -15,16 +15,16 @@ const IconText = ({
 }) => {
   return (
     <div className={classNames(className)} {...props}>
-      {/* {left && (
+      {left && (
         <span className={classNames("inline-block", margin)}>{icon}</span>
       )}
       {children}
       {right && (
         <span className={classNames("inline-block", margin)}>{icon}</span>
-      )} */}
+      )}
       {left && (
         <span
-          className={`after:absolute relatvie inline after:content-['${text}'] after:leading-normal after:ml-2`}
+          className={`inline after:content-['trong'] after:leading-normal after:ml-2`}
         >
           {icon}
         </span>
