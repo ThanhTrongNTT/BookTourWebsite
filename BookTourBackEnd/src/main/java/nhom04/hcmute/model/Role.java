@@ -2,6 +2,8 @@ package nhom04.hcmute.model;
 
 import lombok.*;
 
+import java.util.Date;
+
 /**
  * Create by: IntelliJ IDEA
  * User     : trongnt
@@ -17,4 +19,6 @@ import lombok.*;
 public class Role {
     private String id;
     private String roleName;
+    private Date createdAt;
+    private Date modifiedAt;
 }

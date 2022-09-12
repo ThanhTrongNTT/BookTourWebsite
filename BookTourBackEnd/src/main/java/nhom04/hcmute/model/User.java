@@ -1,8 +1,9 @@
 package nhom04.hcmute.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.Date;
+import java.util.Set;
 
 /**
  * Create by: IntelliJ IDEA
@@ -11,15 +12,18 @@ import lombok.NoArgsConstructor;
  * Time     : 11:29
  * Filename : User
  */
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
+@AllArgsConstructor
 public class User {
     private String id;
-    private String username;
     private String email;
-    private String firstName;
-    private String lastName;
+    private String fullName;
     private Address address;
     private Gender gender;
+    private Set<Role> roles;
+    private Date createdAt;
+    private Date modifiedAt;
 }

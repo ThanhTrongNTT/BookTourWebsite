@@ -1,6 +1,9 @@
 package nhom04.hcmute.model;
 
 import lombok.*;
+import nhom04.hcmute.util.GenderType;
+
+import java.util.Date;
 
 /**
  * Create by: IntelliJ IDEA
@@ -16,5 +19,7 @@ import lombok.*;
 @ToString
 public class Gender {
     private String id;
-    private String genderName;
+    private GenderType genderType;
+    private Date createdAt;
+    private Date modifiedAt;
 }
