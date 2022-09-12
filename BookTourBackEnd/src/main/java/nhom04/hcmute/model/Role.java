@@ -1,5 +1,9 @@
 package nhom04.hcmute.model;
 
+import lombok.*;
+
+import java.util.Date;
+
 /**
  * Create by: IntelliJ IDEA
  * User     : trongnt
@@ -7,6 +11,14 @@ package nhom04.hcmute.model;
  * Time     : 11:54
  * Filename : Role
  */
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class Role {
     private String id;
+    private String roleName;
+    private Date createdAt;
+    private Date modifiedAt;
 }
