@@ -1,29 +1,25 @@
 package nhom04.hcmute.model;
 
 import lombok.*;
+import nhom04.hcmute.util.GenderType;
 
 import java.util.Date;
-import java.util.Set;
 
 /**
  * Create by: IntelliJ IDEA
  * User     : trongnt
- * Date     : Sat, 9/3/2022
- * Time     : 11:29
- * Filename : User
+ * Date     : Sun, 9/11/2022
+ * Time     : 12:07
+ * Filename : Gender
  */
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+@ToString
+public class Gender {
     private String id;
-    private String email;
-    private String fullName;
-    private Address address;
-    private Gender gender;
-    private Set<Role> roles;
+    private GenderType genderType;
     private Date createdAt;
     private Date modifiedAt;
 }
