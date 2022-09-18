@@ -1,22 +1,21 @@
 package nhom04.hcmute.model;
 
-import lombok.*;
+import lombok.Data;
 
 import java.util.Date;
 
 /**
  * Create by: IntelliJ IDEA
  * User     : trongnt
- * Date     : Sat, 9/3/2022
- * Time     : 11:30
- * Filename : Address
+ * Date     : Sun, 9/18/2022
+ * Time     : 16:37
+ * Filename : Tour
  */
 @Data
-public class Address {
+public class Tour {
     private String id;
-    private String street;
-    private String district;
-    private String city;
+    private Passenger passenger;
+    private TourDetail tourDetail;
     private Date createdAt;
     private Date modifiedAt;
 }
