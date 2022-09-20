@@ -1,7 +1,9 @@
 package nhom04.hcmute.model;
 
 import lombok.*;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.persistence.Id;
 import java.util.Date;
 
 /**
@@ -12,7 +14,9 @@ import java.util.Date;
  * Filename : Address
  */
 @Data
+@Document(collection = "address")
 public class Address {
+    @Id
     private String id;
     private String street;
     private String district;

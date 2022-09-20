@@ -1,7 +1,11 @@
 package nhom04.hcmute.model;
 
 import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.persistence.Id;
 import java.util.Date;
 import java.util.List;
 
@@ -13,7 +17,9 @@ import java.util.List;
  * Filename : TourDetail
  */
 @Data
+@Document(collection = "tourDetail")
 public class TourDetail {
+    @Id
     private String id;
     private String tourName;
     private String tourDes;
@@ -23,6 +29,8 @@ public class TourDetail {
     private Date endDay;
     private Location beginningLocation;
     private Location destinationLocation;
+    @CreatedDate
     private Date createdAt;
+    @LastModifiedDate
     private Date modifiedAt;
 }

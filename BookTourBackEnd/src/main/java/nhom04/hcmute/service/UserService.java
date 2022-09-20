@@ -1,5 +1,7 @@
 package nhom04.hcmute.service;
 
+import nhom04.hcmute.model.User;
+
 /**
  * Create by: IntelliJ IDEA
  * User     : trongnt
@@ -8,4 +10,5 @@ package nhom04.hcmute.service;
  * Filename : UserService
  */
 public interface UserService {
+    User saveUser(User user);
 }

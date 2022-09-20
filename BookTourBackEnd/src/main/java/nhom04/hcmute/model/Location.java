@@ -2,7 +2,9 @@ package nhom04.hcmute.model;
 
 import lombok.Data;
 import nhom04.hcmute.util.LocationType;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.persistence.Id;
 import java.util.Date;
 
 /**
@@ -13,7 +15,9 @@ import java.util.Date;
  * Filename : Location
  */
 @Data
+@Document(collection = "location")
 public class Location {
+    @Id
     private String id;
     private String locationName;
     private LocationType locationType;

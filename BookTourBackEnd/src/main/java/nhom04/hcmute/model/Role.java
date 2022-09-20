@@ -1,7 +1,9 @@
 package nhom04.hcmute.model;
 
 import lombok.*;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.persistence.Id;
 import java.util.Date;
 
 /**
@@ -11,12 +13,10 @@ import java.util.Date;
  * Time     : 11:54
  * Filename : Role
  */
-@Getter
-@Setter
-@ToString
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
+@Document(collection = "role")
 public class Role {
+    @Id
     private String id;
     private String roleName;
     private Date createdAt;

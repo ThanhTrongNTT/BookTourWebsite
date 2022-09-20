@@ -1,7 +1,12 @@
 package nhom04.hcmute.model;
 
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.persistence.Id;
+import java.time.Instant;
 import java.util.Date;
 import java.util.Set;
 
@@ -15,15 +20,18 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
+@Document("user")
 public class User {
+    @Id
     private String id;
     private String email;
     private String fullName;
     private Address address;
     private Gender gender;
     private Set<Role> roles;
+    @CreatedDate
     private Date createdAt;
+    @LastModifiedDate
     private Date modifiedAt;
 }

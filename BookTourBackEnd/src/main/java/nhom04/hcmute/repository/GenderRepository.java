@@ -1,16 +1,16 @@
 package nhom04.hcmute.repository;
 
-import nhom04.hcmute.model.User;
+import nhom04.hcmute.model.Gender;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 /**
  * Create by: IntelliJ IDEA
  * User     : trongnt
- * Date     : Sun, 9/11/2022
- * Time     : 12:08
- * Filename : UserRepository
+ * Date     : Tue, 9/20/2022
+ * Time     : 10:57
+ * Filename : GenderRepository
  */
 @Repository
-public interface UserRepository extends MongoRepository<User,String> {
+public interface GenderRepository extends MongoRepository<Gender,String> {
 }
