@@ -1,6 +1,7 @@
 package nhom04.hcmute.model;
 
-import lombok.*;
+import lombok.Data;
+import nhom04.hcmute.util.LocationType;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Id;
@@ -9,16 +10,17 @@ import java.util.Date;
 /**
  * Create by: IntelliJ IDEA
  * User     : trongnt
- * Date     : Fri, 9/9/2022
- * Time     : 11:54
- * Filename : Role
+ * Date     : Sun, 9/18/2022
+ * Time     : 19:06
+ * Filename : Location
  */
 @Data
-@Document(collection = "role")
-public class Role {
+@Document(collection = "location")
+public class Location {
     @Id
     private String id;
-    private String roleName;
+    private String locationName;
+    private LocationType locationType;
     private Date createdAt;
     private Date modifiedAt;
 }
