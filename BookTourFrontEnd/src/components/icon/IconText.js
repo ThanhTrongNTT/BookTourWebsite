@@ -4,31 +4,47 @@ import PropTypes from "prop-types";
 import { withErrorBoundary } from "react-error-boundary";
 import ErrorBoundary from "../common/ErrorBoundary";
 const IconText = ({
-  text,
+  hover,
+  activeDefault,
   icon,
-  left,
-  right,
+  icon1,
+  icon2,
   children,
   margin,
   className,
+  numberIcon,
   ...props
 }) => {
+  let render = "";
+  switch (numberIcon) {
+    case "1":
+      render = <div className="text-center">{icon}</div>;
+      break;
+    case "2":
+      render = (
+        <div className="flex items-center justify-center gap-2 text-center">
+          {icon1}
+          {icon2}
+        </div>
+      );
+      break;
+    default:
+      break;
+  }
   return (
-    <div className={classNames(className)} {...props}>
-      {left && (
-        <span className={classNames("inline-block", margin)}>{icon}</span>
+    <div
+      className={classNames(
+        "inline-block first:ml-0 ml-8 cursor-pointer px-5 font-DMSans transition-all h-[78px] text-c4",
+        className,
+        activeDefault && "border-b-2 border-b-primary-blue text-c3",
+        // hover && "hover:border-b-2 hover:border-b-primary-blue"
       )}
-      {children}
-      {right && (
-        <span className={classNames("inline-block", margin)}>{icon}</span>
-      )}
-      {left && (
-        <span
-          className={`inline after:content-['trong'] after:leading-normal after:ml-2`}
-        >
-          {icon}
-        </span>
-      )}
+      {...props}
+    >
+      <div className="">
+        {render}
+        <div className="mt-2 font-bold text-sm">{children}</div>
+      </div>
     </div>
   );
 };

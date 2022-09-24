@@ -4,6 +4,9 @@ module.exports = {
   content: ["./src/**/*.{html,js}"],
   theme: {
     extend: {
+      backgroundImage: {
+        "icon-moon": "url('/public/icon-moon.svg')",
+      },
       fontFamily: {
         Poppins: ["Poppins", "sans-serif"],
         OpenSans: ["Open Sans", "sans-serif"],

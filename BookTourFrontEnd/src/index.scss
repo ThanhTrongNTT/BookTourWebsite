@@ -11,6 +11,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Passion+One:wght@400;700;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700&display=swap');
 
+
+
+
 @layer base {
   html {
     @apply bg-background;
@@ -44,4 +47,34 @@
 
 input:focus+.error-input {
   display: none;
+}
+
+
+input.e-control {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+//custom react-date-range
+.rdrStaticRanges {
+  @apply text-black;
+}
+
+.rdrInputRanges>div>span {
+  @apply text-black;
+}
+
+.rdrDateRangePickerWrapperP {
+  position: relative;
+}
+
+.rdrDateRangePickerWrapper::before {
+  content: '';
+  position: absolute;
+  top: 1px;
+  left: 3rem;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid white;
+  transform: translateY(-100%);
 }

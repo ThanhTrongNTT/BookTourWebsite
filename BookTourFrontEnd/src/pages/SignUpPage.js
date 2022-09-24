@@ -75,6 +75,7 @@ const SignUpPage = () => {
         <FormGroup>
           <Label htmlFor="fullname">Full Name*</Label>
           <Input
+            variant={"outlined"}
             control={control}
             id="fullname"
             name="fullname"
@@ -86,6 +87,7 @@ const SignUpPage = () => {
         <FormGroup>
           <Label htmlFor="email">Email*</Label>
           <Input
+            variant={"outlined"}
             control={control}
             id="email"
             name="email"
@@ -97,6 +99,7 @@ const SignUpPage = () => {
         <FormGroup>
           <Label htmlFor="password">Password*</Label>
           <Input
+            variant={"outlined"}
             control={control}
             id="password"
             name="password"
