@@ -1,9 +1,9 @@
 import { addDays, format } from "date-fns";
-import React, { Fragment, useState } from "react";
-import { useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { DateRangePicker } from "react-date-range";
 import { useWatch } from "react-hook-form";
-import $ from "jquery";
+
+import { CustomCalendarContext } from "~/modules/search/SearchBoxHotel";
 
 const TippyRenderFormDate = ({
   onChange,
@@ -12,6 +12,7 @@ const TippyRenderFormDate = ({
   name2,
   control,
   setValue,
+  refs,
   ...props
 }) => {
   const dateValue = useWatch({
@@ -20,10 +21,8 @@ const TippyRenderFormDate = ({
     name2,
     defaultValue: "",
   });
-  useEffect(() => {
-    const demo = $(".rdrInputRangeInput");
-    console.log(demo[1]);
-  }, []);
+  const context = useContext(CustomCalendarContext);
+  console.log(context.focusRange);
   const [range, setRange] = useState([
     {
       startDate: new Date(),
@@ -39,21 +38,27 @@ const TippyRenderFormDate = ({
   useEffect(() => {
     setValue(name2, format(range[0].endDate, "dd/MM/yyyy"));
   }, [name2, range, setValue]);
-
   return (
-    <Fragment>
+    <div
+      ref={refs}
+      className={`relative before:absolute before:content-['_'] before:border-l-[10px] before:border-l-transparent before:border-r-transparent before:border-r-[10px] before:border-b-[10px] before:border-b-white before:left-12 before:-translate-y-full before:top-[1px] transition-all before:transition-all ${
+        context.placement ? "before:translate-x-[200px]" : ""
+      }`}
+    >
       <DateRangePicker
         minDate={new Date()}
         onChange={(item) => setRange([item.selection])}
         showSelectionPreview={true}
-        moveRangeOnFirstSelection={false}
+        moveRangeOnFirstSelection={true}
+        retainEndDateOnFirstSelection={true}
+        focusedRange={context.focusRange}
         months={2}
         showMonthArrow
         ranges={range}
         direction="horizontal"
         {...props}
       />
-    </Fragment>
+    </div>
   );
 };
 

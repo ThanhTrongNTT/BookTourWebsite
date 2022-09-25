@@ -7,6 +7,7 @@ import ErrorBoundary from "@/common/ErrorBoundary";
 import classNames from "~/utils/classNames";
 
 const Input = ({
+  pointer,
   variant,
   children,
   control,
@@ -43,7 +44,8 @@ const Input = ({
           error.length > 0
             ? "border-primary-red text-primary-red"
             : "border-c6 text-c3",
-          children ? "pr-16" : ""
+          children ? "pr-16" : "",
+          pointer && "cursor-pointer"
         )}
         placeholder={error.length > 0 ? "" : placeholder}
         {...field}
