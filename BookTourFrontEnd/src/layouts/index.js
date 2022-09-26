@@ -1,2 +1,3 @@
 import LayoutAuth from "./LayoutAuth";
-export { LayoutAuth };
+import LayoutSearchBox from "./LayoutSearchBox";
+export { LayoutAuth, LayoutSearchBox };

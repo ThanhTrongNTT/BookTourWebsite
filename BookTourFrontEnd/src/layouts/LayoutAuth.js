@@ -15,7 +15,7 @@ const LayoutAuth = ({ title, heading, children, textCenter }) => {
       /> */}
       <div className="container mx-auto">
         <img
-          srcSet="/bg-ellipse-light.png 2x"
+          srcSet="/bg-ellipse-dark.png 2x"
           alt="bg"
           className="pointer-events-none absolute bottom-0 left-0 right-0 z-[-1] hidden w-full lg:block"
         />

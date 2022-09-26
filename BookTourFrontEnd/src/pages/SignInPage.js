@@ -76,6 +76,7 @@ const SignInPage = () => {
         <FormGroup>
           <Label htmlFor="email">Email*</Label>
           <Input
+            variant={"outlined"}
             control={control}
             id="email"
             name="email"
@@ -87,6 +88,7 @@ const SignInPage = () => {
         <FormGroup>
           <Label htmlFor="password">Password*</Label>
           <Input
+            variant={"outlined"}
             control={control}
             id="password"
             name="password"
