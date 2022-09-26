@@ -19,10 +19,11 @@ public class BookTourBackEndApplication {
 //    @Bean
 //    CommandLineRunner runner(UserRepository userRepository){
 //        return args -> {
-//            User user = new User();
-//            user.setFullName("Trong123");
-//            userRepository.save(user);
+////            User user = new User();
+////            user.setFullName("Trong123");
+//            User user =userRepository.findByEmail("tronglagi111@gmail.com");
+//            System.out.println(user);
 //        };
-//    }
+//}
+    }
 
-}

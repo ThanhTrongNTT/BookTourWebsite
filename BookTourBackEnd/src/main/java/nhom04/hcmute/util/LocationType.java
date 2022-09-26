@@ -8,5 +8,5 @@ package nhom04.hcmute.util;
  * Filename : LocationType
  */
 public enum LocationType {
-    
+    DESTINATION, BEGINNING
 }

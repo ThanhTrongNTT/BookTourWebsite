@@ -2,6 +2,8 @@ package nhom04.hcmute.model;
 
 import lombok.*;
 import nhom04.hcmute.util.GenderType;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Id;
@@ -20,6 +22,8 @@ public class Gender {
     @Id
     private String id;
     private GenderType genderType;
+    @CreatedDate
     private Date createdAt;
+    @LastModifiedDate
     private Date modifiedAt;
 }

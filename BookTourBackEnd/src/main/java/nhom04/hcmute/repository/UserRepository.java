@@ -2,7 +2,10 @@ package nhom04.hcmute.repository;
 
 import nhom04.hcmute.model.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 /**
  * Create by: IntelliJ IDEA
@@ -13,4 +16,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface UserRepository extends MongoRepository<User,String> {
+    @Query(value = "{'email' : ?0}")
+    User findByEmail(String email);
 }

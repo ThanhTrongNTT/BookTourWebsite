@@ -1,6 +1,9 @@
 package nhom04.hcmute.service;
 
+import nhom04.hcmute.model.Role;
 import nhom04.hcmute.model.User;
+
+import java.util.List;
 
 /**
  * Create by: IntelliJ IDEA
@@ -11,4 +14,22 @@ import nhom04.hcmute.model.User;
  */
 public interface UserService {
     User saveUser(User user);
+
+    User updateUser(String id, User user);
+
+    Role saveRole(Role role);
+
+    void addRoleToUser(String email, Role role);
+
+    User getUserByEmail(String email);
+
+    List<User> getAllUsers();
+
+    Boolean existedByEmail(String Email);
+    void deleteUser(String email);
+    Boolean checkPassword(String username, String password);
+    Boolean changePassword(String password, String username);
+    Boolean forgotPassword(String username,String email);
+
+    List<Role> getAllRoles();
 }

@@ -2,6 +2,8 @@ package nhom04.hcmute.model;
 
 import lombok.Data;
 import nhom04.hcmute.util.LocationType;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Id;
@@ -21,6 +23,8 @@ public class Location {
     private String id;
     private String locationName;
     private LocationType locationType;
+    @CreatedDate
     private Date createdAt;
+    @LastModifiedDate
     private Date modifiedAt;
 }

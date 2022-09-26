@@ -32,4 +32,11 @@ class UserRepositoryTest {
         user.setFullName("Trong");
         userRepository.save(user);
     }
+
+    @Test
+    void findUser(){
+        User user =userRepository.findByEmail("tronglagi111@gmail.com");
+        System.out.println(user);
+//        userRepository.save(user);
+    }
 }

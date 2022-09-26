@@ -1,7 +1,9 @@
 package nhom04.hcmute.repository;
 
 import nhom04.hcmute.model.Role;
+import nhom04.hcmute.util.RoleName;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -13,4 +15,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface RoleRepository extends MongoRepository<Role,String> {
+
+    @Query(value = "{'roleName' : ?0}")
+    Role findByName(RoleName roleName);
 }

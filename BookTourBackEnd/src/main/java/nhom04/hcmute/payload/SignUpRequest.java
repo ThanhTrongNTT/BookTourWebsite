@@ -3,6 +3,7 @@ package nhom04.hcmute.payload;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
 /**
@@ -14,8 +15,11 @@ import java.util.Set;
  */
 @Data
 public class SignUpRequest {
-    private String username;
+    @NotBlank
+    private String fullName;
     @Email(message = "Email is not valid")
+    @NotBlank
     private String email;
+    @NotBlank
     private String password;
 }

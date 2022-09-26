@@ -1,6 +1,8 @@
 package nhom04.hcmute.model;
 
 import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Id;
@@ -21,6 +23,8 @@ public class Booking {
     private User user;
     private boolean enable;
     private Tour tour;
+    @CreatedDate
     private Date createdAt;
+    @LastModifiedDate
     private Date modifiedAt;
 }
