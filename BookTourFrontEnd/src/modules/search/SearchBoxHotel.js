@@ -7,9 +7,9 @@ import { RenderFormDate } from "~/modules/tippy";
 
 import { ErrorBoundary, FormField } from "@/common";
 import { FieldSearchBox } from "@/field";
-import { IconCalendar, IconMinus, IconPeopleGroup, IconPlus } from "@/icon";
-import Number from "@/number/Number";
-import Wrapper from "@/wrapper/Wrapper";
+import Amount from "@/amount/Amount";
+import WrapperAmount from "@/common/WrapperAmount";
+import { IconCalendar, IconPeopleGroup } from "@/icon";
 export const CustomCalendarContext = createContext();
 
 const SearchBoxHotel = ({ control, setValue }) => {
@@ -61,6 +61,7 @@ const SearchBoxHotel = ({ control, setValue }) => {
     setNumberChildrens(numberChildrens - 1);
     setValue("childrens", numberChildrens - 1);
   };
+
   return (
     <CustomCalendarContext.Provider value={value}>
       <div className="grid grid-cols-2 gap-4">
@@ -73,8 +74,6 @@ const SearchBoxHotel = ({ control, setValue }) => {
               placement="bottom-start"
               render={(attrs) => (
                 <RenderFormDate
-                  // placement={placement}
-                  // focusedRange={focusRange}
                   refs={calendarRef}
                   name1="depart-date"
                   name2="return-date"
@@ -84,7 +83,7 @@ const SearchBoxHotel = ({ control, setValue }) => {
                 />
               )}
             >
-              <div className="grid grid-cols-2">
+              <div className="grid grid-cols-2 select-none">
                 <div
                   className="flex py-1 relative border-r border-r-c6 items-center bg-white cursor-pointer gap-2 rounded-tl-[4px] rounded-bl-[4px] after:absolute after:w-5 after:h-5 after:content-['_'] after:bg-icon-moon after:bg-no-repeat after:right-0 after:translate-x-2/4 "
                   onClick={handleClickDepartDate}
@@ -130,91 +129,66 @@ const SearchBoxHotel = ({ control, setValue }) => {
           </div>
         </div>
         <div className="flex gap-4">
-          <Tippy
-            trigger="click"
-            interactive
-            placement="bottom-start"
-            render={(attrs) => (
-              <div
-                className="w-[243px] bg-[#EBEBEB] relative before:content-['_'] before:border-l-[10px] before:border-l-transparent before:border-r-[10px] before:border-r-transparent before:border-b-[10px] before:border-b-[#EBEBEB] before:absolute before:top-[1px] before:left-2/4 before:-translate-x-2/4 before:-translate-y-full p-[10px] text-c3 rounded-[4px]"
-                {...attrs}
-              >
-                <div className="room flex justify-between p-[10px] bg-white">
-                  <div className="flex gap-3 items-center">
-                    <Number
+          <div className="w-full h-full">
+            <Tippy
+              trigger="click"
+              interactive
+              placement="bottom-start"
+              render={(attrs) => (
+                <div
+                  className="w-[243px] bg-[#EBEBEB] relative before:content-['_'] select-none before:border-l-[10px] before:border-l-transparent before:border-r-[10px] before:border-r-transparent before:border-b-[10px] before:border-b-[#EBEBEB] before:absolute before:top-[1px] before:left-2/4 before:-translate-x-2/4 before:-translate-y-full p-[10px] text-c3 rounded-[4px]"
+                  {...attrs}
+                >
+                  <WrapperAmount>
+                    <Amount
                       control={control}
                       name="room"
                       initialValue={numberRoom}
+                      onClickPlus={handlePlusRoom}
+                      onClickMinus={handleMinusRoom}
                     >
-                      {numberRoom}
-                    </Number>
-                    <p className="text-c4">Room</p>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Wrapper onClick={handleMinusRoom}>
-                      <IconMinus />
-                    </Wrapper>
-                    <Wrapper onClick={handlePlusRoom}>
-                      <IconPlus />
-                    </Wrapper>
-                  </div>
-                </div>
-                <div className="adults mt-[1px] flex justify-between p-[10px] bg-white">
-                  <div className="flex gap-3 items-center">
-                    <Number
+                      Room
+                    </Amount>
+                  </WrapperAmount>
+                  <WrapperAmount className="mt-[1px]">
+                    <Amount
                       control={control}
-                      initialValue={numberAdults}
                       name="adults"
+                      initialValue={numberAdults}
+                      onClickPlus={handlePlusAdults}
+                      onClickMinus={handleMinusAdults}
                     >
-                      {numberAdults}
-                    </Number>
-                    <p className="text-c4">Adults</p>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Wrapper onClick={handleMinusAdults}>
-                      <IconMinus />
-                    </Wrapper>
-                    <Wrapper onClick={handlePlusAdults}>
-                      <IconPlus />
-                    </Wrapper>
-                  </div>
-                </div>
-                <div className="children mt-[1px] flex justify-between p-[10px] bg-white">
-                  <div className="flex gap-3 items-center">
-                    <Number
+                      Adults
+                    </Amount>
+                  </WrapperAmount>
+                  <WrapperAmount className="mt-[1px]">
+                    <Amount
                       control={control}
                       name="childrens"
                       initialValue={numberChildrens}
+                      onClickPlus={handlePlusChildrens}
+                      onClickMinus={handleMinusChildrens}
                     >
-                      {numberChildrens}
-                    </Number>
-                    <p className="text-c4">Childrens</p>
+                      Childrens
+                    </Amount>
+                  </WrapperAmount>
+                </div>
+              )}
+            >
+              <div className="flex gap-4 items-center bg-white rounded-[4px] flex-1 w-full h-full cursor-pointer select-none">
+                <span className="text-c4 ml-4">
+                  <IconPeopleGroup />
+                </span>
+                <div className="flex flex-col flex-1">
+                  <div className="inline">
+                    <span className="text-c3">{numberAdults} Adults, </span>
+                    <span className="text-c3">{numberChildrens} Childrens</span>
                   </div>
-                  <div className="flex items-center gap-1">
-                    <Wrapper onClick={handleMinusChildrens}>
-                      <IconMinus />
-                    </Wrapper>
-                    <Wrapper onClick={handlePlusChildrens}>
-                      <IconPlus />
-                    </Wrapper>
-                  </div>
+                  <p className="text-c3">{numberRoom} Room</p>
                 </div>
               </div>
-            )}
-          >
-            <div className="flex gap-4 items-center bg-white rounded-[4px] flex-1">
-              <span className="text-c4 ml-4">
-                <IconPeopleGroup />
-              </span>
-              <div className="flex flex-col flex-1">
-                <div className="inline">
-                  <span className="text-c3">{numberAdults} Adults, </span>
-                  <span className="text-c3">{numberChildrens} Childrens</span>
-                </div>
-                <p className="text-c3">{numberRoom} Room</p>
-              </div>
-            </div>
-          </Tippy>
+            </Tippy>
+          </div>
           <button
             type="submit"
             className="px-5 bg-gradient-to-tr from-blue-700 to-blue-500 rounded-[4px]"

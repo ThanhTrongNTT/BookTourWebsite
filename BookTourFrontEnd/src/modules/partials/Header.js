@@ -1,14 +1,12 @@
-import React, { useState } from "react";
+import Avt from "@/avt/Avt";
+import { IconArrowDownSolid, IconUser } from "@/icon/IconHomePage";
 import Logo from "@/logo/Logo";
 import Notification from "@/notification/Notification";
 import Search from "@/search/Search";
-import { IconArrowDownSolid, IconUser } from "@/icon/IconHomePage";
-import { NavLink, useNavigate } from "react-router-dom";
-import classNames from "~/utils/classNames";
-import Avt from "@/avt/Avt";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import NavHeader from "~/components/nav/NavHeader";
-import Tippy from "@tippyjs/react";
-import Wrapper from "~/components/popper/Wrapper";
+import classNames from "~/utils/classNames";
 
 const Header = () => {
   const navigate = useNavigate();

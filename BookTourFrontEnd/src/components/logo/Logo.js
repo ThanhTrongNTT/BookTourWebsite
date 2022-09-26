@@ -4,7 +4,7 @@ import classNames from "~/utils/classNames";
 
 const Logo = ({ className = "" }) => {
   return (
-    <Link to="/">
+    <Link to="/" tabIndex={-1}>
       <div
         className={classNames(
           "header-left flex cursor-pointer select-none items-center gap-[10px]",

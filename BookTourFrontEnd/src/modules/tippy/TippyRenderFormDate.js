@@ -22,7 +22,6 @@ const TippyRenderFormDate = ({
     defaultValue: "",
   });
   const context = useContext(CustomCalendarContext);
-  console.log(context.focusRange);
   const [range, setRange] = useState([
     {
       startDate: new Date(),
