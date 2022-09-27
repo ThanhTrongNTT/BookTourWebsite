@@ -136,7 +136,7 @@ const SearchBoxHotel = ({ control, setValue }) => {
               placement="bottom-start"
               render={(attrs) => (
                 <div
-                  className="w-[243px] bg-[#EBEBEB] relative before:content-['_'] select-none before:border-l-[10px] before:border-l-transparent before:border-r-[10px] before:border-r-transparent before:border-b-[10px] before:border-b-[#EBEBEB] before:absolute before:top-[1px] before:left-2/4 before:-translate-x-2/4 before:-translate-y-full p-[10px] text-c3 rounded-[4px]"
+                  className="w-[243px] bg-[#EBEBEB] relative before:content-['_'] select-none before:border-l-[10px] before:border-l-transparent before:border-r-[10px] before:border-r-transparent before:border-b-[10px] before:border-b-[#EBEBEB] before:absolute before:top-[1px] before:left-2/4 before:-translate-x-2/4 before:-translate-y-full p-[10px] text-c3 rounded-[4px] font-DMSans"
                   {...attrs}
                 >
                   <WrapperAmount>
@@ -175,7 +175,7 @@ const SearchBoxHotel = ({ control, setValue }) => {
                 </div>
               )}
             >
-              <div className="flex gap-4 items-center bg-white rounded-[4px] flex-1 w-full h-full cursor-pointer select-none">
+              <div className="flex gap-4 items-center bg-white rounded-[4px] flex-1 w-full h-full cursor-pointer select-none font-DMSans">
                 <span className="text-c4 ml-4">
                   <IconPeopleGroup />
                 </span>

@@ -9,6 +9,7 @@ module.exports = {
       },
       fontFamily: {
         Poppins: ["Poppins", "sans-serif"],
+        Helvetica: ["Helvatica", "sans-serif"],
         OpenSans: ["Open Sans", "sans-serif"],
         Roboto: ["Roboto", "sans-serif"],
         DMSans: ["DM Sans", "sans-serif"],
