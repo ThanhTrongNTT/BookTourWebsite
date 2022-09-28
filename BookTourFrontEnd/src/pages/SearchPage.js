@@ -1,5 +1,6 @@
 import React from "react";
 import ButtonSelect from "~/components/button/ButtonSelect";
+import TourItem from "~/components/TourItem";
 const SearchPage = () => {
   return (
     <div>
@@ -17,8 +18,8 @@ const SearchPage = () => {
         </div>
       </div>
       <div className="w-full">
-        <div className="flex max-w-7xl mx-auto">
-          <aside className="w-full max-w-[318px] bg-slate-100">
+        <div className="flex max-w-[1500px] mx-auto">
+          <aside className="w-full max-w-[318px] bg-slate-100 mr-10">
             <p className="px-4 font-bold text-xl py-5">Results</p>
             <div className="px-4 bg-primary-blue text-white font-bold py-1.5">
               <p>Country</p>
@@ -118,14 +119,51 @@ const SearchPage = () => {
                   <span>Min</span>
                   <input type="number" className="w-full bg-c6"></input>
                 </div>
-                <div className="max flex flex-row gap-2">
+                <div className="max flex flex-row gap-2                               ">
                   <span>Max</span>
                   <input type="number" className="w-full bg-c6"></input>
                 </div>
               </div>
             </div>
           </aside>
-          <div className="flex-1">right</div>
+          <div className="">
+            <h1 className="py-4 h2 fw-bold heading text-center text-5xl">
+              Du lịch Hải Phòng
+            </h1>
+            <hr></hr>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit
+              tempora nihil necessitatibus modi inventore velit natus totam nisi
+              obcaecati? Inventore nulla quam amet nemo perferendis, illum unde
+              incidunt tempore natus!
+            </p>
+            <div className="d-none d-lg-block">
+              <div className="order-by flex">
+                <div className="order-by-title text-sm">
+                  <span>Chúng tôi tìm thấy </span>
+                  <strong>numbers</strong>
+                  <span> tour cho quý khách.</span>
+                </div>
+                <div className="order-by-left text-sm relative left-80">
+                  <span>Sắp xếp theo</span>
+                  <select className="order-left text-center">
+                    <option value="-1">--- Chọn ---</option>
+                    <option value="0">Theo giá thấp đến cao</option>
+                    <option value="1">Theo giá cao đến thấp</option>
+                    <option value="2">Giảm giá nhiều nhất</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div className="grid gap-3 grid-cols-3">
+              <TourItem></TourItem>
+              <TourItem></TourItem>
+              <TourItem></TourItem>
+              <TourItem></TourItem>
+              <TourItem></TourItem>
+              <TourItem></TourItem>
+            </div>
+          </div>
         </div>
       </div>
     </div>
