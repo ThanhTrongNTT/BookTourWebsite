@@ -1,5 +1,9 @@
 package nhom04.hcmute.service;
 
+import nhom04.hcmute.model.Booking;
+
+import java.util.List;
+
 /**
  * Create by: IntelliJ IDEA
  * User     : trongnt
@@ -8,4 +12,13 @@ package nhom04.hcmute.service;
  * Filename : BookingService
  */
 public interface BookingService {
+    List<Booking> getAllBookings();
+
+    Booking getById(String id);
+
+    Booking saveBooking(Booking booking);
+
+    Booking updateBooking(String id, Booking booking);
+
+    void deleteBooking(String id);
 }

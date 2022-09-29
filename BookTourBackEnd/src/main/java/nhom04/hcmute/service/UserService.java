@@ -25,11 +25,11 @@ public interface UserService {
 
     List<User> getAllUsers();
 
-    Boolean existedByEmail(String Email);
+    Boolean existedByEmail(String email);
     void deleteUser(String email);
-    Boolean checkPassword(String username, String password);
-    Boolean changePassword(String password, String username);
-    Boolean forgotPassword(String username,String email);
+    Boolean checkPassword(String email, String password);
+    Boolean changePassword(String password, String email);
+    Boolean forgotPassword(String email);
 
     List<Role> getAllRoles();
 }
