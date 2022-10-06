@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface TourService {
     List<Tour> getAllTours();
-    List<Tour> getTourByType(TourType type);
+    List<Tour> getTourByType(String typeName);
     Tour getTourById(String id);
     Tour saveTour(Tour tour);
     Tour updateTour(String id, Tour tour);

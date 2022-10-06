@@ -1,7 +1,13 @@
 package nhom04.hcmute.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.RequiredArgsConstructor;
+import nhom04.hcmute.model.Booking;
+import nhom04.hcmute.payload.ApiResponse;
+import nhom04.hcmute.service.BookingService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Create by: IntelliJ IDEA
@@ -12,5 +18,34 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api/v1/booking")
+@RequiredArgsConstructor
 public class BookingController {
+    private final BookingService bookingService;
+
+    @GetMapping()
+    public ResponseEntity<List<Booking>> getAllBookings(){
+        return ResponseEntity.ok().body(bookingService.getAllBookings());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Booking> getBookingById(@PathVariable("id")String id){
+        return ResponseEntity.ok().body(bookingService.getById(id));
+    }
+
+    @PostMapping("/save")
+    public ResponseEntity<ApiResponse> saveBooking(@RequestBody Booking booking){
+        Booking saveBooking = bookingService.saveBooking(booking);
+        return ResponseEntity.ok().body(new ApiResponse(true, "Save Booking success!"));
+    }
+    @PostMapping("/{id}")
+    public ResponseEntity<ApiResponse> updateBooking(@PathVariable("id")String id, Booking booking){
+        Booking updateBooking = bookingService.updateBooking(id,booking);
+        return ResponseEntity.ok().body(new ApiResponse(true, "Update success!"));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse> deleteBooking(@PathVariable("id")String id){
+        bookingService.deleteBooking(id);
+        return ResponseEntity.ok().body(new ApiResponse(true,"Delete Booking success!"));
+    }
 }

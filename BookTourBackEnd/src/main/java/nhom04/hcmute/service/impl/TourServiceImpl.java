@@ -31,9 +31,10 @@ public class TourServiceImpl implements TourService {
     }
 
     @Override
-    public List<Tour> getTourByType(TourType type) {
-        log.info("Get Tour with type {}",type);
-        return tourRepository.getTourByType(type);
+    public List<Tour> getTourByType(String typeName) {
+        log.info("Get Tour with type {}",typeName);
+        TourType tourType = TourType.findByName(typeName);
+        return tourRepository.getTourByType(tourType);
     }
 
     @Override

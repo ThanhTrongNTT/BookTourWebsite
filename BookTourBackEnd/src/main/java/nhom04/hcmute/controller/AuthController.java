@@ -54,6 +54,12 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> register(@Valid @RequestBody SignUpRequest signUpRequest){
+        if(signUpRequest.getEmail().equals("")){
+            return ResponseEntity.ok().body(new ApiResponse(false,"Email cannot be null"));
+        }
+        if(userService.existedByEmail(signUpRequest.getEmail())){
+            return ResponseEntity.ok().body(new ApiResponse(false,"Email has been existed"));
+        }
         User user = new User();
         user.setFullName(signUpRequest.getFullName());
         user.setEmail(signUpRequest.getEmail());

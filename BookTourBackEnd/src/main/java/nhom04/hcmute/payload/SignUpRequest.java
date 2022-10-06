@@ -18,7 +18,6 @@ public class SignUpRequest {
     @NotBlank
     private String fullName;
     @Email(message = "Email is not valid")
-    @NotBlank
     private String email;
     @NotBlank
     private String password;
