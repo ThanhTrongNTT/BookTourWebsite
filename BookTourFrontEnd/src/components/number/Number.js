@@ -10,7 +10,6 @@ const Number = ({ children, name, control, initialValue }) => {
     control,
     defaultValue: initialValue,
   });
-  console.log("TCL: Number -> field", field);
   return (
     <span className="text-lg font-OpenSans font-medium" {...field}>
       {children}

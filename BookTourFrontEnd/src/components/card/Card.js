@@ -24,8 +24,8 @@ const Card = ({
   };
   return (
     <div
-      className="flex items-center gap-3 p-4 cursor-pointer rounded-sm
-      hover:bg-c6 transition-all select-none"
+      className="flex cursor-pointer select-none items-center gap-3 rounded-sm
+      p-4 transition-all hover:bg-c6"
       onClick={handleClickCard}
     >
       <ImgCardList src={src} />
