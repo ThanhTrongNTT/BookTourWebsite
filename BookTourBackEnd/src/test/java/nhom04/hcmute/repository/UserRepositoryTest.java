@@ -1,10 +1,19 @@
 package nhom04.hcmute.repository;
 
 import nhom04.hcmute.model.User;
+import nhom04.hcmute.service.UserService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,11 +24,17 @@ import static org.junit.jupiter.api.Assertions.*;
  * Time     : 13:57
  * Filename : UserRepositoryTest
  */
+@RunWith(MockitoJUnitRunner.class)
 class UserRepositoryTest {
-    @Autowired
+    private MockMvc mockMvc;
+    @Mock
     UserRepository userRepository;
+    @InjectMocks
+    private UserService userService;
     @BeforeEach
     void setUp() {
+        MockitoAnnotations.initMocks(this);
+        this.mockMvc = MockMvcBuilders.standaloneSetup(userService).build();
     }
 
     @AfterEach
@@ -34,9 +49,15 @@ class UserRepositoryTest {
     }
 
     @Test
-    void findUser(){
-        User user =userRepository.findByEmail("tronglagi111@gmail.com");
+    void findUser() throws Exception{
+        User user =userService.getUserByEmail("tronglagi111@gmail.com");
         System.out.println(user);
-//        userRepository.save(user);
+        userRepository.save(user);
+    }
+
+    @Test
+    public void getAllUsers() throws Exception{
+        List<User> users = userService.getAllUsers();
+        System.out.println(users);
     }
 }

@@ -1,5 +1,9 @@
 package nhom04.hcmute.service;
 
+import nhom04.hcmute.model.TourDetail;
+
+import java.util.List;
+
 /**
  * Create by: IntelliJ IDEA
  * User     : trongnt
@@ -8,4 +12,9 @@ package nhom04.hcmute.service;
  * Filename : TourDetailService
  */
 public interface TourDetailService {
+    List<TourDetail> getAllTourDetail();
+    TourDetail getTourDetailById(String id);
+    TourDetail saveTourDetail(TourDetail tourDetail);
+    TourDetail updateTourDetail(String id, TourDetail tourDetail);
+    void deleteTourDetail(String id);
 }

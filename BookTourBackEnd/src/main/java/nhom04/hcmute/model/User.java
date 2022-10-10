@@ -1,5 +1,6 @@
 package nhom04.hcmute.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -26,6 +27,7 @@ public class User {
     @Id
     private String id;
     private String email;
+    @JsonIgnore
     private String password;
     private String fullName;
     private Address address;

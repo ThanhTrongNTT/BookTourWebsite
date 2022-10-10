@@ -1,6 +1,7 @@
 package nhom04.hcmute.model;
 
 import lombok.Data;
+import nhom04.hcmute.util.TourType;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -22,6 +23,7 @@ public class Tour {
     private String id;
     private Passenger passenger;
     private TourDetail tourDetail;
+    private TourType type;
     @CreatedDate
     private Date createdAt;
     @LastModifiedDate
