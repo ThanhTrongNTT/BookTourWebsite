@@ -1,6 +1,8 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { IconSearch } from "../icon";
+import { withErrorBoundary } from "react-error-boundary";
+import { ErrorBoundary } from "../common";
 
 const Search = () => {
   const { register, handleSubmit } = useForm();
@@ -9,13 +11,13 @@ const Search = () => {
     <form
       autoComplete="off"
       onSubmit={handleSubmit(handleSearch)}
-      className="border-2 flex items-center border-c6 rounded-lg pl-4 text-c3 focus-within:border-blue-400 transition-all"
+      className="border-2 flex items-center border-c6 rounded-lg lg:pl-4 pl-2 text-c3 focus-within:border-blue-400 transition-all"
     >
       <input
         type="text"
         placeholder="Search..."
         {...register("search")}
-        className="pr-2 bg-transparent"
+        className="pr-2 bg-transparent lg:text-base text-sm w-full"
       />
       <button className="py-2 px-3 text-c4">
         <IconSearch />
@@ -24,4 +26,6 @@ const Search = () => {
   );
 };
 
-export default Search;
+export default withErrorBoundary(Search, {
+  FallbackComponent: ErrorBoundary,
+});

@@ -3,13 +3,20 @@ import { createContext, useState } from "react";
 import { withErrorBoundary } from "react-error-boundary";
 
 import useClickOutSide from "~/hooks/useClickOutSide";
-import { RenderFormDate } from "~/modules/tippy";
+import { RenderFormDate, RenderPlaceHot } from "~/modules/tippy";
 
-import { ErrorBoundary, FormField } from "@/common";
-import { FieldSearchBox } from "@/field";
 import Amount from "@/amount/Amount";
-import WrapperAmount from "@/common/WrapperAmount";
+import ButtonSubmitDefault from "@/button/ButtonSubmitDefault";
+import {
+  ErrorBoundary,
+  FormField,
+  WrapperAmount,
+  WrapperFull,
+  WrapperGrid,
+} from "@/common";
+import { FieldSearchBox } from "@/field";
 import { IconCalendar, IconPeopleGroup } from "@/icon";
+
 export const CustomCalendarContext = createContext();
 
 const SearchBoxHotel = ({ control, setValue }) => {
@@ -64,8 +71,9 @@ const SearchBoxHotel = ({ control, setValue }) => {
 
   return (
     <CustomCalendarContext.Provider value={value}>
-      <div className="grid grid-cols-2 gap-4">
-        <div className="">
+      <WrapperGrid rows="1" spacing="4" className="lg:rows-2">
+        <RenderPlaceHot control={control} setValue={setValue} />
+        <WrapperGrid cols="1" spacing="4" className="lg:grid-cols-2">
           <div>
             <Tippy
               ref={nodeRef}
@@ -83,12 +91,12 @@ const SearchBoxHotel = ({ control, setValue }) => {
                 />
               )}
             >
-              <div className="grid grid-cols-2 select-none">
+              <div className="grid select-none grid-cols-2 lg:grid-cols-2">
                 <div
-                  className="flex py-1 relative border-r border-r-c6 items-center bg-white cursor-pointer gap-2 rounded-tl-[4px] rounded-bl-[4px] after:absolute after:w-5 after:h-5 after:content-['_'] after:bg-icon-moon after:bg-no-repeat after:right-0 after:translate-x-2/4 "
+                  className="relative flex cursor-pointer items-center gap-2 rounded-tl-[4px] rounded-bl-[4px] border-r border-r-c6 bg-white py-1 after:absolute after:right-0 after:h-5 after:w-5 after:translate-x-2/4 after:bg-icon-moon after:bg-no-repeat after:content-['_']"
                   onClick={handleClickDepartDate}
                 >
-                  <div className="text-c4 ml-4">
+                  <div className="ml-4 text-c4">
                     <IconCalendar />
                   </div>
                   <FormField>
@@ -104,10 +112,10 @@ const SearchBoxHotel = ({ control, setValue }) => {
                   </FormField>
                 </div>
                 <div
-                  className="flex py-1 items-center bg-white cursor-pointer gap-2 rounded-tr-[4px] rounded-br-[4px]"
+                  className="flex cursor-pointer items-center gap-2 rounded-tr-[4px] rounded-br-[4px] bg-white py-1"
                   onClick={handleClickReturnDate}
                 >
-                  <div className="text-c4 ml-4">
+                  <div className="ml-4 text-c4">
                     <IconCalendar />
                   </div>
                   <div className="flex flex-col">
@@ -127,76 +135,75 @@ const SearchBoxHotel = ({ control, setValue }) => {
               </div>
             </Tippy>
           </div>
-        </div>
-        <div className="flex gap-4">
-          <div className="w-full h-full">
-            <Tippy
-              trigger="click"
-              interactive
-              placement="bottom-start"
-              render={(attrs) => (
-                <div
-                  className="w-[243px] bg-[#EBEBEB] relative before:content-['_'] select-none before:border-l-[10px] before:border-l-transparent before:border-r-[10px] before:border-r-transparent before:border-b-[10px] before:border-b-[#EBEBEB] before:absolute before:top-[1px] before:left-2/4 before:-translate-x-2/4 before:-translate-y-full p-[10px] text-c3 rounded-[4px] font-DMSans"
-                  {...attrs}
-                >
-                  <WrapperAmount>
-                    <Amount
-                      control={control}
-                      name="room"
-                      initialValue={numberRoom}
-                      onClickPlus={handlePlusRoom}
-                      onClickMinus={handleMinusRoom}
-                    >
-                      Room
-                    </Amount>
-                  </WrapperAmount>
-                  <WrapperAmount className="mt-[1px]">
-                    <Amount
-                      control={control}
-                      name="adults"
-                      initialValue={numberAdults}
-                      onClickPlus={handlePlusAdults}
-                      onClickMinus={handleMinusAdults}
-                    >
-                      Adults
-                    </Amount>
-                  </WrapperAmount>
-                  <WrapperAmount className="mt-[1px]">
-                    <Amount
-                      control={control}
-                      name="childrens"
-                      initialValue={numberChildrens}
-                      onClickPlus={handlePlusChildrens}
-                      onClickMinus={handleMinusChildrens}
-                    >
-                      Childrens
-                    </Amount>
-                  </WrapperAmount>
-                </div>
-              )}
-            >
-              <div className="flex gap-4 items-center bg-white rounded-[4px] flex-1 w-full h-full cursor-pointer select-none font-DMSans">
-                <span className="text-c4 ml-4">
-                  <IconPeopleGroup />
-                </span>
-                <div className="flex flex-col flex-1">
-                  <div className="inline">
-                    <span className="text-c3">{numberAdults} Adults, </span>
-                    <span className="text-c3">{numberChildrens} Childrens</span>
+          <div className="grid grid-cols-1 grid-rows-2 gap-4 lg:flex">
+            <WrapperFull>
+              <Tippy
+                trigger="click"
+                interactive
+                placement="bottom-start"
+                render={(attrs) => (
+                  <div
+                    className="relative w-[243px] select-none rounded-[4px] bg-[#EBEBEB] p-[10px] font-DMSans text-c3 before:absolute before:top-[1px] before:left-2/4 before:-translate-x-2/4 before:-translate-y-full before:border-l-[10px] before:border-r-[10px] before:border-b-[10px] before:border-l-transparent before:border-r-transparent before:border-b-[#EBEBEB] before:content-['_']"
+                    {...attrs}
+                  >
+                    <WrapperAmount>
+                      <Amount
+                        control={control}
+                        name="room"
+                        initialValue={numberRoom}
+                        onClickPlus={handlePlusRoom}
+                        onClickMinus={handleMinusRoom}
+                      >
+                        Room
+                      </Amount>
+                    </WrapperAmount>
+                    <WrapperAmount className="mt-[1px]">
+                      <Amount
+                        control={control}
+                        name="adults"
+                        initialValue={numberAdults}
+                        onClickPlus={handlePlusAdults}
+                        onClickMinus={handleMinusAdults}
+                      >
+                        Adults
+                      </Amount>
+                    </WrapperAmount>
+                    <WrapperAmount className="mt-[1px]">
+                      <Amount
+                        control={control}
+                        name="childrens"
+                        initialValue={numberChildrens}
+                        onClickPlus={handlePlusChildrens}
+                        onClickMinus={handleMinusChildrens}
+                      >
+                        Childrens
+                      </Amount>
+                    </WrapperAmount>
                   </div>
-                  <p className="text-c3">{numberRoom} Room</p>
+                )}
+              >
+                <div className="flex h-full w-full flex-1 cursor-pointer select-none items-center gap-4 rounded-[4px] bg-white py-1 font-DMSans lg:py-0">
+                  <span className="ml-4 text-c4">
+                    <IconPeopleGroup />
+                  </span>
+                  <div className="flex flex-1 flex-col">
+                    <div className="inline">
+                      <span className="text-c3">{numberAdults} Adults, </span>
+                      <span className="text-c3">
+                        {numberChildrens} Childrens
+                      </span>
+                    </div>
+                    <p className="text-c3">{numberRoom} Room</p>
+                  </div>
                 </div>
-              </div>
-            </Tippy>
+              </Tippy>
+            </WrapperFull>
+            <ButtonSubmitDefault radius="2" background="blue" className="px-5">
+              Search
+            </ButtonSubmitDefault>
           </div>
-          <button
-            type="submit"
-            className="px-5 bg-gradient-to-tr from-blue-700 to-blue-500 rounded-[4px]"
-          >
-            Search
-          </button>
-        </div>
-      </div>
+        </WrapperGrid>
+      </WrapperGrid>
     </CustomCalendarContext.Provider>
   );
 };

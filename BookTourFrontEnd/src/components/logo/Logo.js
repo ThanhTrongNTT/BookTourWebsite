@@ -1,6 +1,9 @@
-import React from "react";
+import { memo } from "react";
+import { withErrorBoundary } from "react-error-boundary";
 import { Link } from "react-router-dom";
+
 import classNames from "~/utils/classNames";
+import { ErrorBoundary } from "@/common";
 
 const Logo = ({ className = "" }) => {
   return (
@@ -24,4 +27,8 @@ const Logo = ({ className = "" }) => {
   );
 };
 
-export default Logo;
+export default memo(
+  withErrorBoundary(Logo, {
+    FallbackComponent: ErrorBoundary,
+  })
+);

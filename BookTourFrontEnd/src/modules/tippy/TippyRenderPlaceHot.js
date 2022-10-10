@@ -57,15 +57,15 @@ const TippyRenderPlaceHot = ({ setValue, control }) => {
           </Wrapper>
         )}
       >
-        <div className="relative bg-white cursor-pointer rounded-[4px] z-10">
-          <span className="absolute left-0 top-0 bottom-0 text-c4 py-4 mx-4 flex items-center">
+        <div className="relative z-10 cursor-pointer rounded-[4px] bg-white">
+          <span className="absolute left-0 top-0 bottom-0 mx-4 flex items-center py-4 text-c4">
             <IconLocationRegular />
           </span>
           <Input
             control={control}
             type="text"
             name="location"
-            className="h-full w-full pl-12 bg-transparent py-4 text-c3"
+            className="h-full w-full bg-transparent py-4 pl-12 text-c3"
             placeholder="Enter destination..."
           />
         </div>

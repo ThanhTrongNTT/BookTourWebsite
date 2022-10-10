@@ -1,2 +1,4 @@
 import SearchBoxHotel from "./SearchBoxHotel";
-export { SearchBoxHotel };
+import SearchBoxFlight from "./SearchBoxFlight";
+import SearchBoxCar from "./SearchBoxCar";
+export { SearchBoxHotel, SearchBoxFlight, SearchBoxCar };
