@@ -1,37 +1,50 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 import classNames from "~/utils/classNames";
-import { initialTabs as tabs } from "~/utils/search-box/ingredients";
+import { IconCar, IconFlight, IconHotel } from "@/icon";
+
+const NAVLINK = [
+  { icon: <IconHotel />, label: "Hotel", path: "/" },
+  { icon: <IconFlight />, label: "Flight", path: "/flight" },
+  { icon: <IconCar />, label: "Car", path: "/car" },
+];
 
 const NavSearchBox = ({ children }) => {
-  const [selectedTab, setSelectedTab] = useState(tabs[0]);
+  const location = useLocation();
+  const [selectedTab, setSelectedTab] = useState(
+    NAVLINK.find((item) => item.path === location.pathname)
+  );
+  
   return (
     <div className="mt-4 rounded-lg bg-[rgba(0,0,0,0.3)] px-4 pt-2 pb-4 shadow-[0px_0px_8px_4px_rgba(255,255,255,0.2)_inset]">
       <nav className="h-full rounded-[10px] rounded-bl-none rounded-br-none border-b border-b-[#eeeeee] bg-transparent pt-1">
         <ul className="flex items-center rounded-bl-none rounded-br-none text-sm font-medium">
-          {tabs.map((item) => (
-            <Link
+          {NAVLINK.map((item) => (
+            <NavLink
               to={item.path}
               key={item.label}
               className={classNames(
-                "justiy-between relative h-full w-full flex-1 cursor-pointer select-none items-center rounded-[5px] rounded-bl-none rounded-br-none bg-transparent p-3 lg:p-4",
-                item === selectedTab ? "bg-[#eee] text-c3" : "text-c4"
+                "justiy-between relative h-full w-full flex-1 cursor-pointer select-none items-center rounded-[5px] rounded-bl-none rounded-br-none bg-transparent p-3 lg:p-4"
               )}
+              style={({ isActive }) => ({
+                color: isActive ? "#3B3E44" : "#84878B",
+                background: isActive ? "#eee" : "",
+              })}
               onClick={() => setSelectedTab(item)}
             >
               <p className="flex items-center gap-2">
                 {item.icon}
                 {item.label}
               </p>
-              {item === selectedTab ? (
+              {item.path === location.pathname ? (
                 <motion.div
                   className="absolute bottom-[-2px] left-0 right-0 h-[3px] bg-primary-blue"
                   layoutId="underline-tab"
                 />
               ) : null}
-            </Link>
+            </NavLink>
           ))}
         </ul>
       </nav>

@@ -1,29 +1,31 @@
 import { addDays, format } from "date-fns";
-import { Fragment, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { DateRangePicker } from "react-date-range";
 import { useWatch } from "react-hook-form";
 import { useResize } from "~/hooks/useResize";
 
 import { CustomCalendarContext } from "~/modules/search/SearchBoxHotel";
+import { PlacementArrow } from "~/modules/tippy/TippyDateRange";
 
-const TippyRenderFormDate = ({
+const RenderFormDate = ({
   onChange,
   ranges,
-  name1,
-  name2,
+  nameDepartDate,
+  nameReturnDate,
   control,
   setValue,
   refs,
   ...props
 }) => {
-  const context = useContext(CustomCalendarContext);
+  const contextArrow = useContext(PlacementArrow);
+  console.log(contextArrow);
 
   const { windowSize } = useResize();
 
   const dateValue = useWatch({
     control,
-    name1,
-    name2,
+    nameDepartDate,
+    nameReturnDate,
     defaultValue: "",
   });
 
@@ -36,19 +38,19 @@ const TippyRenderFormDate = ({
   ]);
 
   useEffect(() => {
-    setValue(name1, format(range[0].startDate, "dd/MM/yyyy"));
-  }, [name1, range, setValue]);
+    setValue(nameDepartDate, format(range[0].startDate, "dd/MM/yyyy"));
+  }, [nameDepartDate, range, setValue]);
 
   useEffect(() => {
-    setValue(name2, format(range[0].endDate, "dd/MM/yyyy"));
-  }, [name2, range, setValue]);
+    setValue(nameReturnDate, format(range[0].endDate, "dd/MM/yyyy"));
+  }, [nameReturnDate, range, setValue]);
 
   return (
     <div
       ref={refs}
-      className={`relative transition-all before:absolute before:left-12 before:top-[1px] before:-translate-y-full before:border-l-[10px] before:border-r-[10px] before:border-b-[10px] before:border-l-transparent before:border-r-transparent before:border-b-white before:transition-all before:content-['_'] ${
-        context.placement ? "before:translate-x-[200px]" : ""
-      }`}
+      className={`relative transition-all before:absolute before:left-12 before:top-[1px] before:-translate-y-full before:border-l-[10px] before:border-r-[10px] before:border-b-[10px] before:border-l-transparent before:border-r-transparent before:border-b-white before:transition-all before:content-['_'] 
+      ${contextArrow?.placement ? "before:translate-x-[200px]" : ""}
+      `}
     >
       <DateRangePicker
         minDate={new Date()}
@@ -56,7 +58,7 @@ const TippyRenderFormDate = ({
         showSelectionPreview={true}
         moveRangeOnFirstSelection={true}
         retainEndDateOnFirstSelection={true}
-        focusedRange={context.focusRange}
+        focusedRange={contextArrow?.focusRange}
         months={windowSize.innerWidth < 640 ? 1 : 2}
         showMonthArrow
         ranges={range}
@@ -67,4 +69,4 @@ const TippyRenderFormDate = ({
   );
 };
 
-export default TippyRenderFormDate;
+export default RenderFormDate;
