@@ -15,7 +15,7 @@ import java.util.List;
 public interface UserService {
     User saveUser(User user);
 
-    User updateUser(String id, User user);
+    User updateUser(String email, User user);
 
     Role saveRole(Role role);
 

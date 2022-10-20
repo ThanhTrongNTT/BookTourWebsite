@@ -36,13 +36,13 @@ public class LocationController {
         Location saveLocation = locationService.saveLocation(location);
         return ResponseEntity.ok().body(new ApiResponse(true,"Save success!"));
     }
-    @PostMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<ApiResponse> updateLocation(@PathVariable("id")String id, Location location){
         Location updateLocation = locationService.updateLocation(id,location);
         return ResponseEntity.ok().body(new ApiResponse(true,"Update Success!"));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<ApiResponse> deleteLocation(@PathVariable("id")String id){
         locationService.deleteLocation(id);
         return ResponseEntity.ok().body(new ApiResponse(true,"Delete success!"));
