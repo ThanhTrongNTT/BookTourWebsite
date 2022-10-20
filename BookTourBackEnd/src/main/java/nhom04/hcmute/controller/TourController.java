@@ -8,6 +8,9 @@ import nhom04.hcmute.util.TourType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -38,13 +41,13 @@ public class TourController {
         return ResponseEntity.ok().body(new ApiResponse(true,"Save success!"));
     }
 
-    @PostMapping("/tour/{id}")
+    @PutMapping("/tour/{id}")
     public ResponseEntity<ApiResponse> updateTour(@PathVariable("id")String id,@RequestBody Tour tour){
         Tour updateTour = tourService.updateTour(id,tour);
         return ResponseEntity.ok().body(new ApiResponse(true, "Update Success"));
     }
 
-    @DeleteMapping("/tour/{id}")
+    @DeleteMapping("/tour/delete/{id}")
     public ResponseEntity<ApiResponse> deleteTour(@PathVariable("id")String id){
         tourService.deleteTour(id);
         return  ResponseEntity.ok().body(new ApiResponse(true, "Delete Success"));

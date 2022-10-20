@@ -55,8 +55,6 @@ public class TourDetailServiceImpl implements TourDetailService {
         updateTourDetail.setEndDay(tourDetail.getEndDay());
         updateTourDetail.setBeginningLocation(tourDetail.getBeginningLocation());
         updateTourDetail.setDestinationLocation(tourDetail.getDestinationLocation());
-        Date date = new Date();
-        updateTourDetail.setModifiedAt(date);
         return tourDetailRepository.save(updateTourDetail);
     }
 

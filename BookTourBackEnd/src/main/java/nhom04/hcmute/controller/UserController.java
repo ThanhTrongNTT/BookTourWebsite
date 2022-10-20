@@ -3,6 +3,7 @@ package nhom04.hcmute.controller;
 import lombok.RequiredArgsConstructor;
 import nhom04.hcmute.model.User;
 import nhom04.hcmute.payload.ApiResponse;
+import nhom04.hcmute.payload.DeleteRequest;
 import nhom04.hcmute.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,14 +32,19 @@ public class UserController {
     public ResponseEntity<User> getUserByEmail(@PathVariable("email")String email){
         return ResponseEntity.ok().body(userService.getUserByEmail(email));
     }
-    @PostMapping("/user/update/{id}")
-    public ResponseEntity<ApiResponse> getUserByEmail(@PathVariable("id")String id, User user){
-        User updateUser = userService.updateUser(id,user);
+    @PutMapping("/user/{email}")
+    public ResponseEntity<ApiResponse> getUserByEmail(@PathVariable("email")String email, User user){
+        User updateUser = userService.updateUser(email,user);
         return ResponseEntity.ok().body(new ApiResponse(true,"Update success!"));
     }
-    @DeleteMapping("/user/delete/{email}")
-    public ResponseEntity<ApiResponse> deleteUser(@PathVariable("email")String email){
-        userService.deleteUser(email);
+    @DeleteMapping("/user/delete")
+    public ResponseEntity<ApiResponse> deleteUser(@RequestBody DeleteRequest deleteRequest){
+        userService.deleteUser(deleteRequest.getDeleteField());
         return ResponseEntity.ok().body(new ApiResponse(true,"Delete success"));
+    }
+    @PostMapping("/user/changePass/{email}")
+    public ResponseEntity<ApiResponse> changePassword(@PathVariable("email")String email){
+        userService.changePassword("trong",email);
+        return ResponseEntity.ok().body(new ApiResponse(true,"Change password success!"));
     }
 }

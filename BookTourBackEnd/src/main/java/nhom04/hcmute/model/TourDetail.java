@@ -29,8 +29,4 @@ public class TourDetail {
     private Date endDay;
     private Location beginningLocation;
     private Location destinationLocation;
-    @CreatedDate
-    private Date createdAt;
-    @LastModifiedDate
-    private Date modifiedAt;
 }

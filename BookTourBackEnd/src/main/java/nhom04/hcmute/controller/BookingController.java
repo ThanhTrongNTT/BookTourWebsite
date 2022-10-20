@@ -37,13 +37,13 @@ public class BookingController {
         Booking saveBooking = bookingService.saveBooking(booking);
         return ResponseEntity.ok().body(new ApiResponse(true, "Save Booking success!"));
     }
-    @PostMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<ApiResponse> updateBooking(@PathVariable("id")String id, Booking booking){
         Booking updateBooking = bookingService.updateBooking(id,booking);
         return ResponseEntity.ok().body(new ApiResponse(true, "Update success!"));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<ApiResponse> deleteBooking(@PathVariable("id")String id){
         bookingService.deleteBooking(id);
         return ResponseEntity.ok().body(new ApiResponse(true,"Delete Booking success!"));

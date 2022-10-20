@@ -40,9 +40,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUser(String id, User user) {
-        User updateUser = userRepository.findById(id)
-                .orElseThrow(()->new NotFoundException(String.format("User with id %s not found",id)));
+    public User updateUser(String email, User user) {
+        User updateUser = userRepository.findByEmail(email)
+                .orElseThrow(()->new NotFoundException(String.format("User with email %s not found",email)));
+        log.info("Updating User");
         updateUser.setFullName(user.getFullName());
         updateUser.setAddress(user.getAddress());
         updateUser.setGender(user.getGender());
@@ -57,6 +58,7 @@ public class UserServiceImpl implements UserService {
         if(roleExist!=null){
             throw new AppException(String.format("Role with RoleName %s has existed",role.getRoleName()));
         }
+        log.info("Saving Role");
         return roleRepository.save(role);
     }
 
@@ -70,12 +72,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByEmail(String email) {
+        log.info("Get user with email {}",email);
         return userRepository.findByEmail(email)
                 .orElseThrow(()->new NotFoundException(String.format("User with email %s not found!",email)));
     }
 
     @Override
     public List<User> getAllUsers() {
+        log.info("Get All Users");
         return userRepository.findAll();
     }
 
@@ -88,7 +92,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(String email) {
         User userDelete = userRepository.findByEmail(email)
-                .orElseThrow(()->new NotFoundException(String.format("User with username %s not found",email
+                .orElseThrow(()->new NotFoundException(String.format("User with email %s not found",email
                 )));
         log.info("Deleting user with email {}",email);
         userRepository.delete(userDelete);
@@ -97,7 +101,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public Boolean checkPassword(String email, String password) {
         User users = userRepository.findByEmail(email)
-                .orElseThrow(()->new NotFoundException(String.format("User with username %s not found",email)));
+                .orElseThrow(()->new NotFoundException(String.format("User with email %s not found",email)));
+        log.info("Check password!");
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String comparePassword = users.getPassword();
         return passwordEncoder.matches(password, comparePassword);
@@ -110,6 +115,7 @@ public class UserServiceImpl implements UserService {
             log.error("User not found!");
             return false;
         }else {
+            log.info("Change Password");
             userChange.setPassword(BCrypt.hashpw(password, BCrypt.gensalt(12)));
             userRepository.save(userChange);
         }
@@ -118,6 +124,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean forgotPassword(String email) {
+        // Send Email To User To reset Password
+        // Implement Algorithm
         return null;
     }
 
