@@ -8,7 +8,7 @@ package nhom04.hcmute.util;
  * Filename : TourType
  */
 public enum TourType {
-    HOTEL,FLIGHT,CAR;
+    HOTEL,FLIGHT,TOUR_BASIC;
 
     public static TourType findByName(String name) {
         TourType result = null;
