@@ -6,7 +6,7 @@ const LayoutSearch = lazy(() => import("~/layouts/LayoutSearch"));
 
 const HomePage = lazy(() => import("~/pages/HomePage"));
 const FlightPage = lazy(() => import("~/pages/FlightPage"));
-const CarePage = lazy(() => import("~/pages/CarPage"));
+const TourPage = lazy(() => import("~/pages/TourPage"));
 const SignInPage = lazy(() => import("~/pages/SignInPage"));
 const SignUpPage = lazy(() => import("~/pages/SignUpPage"));
 const SearchPage = lazy(() => import("~/pages/SearchPage"));
@@ -23,7 +23,7 @@ function App() {
         <Route element={<LayoutDefault />}>
           <Route path="/" element={<HomePage />} />
           <Route path="flight" element={<FlightPage />} />
-          <Route path="/car" element={<CarePage />} />
+          <Route path="/tour" element={<TourPage />} />
         </Route>
       </Routes>
     </Suspense>

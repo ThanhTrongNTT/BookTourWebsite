@@ -29,7 +29,7 @@ const Banner = () => {
         </WrapperBanner>
       );
       break;
-    case "/car":
+    case "/tour":
       render = (
         <WrapperBanner
           src="https://www.dodge.com/content/dam/fca-brands/na/dodge/en_us/bhp/hero/desktop/Hornet_Reveal_BHP-Hero_Desktop.jpg"

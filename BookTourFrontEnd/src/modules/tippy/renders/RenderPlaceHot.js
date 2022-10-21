@@ -30,7 +30,7 @@ const RenderPlaceHot = ({ setValue, control }) => {
     opacity.set(0);
   }
   return (
-    <div>
+    <span>
       <Tippy
         trigger="click"
         interactive
@@ -70,7 +70,7 @@ const RenderPlaceHot = ({ setValue, control }) => {
           />
         </div>
       </Tippy>
-    </div>
+    </span>
   );
 };
 

@@ -4,7 +4,6 @@ import { DateRangePicker } from "react-date-range";
 import { useWatch } from "react-hook-form";
 import { useResize } from "~/hooks/useResize";
 
-import { CustomCalendarContext } from "~/modules/search/SearchBoxHotel";
 import { PlacementArrow } from "~/modules/tippy/TippyDateRange";
 
 const RenderFormDate = ({

@@ -3,12 +3,13 @@ import { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 
 import classNames from "~/utils/classNames";
-import { IconCar, IconFlight, IconHotel } from "@/icon";
+import { IconCar, IconFlight, IconHotel, IconTourist } from "@/icon";
 
 const NAVLINK = [
   { icon: <IconHotel />, label: "Hotel", path: "/" },
   { icon: <IconFlight />, label: "Flight", path: "/flight" },
-  { icon: <IconCar />, label: "Car", path: "/car" },
+  // { icon: <IconCar />, label: "Tour", path: "/tour" },
+  { icon: <IconTourist />, label: "Tour", path: "/tour" },
 ];
 
 const NavSearchBox = ({ children }) => {
@@ -16,7 +17,7 @@ const NavSearchBox = ({ children }) => {
   const [selectedTab, setSelectedTab] = useState(
     NAVLINK.find((item) => item.path === location.pathname)
   );
-  
+
   return (
     <div className="mt-4 rounded-lg bg-[rgba(0,0,0,0.3)] px-4 pt-2 pb-4 shadow-[0px_0px_8px_4px_rgba(255,255,255,0.2)_inset]">
       <nav className="h-full rounded-[10px] rounded-bl-none rounded-br-none border-b border-b-[#eeeeee] bg-transparent pt-1">
