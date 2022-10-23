@@ -4,15 +4,15 @@ import PropTypes from "prop-types";
 import { withErrorBoundary } from "react-error-boundary";
 import { ErrorBoundary } from "../common";
 
-const Number = ({ children, name, control, initialValue }) => {
+const Number = ({ children, name, control, initialValue, ...rest }) => {
   const { field } = useController({
     name,
     control,
-    defaultValue: initialValue,
+    defaultValue: "",
   });
   return (
-    <span className="text-lg font-OpenSans font-medium" {...field}>
-      {children}
+    <span className="font-Poppins text-sm text-c3" {...field} {...rest}>
+      {field.value} {children}
     </span>
   );
 };

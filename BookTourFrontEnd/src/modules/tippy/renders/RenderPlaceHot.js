@@ -1,12 +1,12 @@
 import Tippy from "@tippyjs/react/headless";
 import React from "react";
 import { useSpring } from "framer-motion";
-import { IconLocationRegular } from "~/components/icon";
-import Input from "~/components/input/Input";
-import List from "~/components/list/List";
-import Wrapper from "~/components/popper/Wrapper";
+import { IconLocationRegular } from "@/icon";
+import Input from "@/input/Input";
+import ListPlace from "~/components/list/ListPlace";
+import Wrapper from "@/popper/Wrapper";
 
-const TippyRenderPlaceHot = ({ setValue, control }) => {
+const RenderPlaceHot = ({ setValue, control }) => {
   //framer-motion
   const springConfig = { damping: 15, stiffness: 300 };
   const initialScale = 0.5;
@@ -30,7 +30,7 @@ const TippyRenderPlaceHot = ({ setValue, control }) => {
     opacity.set(0);
   }
   return (
-    <div>
+    <span>
       <Tippy
         trigger="click"
         interactive
@@ -48,7 +48,7 @@ const TippyRenderPlaceHot = ({ setValue, control }) => {
             tabIndex="-1"
             {...attrs}
           >
-            <List
+            <ListPlace
               setValue={setValue}
               heading="The place is hot"
               control={control}
@@ -57,7 +57,7 @@ const TippyRenderPlaceHot = ({ setValue, control }) => {
           </Wrapper>
         )}
       >
-        <div className="relative z-10 cursor-pointer rounded-[4px] bg-white">
+        <div className="relative z-10 h-full cursor-pointer rounded-[4px] bg-white">
           <span className="absolute left-0 top-0 bottom-0 mx-4 flex items-center py-4 text-c4">
             <IconLocationRegular />
           </span>
@@ -70,8 +70,8 @@ const TippyRenderPlaceHot = ({ setValue, control }) => {
           />
         </div>
       </Tippy>
-    </div>
+    </span>
   );
 };
 
-export default TippyRenderPlaceHot;
+export default RenderPlaceHot;

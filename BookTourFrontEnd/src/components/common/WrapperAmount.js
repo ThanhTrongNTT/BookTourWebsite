@@ -3,17 +3,16 @@ import classNames from "~/utils/classNames";
 import PropTypes from "prop-types";
 import { withErrorBoundary } from "react-error-boundary";
 import ErrorBoundary from "./ErrorBoundary";
+import WrapperFlex from "./WrapperFlex";
 
 const WrapperAmount = ({ children, className }) => {
   return (
-    <div
-      className={classNames(
-        "flex justify-between p-[10px] bg-white",
-        className
-      )}
+    <WrapperFlex
+      justify="between"
+      className={classNames("bg-white p-[10px]", className)}
     >
       {children}
-    </div>
+    </WrapperFlex>
   );
 };
 WrapperAmount.propTypes = {

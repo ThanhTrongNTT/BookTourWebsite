@@ -5,23 +5,39 @@ import { withErrorBoundary } from "react-error-boundary";
 import ErrorBoundary from "./ErrorBoundary";
 import {
   arrSpacing,
+  borderRadius,
   columnStartEnd,
   rowStartEnd,
   templateColumns,
   templateRows,
 } from "~/utils/arrCss";
-const Grid = ({ children, cols, col, row, rows, spacing, className }) => {
+const Grid = ({
+  onClick,
+  children,
+  cols,
+  col,
+  row,
+  rows,
+  spacing,
+  className,
+  radius,
+  ...rest
+}) => {
+  let resultBorderRadius = borderRadius.find((item) => item.radius === radius);
   return (
     <div
       className={classNames(
         "grid",
-        templateColumns[cols - 1],
+        templateColumns[cols],
         columnStartEnd[col],
-        templateRows[rows - 1],
+        templateRows[rows],
         rowStartEnd[row],
         arrSpacing[spacing - 1],
+        radius && resultBorderRadius.radiusCss,
         className
       )}
+      onClick={onClick}
+      {...rest}
     >
       {children}
     </div>
@@ -35,6 +51,7 @@ Grid.propTypes = {
   row: PropTypes.string,
   spacing: PropTypes.string,
   className: PropTypes.string,
+  onClick: PropTypes.func,
 };
 export default withErrorBoundary(Grid, {
   FallbackComponent: ErrorBoundary,

@@ -1,6 +1,2 @@
-import TippyRenderPlaceHot from "./TippyRenderPlaceHot";
-import TippyRenderFormDate from "./TippyRenderFormDate";
-export {
-  TippyRenderPlaceHot as RenderPlaceHot,
-  TippyRenderFormDate as RenderFormDate,
-};
+import TippyDateRange from "./TippyDateRange";
+export { TippyDateRange };

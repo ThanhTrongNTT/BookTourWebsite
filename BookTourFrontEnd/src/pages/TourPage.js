@@ -1,6 +1,6 @@
 import React from "react";
 
-const FlightPage = () => {
+const TourPage = () => {
   return (
     <div className="px-5 py-10 font-DMSans lg:mx-auto lg:max-w-7xl">
       <div className="safe-travel">
@@ -20,4 +20,4 @@ const FlightPage = () => {
   );
 };
 
-export default FlightPage;
+export default TourPage;

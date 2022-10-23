@@ -1,15 +1,17 @@
-import React, { Fragment } from "react";
 import PropTypes from "prop-types";
+import { Fragment } from "react";
 import { withErrorBoundary } from "react-error-boundary";
 
 import { ErrorBoundary } from "@/common";
 import Input from "@/input/Input";
 import Label from "@/label/Label";
 
-const FieldSearchBox = ({ children, ...props }) => {
+const FieldSearchBox = ({ children, htmlFor, ...props }) => {
   return (
     <Fragment>
-      <Label className="leading-none">{children}</Label>
+      <Label className="leading-none" htmlFor={props.id}>
+        {children}
+      </Label>
       <Input {...props} />
     </Fragment>
   );
