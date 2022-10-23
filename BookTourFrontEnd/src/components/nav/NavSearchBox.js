@@ -2,13 +2,12 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 
+import { IconFlight, IconHotel, IconTourist } from "@/icon";
 import classNames from "~/utils/classNames";
-import { IconCar, IconFlight, IconHotel, IconTourist } from "@/icon";
 
 const NAVLINK = [
   { icon: <IconHotel />, label: "Hotel", path: "/" },
   { icon: <IconFlight />, label: "Flight", path: "/flight" },
-  // { icon: <IconCar />, label: "Tour", path: "/tour" },
   { icon: <IconTourist />, label: "Tour", path: "/tour" },
 ];
 

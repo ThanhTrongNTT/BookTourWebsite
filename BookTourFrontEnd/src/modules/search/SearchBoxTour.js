@@ -1,4 +1,3 @@
-import { format } from "date-fns";
 import { Fragment } from "react";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -11,6 +10,7 @@ import { WrapperFlex, WrapperGrid } from "@/common";
 import DropdownList from "@/dropdown/DropdownList";
 import { IconCalendar } from "@/icon";
 import Label from "@/label/Label";
+import { format } from "date-fns";
 
 const SearchBoxTour = () => {
   const { handleSubmit, control, setValue } = useForm({

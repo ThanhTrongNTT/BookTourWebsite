@@ -6,7 +6,7 @@ import ButtonSubmitDefault from "@/button/ButtonSubmitDefault";
 import { ErrorBoundary, WrapperFlex, WrapperGrid } from "@/common";
 import { useForm } from "react-hook-form";
 import { RenderFormRooms as TippyRenderFormRooms } from "~/modules/tippy/renders";
-import { TippyDateRange } from "../tippy";
+import TippyDateRange from "~/modules/tippy/TippyDateRange";
 
 const SearchBoxHotel = () => {
   const { handleSubmit, control, setValue } = useForm({

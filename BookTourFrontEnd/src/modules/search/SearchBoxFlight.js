@@ -2,7 +2,7 @@ import ButtonSubmitDefault from "@/button/ButtonSubmitDefault";
 import { WrapperGrid } from "@/common";
 import { useForm } from "react-hook-form";
 import { IconPlaneEnd, IconPlaneStart } from "~/components/icon";
-import { TippyDateRange } from "~/modules/tippy";
+import TippyDateRange from "~/modules/tippy/TippyDateRange";
 import { RenderFormRooms as TippyRenderFormRooms } from "~/modules/tippy/renders";
 import RenderAirport from "../tippy/renders/RenderAirport";
 
