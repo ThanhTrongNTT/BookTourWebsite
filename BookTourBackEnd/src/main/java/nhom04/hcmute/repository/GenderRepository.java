@@ -1,7 +1,9 @@
 package nhom04.hcmute.repository;
 
 import nhom04.hcmute.model.Gender;
+import nhom04.hcmute.util.GenderType;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -13,4 +15,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface GenderRepository extends MongoRepository<Gender,String> {
+
+    @Query(value = "{'GenderType' : ?0}")
+    Gender findByName(GenderType genderType);
 }

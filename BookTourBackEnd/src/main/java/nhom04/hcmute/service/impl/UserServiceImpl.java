@@ -4,8 +4,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nhom04.hcmute.exception.AppException;
 import nhom04.hcmute.exception.NotFoundException;
+import nhom04.hcmute.model.Gender;
 import nhom04.hcmute.model.Role;
 import nhom04.hcmute.model.User;
+import nhom04.hcmute.repository.GenderRepository;
 import nhom04.hcmute.repository.RoleRepository;
 import nhom04.hcmute.repository.UserRepository;
 import nhom04.hcmute.service.UserService;
@@ -29,6 +31,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final GenderRepository genderRepository;
 
 
     @Override
@@ -131,5 +134,18 @@ public class UserServiceImpl implements UserService {
     public List<Role> getAllRoles() {
         log.info("Get all roles!");
         return roleRepository.findAll();
+    }
+
+    @Override
+    public Gender saveGender(Gender gender) {
+        log.info("Saving Gender!");
+        return genderRepository.save(gender);
+    }
+
+
+    @Override
+    public List<Gender> getAllGenders(){
+        log.info("Get All Genders!");
+        return genderRepository.findAll();
     }
 }

@@ -27,9 +27,6 @@ public class UserPrincipal implements UserDetails {
     private String id;
     private String email;
     private String password;
-    private String fullName;
-    private Address address;
-    private Gender gender;
     private Collection<? extends GrantedAuthority> authorities;
 
     @Override
@@ -41,28 +38,22 @@ public class UserPrincipal implements UserDetails {
 
     }
 
-    public UserPrincipal(String id, String email, String password, String fullName, Address address, Gender gender) {
+    public UserPrincipal(String id, String email, String password,Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.email = email;
         this.password = password;
-        this.fullName = fullName;
-        this.address = address;
-        this.gender = gender;
-//        this.authorities = authorities;
+        this.authorities = authorities;
     }
 
     public static UserPrincipal create(User user){
-//        List<GrantedAuthority> authorities = user.getRoles().stream().map(role ->
-//                new SimpleGrantedAuthority(role.getRoleName().name())
-//        ).collect(Collectors.toList());
+        List<GrantedAuthority> authorities = user.getRoles().stream().map(role ->
+                new SimpleGrantedAuthority(role.getRoleName().name())
+        ).collect(Collectors.toList());
         UserPrincipal userPrincipal = new UserPrincipal(
                 user.getId(),
                 user.getEmail(),
                 user.getPassword(),
-                user.getFullName(),
-                user.getAddress(),
-                user.getGender()
-//                authorities
+                authorities
         );
         return userPrincipal;
     }
