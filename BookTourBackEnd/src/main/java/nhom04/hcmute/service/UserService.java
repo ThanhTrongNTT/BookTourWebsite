@@ -1,5 +1,6 @@
 package nhom04.hcmute.service;
 
+import nhom04.hcmute.model.Gender;
 import nhom04.hcmute.model.Role;
 import nhom04.hcmute.model.User;
 
@@ -32,4 +33,7 @@ public interface UserService {
     Boolean forgotPassword(String email);
 
     List<Role> getAllRoles();
+    List<Gender> getAllGenders();
+
+    Gender saveGender(Gender gender);
 }

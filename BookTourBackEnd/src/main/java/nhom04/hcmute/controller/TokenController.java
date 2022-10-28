@@ -24,7 +24,7 @@ import java.util.Date;
 @RestController
 @RequestMapping("api/v1")
 @RequiredArgsConstructor
-public class Token {
+public class TokenController {
     private final JwtProvider jwtProvider;
     @Value("${app.jwtSecret}")
     private String jwtSecret;

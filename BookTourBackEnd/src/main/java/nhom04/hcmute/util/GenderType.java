@@ -8,5 +8,5 @@ package nhom04.hcmute.util;
  * Filename : GenderName
  */
 public enum GenderType {
-    MALE,FEMALE
+    MALE,FEMALE,ANOTHER
 }
