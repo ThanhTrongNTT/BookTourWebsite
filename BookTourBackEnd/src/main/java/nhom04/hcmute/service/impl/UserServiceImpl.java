@@ -1,7 +1,5 @@
 package nhom04.hcmute.service.impl;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nhom04.hcmute.exception.AppException;
@@ -11,7 +9,6 @@ import nhom04.hcmute.model.User;
 import nhom04.hcmute.repository.RoleRepository;
 import nhom04.hcmute.repository.UserRepository;
 import nhom04.hcmute.service.UserService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -33,6 +30,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 
+
     @Override
     public User saveUser(User user) {
         log.info("Saving User");
@@ -42,10 +40,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User updateUser(String email, User user) {
         User updateUser = userRepository.findByEmail(email)
-                .orElseThrow(()->new NotFoundException(String.format("User with email %s not found",email)));
+                .orElseThrow(() -> new NotFoundException(String.format("User with email %s not found", email)));
         log.info("Updating User");
         updateUser.setFullName(user.getFullName());
-        updateUser.setAddress(user.getAddress());
+        if (user.getAddress() != null) updateUser.setAddress(user.getAddress());
         updateUser.setGender(user.getGender());
         Date date = new Date();
         updateUser.setModifiedAt(date);
@@ -55,8 +53,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public Role saveRole(Role role) {
         Role roleExist = roleRepository.findByName(role.getRoleName());
-        if(roleExist!=null){
-            throw new AppException(String.format("Role with RoleName %s has existed",role.getRoleName()));
+        if (roleExist != null) {
+            throw new AppException(String.format("Role with RoleName %s has existed", role.getRoleName()));
         }
         log.info("Saving Role");
         return roleRepository.save(role);
@@ -65,16 +63,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public void addRoleToUser(String email, Role role) {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(()->new NotFoundException(String.format("User with email %s not found!",email)));
+                .orElseThrow(() -> new NotFoundException(String.format("User with email %s not found!", email)));
         user.getRoles().add(role);
-        log.info("Add role {} into user {}",role.getRoleName(),user.getFullName());
+        log.info("Add role {} into user {}", role.getRoleName(), user.getFullName());
     }
 
     @Override
     public User getUserByEmail(String email) {
-        log.info("Get user with email {}",email);
+        log.info("Get user with email {}", email);
         return userRepository.findByEmail(email)
-                .orElseThrow(()->new NotFoundException(String.format("User with email %s not found!",email)));
+                .orElseThrow(() -> new NotFoundException(String.format("User with email %s not found!", email)));
     }
 
     @Override
@@ -92,16 +90,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(String email) {
         User userDelete = userRepository.findByEmail(email)
-                .orElseThrow(()->new NotFoundException(String.format("User with email %s not found",email
+                .orElseThrow(() -> new NotFoundException(String.format("User with email %s not found", email
                 )));
-        log.info("Deleting user with email {}",email);
+        log.info("Deleting user with email {}", email);
         userRepository.delete(userDelete);
     }
 
     @Override
     public Boolean checkPassword(String email, String password) {
         User users = userRepository.findByEmail(email)
-                .orElseThrow(()->new NotFoundException(String.format("User with email %s not found",email)));
+                .orElseThrow(() -> new NotFoundException(String.format("User with email %s not found", email)));
         log.info("Check password!");
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String comparePassword = users.getPassword();
@@ -111,10 +109,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public Boolean changePassword(String password, String email) {
         User userChange = userRepository.findByEmail(email).orElse(null);
-        if(userChange == null){
+        if (userChange == null) {
             log.error("User not found!");
             return false;
-        }else {
+        } else {
             log.info("Change Password");
             userChange.setPassword(BCrypt.hashpw(password, BCrypt.gensalt(12)));
             userRepository.save(userChange);

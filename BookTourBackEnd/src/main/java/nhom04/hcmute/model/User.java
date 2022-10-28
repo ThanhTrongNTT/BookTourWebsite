@@ -32,6 +32,7 @@ public class User {
     private String fullName;
     private Address address;
     private Gender gender;
+    private String avatar;
     private Set<Role> roles;
     @CreatedDate
     private Date createdAt;

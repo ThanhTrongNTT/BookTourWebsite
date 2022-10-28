@@ -1,14 +1,18 @@
 package nhom04.hcmute.security.jwt;
 
 import io.jsonwebtoken.*;
+import nhom04.hcmute.payload.JwtAuthenticationResponse;
 import nhom04.hcmute.security.principal.UserPrincipal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 /**
@@ -28,15 +32,26 @@ public class JwtProvider {
     @Value("${app.jwtExpirationInMs}")
     private int jwtExpirationInMs;
 
-    public String createToken(Authentication authentication){
+    @Value("${app.jwtRefreshExpirationInMs}")
+    private int jwtRefreshExpirationInMs;
+
+    public JwtAuthenticationResponse createToken(Authentication authentication) {
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
-        return Jwts.builder().setSubject(userPrincipal.getUsername())
+        Date expiryRefreshDate = new Date(now.getTime() + jwtRefreshExpirationInMs);
+
+        String accessToken = Jwts.builder().setSubject(userPrincipal.getUsername())
                 .setIssuedAt(new Date())
                 .setExpiration(expiryDate)
-                .signWith(SignatureAlgorithm.HS512,jwtSecret)
+                .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
+        String refreshToken = Jwts.builder().setSubject(userPrincipal.getUsername())
+                .setIssuedAt(new Date())
+                .setExpiration(expiryRefreshDate)
+                .signWith(SignatureAlgorithm.HS512, jwtSecret)
+                .compact();
+        return new JwtAuthenticationResponse(accessToken, refreshToken);
     }
 
     public String getUsernameFromJWT(String token) {
@@ -47,6 +62,7 @@ public class JwtProvider {
     public boolean validateToken(String authToken) {
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
+            logger.info("Token true");
             return true;
         } catch (SignatureException ex) {
             logger.error("Invalid JWT signature");
