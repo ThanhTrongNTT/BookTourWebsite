@@ -1,8 +1,7 @@
 import React from "react";
 import classNames from "~/utils/classNames";
 
-const Avt = ({ src, sx }) => {
-
+const Avt = ({ src, sx, className }) => {
   switch (sx) {
     case "default":
       sx = "w-8 h-8";
@@ -12,12 +11,20 @@ const Avt = ({ src, sx }) => {
   }
 
   return (
-    <img
-      src={src}
-      alt="avt"
-      loading="lazy"
-      className={classNames("rounded-full object-cover", sx)}
-    />
+    <div
+      className={classNames(
+        "flex cursor-pointer items-center justify-center rounded-full",
+        sx,
+        className
+      )}
+    >
+      <img
+        src={src}
+        alt="avt"
+        loading="lazy"
+        className={classNames("rounded-full object-cover")}
+      />
+    </div>
   );
 };
 

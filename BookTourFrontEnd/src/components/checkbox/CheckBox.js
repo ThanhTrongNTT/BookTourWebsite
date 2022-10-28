@@ -18,7 +18,6 @@ const Checkbox = ({
     name,
     defaultValue: false,
   });
-  console.log("TCL: checked", checked);
   return (
     <div className="flex items-start gap-x-5">
       <div

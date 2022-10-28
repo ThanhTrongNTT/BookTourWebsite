@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { withErrorBoundary } from "react-error-boundary";
 import { ErrorBoundary, WrapperFlex } from "../common";
 import { textColor, textSize } from "~/utils/arrCss";
-const Heading = ({ children, sx, color, deal, total, font }) => {
+const Heading = ({ children, sx, color, deal, total, font, className }) => {
   let resultTextSize = textSize.find((item) => item.text === sx);
   let resultTextColor = textColor.find((item) => item.color === color);
 
@@ -28,7 +28,8 @@ const Heading = ({ children, sx, color, deal, total, font }) => {
           "font-Poppins",
           font ? font : "font-semibold",
           sx && resultTextSize.textCss,
-          color && resultTextColor.colorCss
+          color && resultTextColor.colorCss,
+          className
         )}
       >
         {children}

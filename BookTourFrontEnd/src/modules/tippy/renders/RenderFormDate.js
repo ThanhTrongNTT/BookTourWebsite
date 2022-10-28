@@ -17,7 +17,6 @@ const RenderFormDate = ({
   ...props
 }) => {
   const contextArrow = useContext(PlacementArrow);
-  console.log(contextArrow);
 
   const { windowSize } = useResize();
 

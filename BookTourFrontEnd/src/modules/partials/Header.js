@@ -1,18 +1,22 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import Tippy from "@tippyjs/react/headless";
 
 import classNames from "~/utils/classNames";
 
 import Avt from "@/avt/Avt";
+import { IconArrowDownSolid, IconUser } from "@/icon/IconHomePage";
 import Logo from "@/logo/Logo";
 import Notification from "@/notification/Notification";
 import Search from "@/search/Search";
-import { IconArrowDownSolid, IconUser } from "@/icon/IconHomePage";
 import { WrapperFlex } from "~/components/common";
+import Menu from "../menu/Menu";
 
 const Header = () => {
+  const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
-  const [user, setUser] = useState(false);
+  const handleRedirect = () => navigate("/profile");
   return (
     <div className="bg-white">
       <header className="header bg-white px-5 py-[30px] dark:bg-c2 lg:mx-auto lg:max-w-7xl lg:px-10 lg:py-5">
@@ -25,23 +29,45 @@ const Header = () => {
           <WrapperFlex justify="end" flex1>
             <div className={classNames("flex items-center", !!user && "gap-4")}>
               <Search />
-              {!!user ? (
-                <WrapperFlex className="header-right h-8 font-Roboto">
+              {user ? (
+                <WrapperFlex
+                  className="header-right h-8 font-Roboto"
+                  items="center"
+                >
                   <Notification />
                   <div className="mr-5 h-full w-[1px] bg-c5 dark:bg-c3" />
-                  <WrapperFlex spacing="3">
-                    <Avt
-                      sx="default"
-                      src="https://images.unsplash.com/photo-1441123694162-e54a981ceba5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
-                    />
-                    <WrapperFlex spacing="4">
-                      <p className="inline-block text-sm font-semibold">
-                        VinhQuoc
+                  <WrapperFlex spacing="3" items="center">
+                    <div onClick={handleRedirect}>
+                      <Avt
+                        sx="default"
+                        src={user?.img || "../none-avt.png"}
+                        className="bg-c7"
+                      />
+                    </div>
+                    <div className="flex items-center">
+                      <p className="inline-block select-none text-sm font-semibold">
+                        {user.fullName}
                       </p>
-                      <span className="text-c3">
-                        <IconArrowDownSolid />
-                      </span>
-                    </WrapperFlex>
+                      <Tippy
+                        interactive
+                        delay={[0, 200]}
+                        offset={[0, 10]}
+                        moveTransition
+                        render={(attrs) => (
+                          <div
+                            className="w-[238px] rounded-2xl"
+                            tabIndex="-1"
+                            {...attrs}
+                          >
+                            <Menu />
+                          </div>
+                        )}
+                      >
+                        <span className="cursor-pointer px-2 py-4 text-c3">
+                          <IconArrowDownSolid />
+                        </span>
+                      </Tippy>
+                    </div>
                   </WrapperFlex>
                 </WrapperFlex>
               ) : (
