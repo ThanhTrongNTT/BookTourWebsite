@@ -28,12 +28,12 @@ public class UserController {
         return ResponseEntity.ok().body(userService.getAllUsers());
     }
 
-    @GetMapping("/user/{email}")
-    public ResponseEntity<User> getUserByEmail(@PathVariable("email")String email){
+    @GetMapping("/user")
+    public ResponseEntity<User> getUserByEmail(@RequestBody String email){
         return ResponseEntity.ok().body(userService.getUserByEmail(email));
     }
     @PutMapping("/user/{email}")
-    public ResponseEntity<ApiResponse> getUserByEmail(@PathVariable("email")String email, User user){
+    public ResponseEntity<ApiResponse> getUserByEmail(@PathVariable("email")String email,@RequestBody User user){
         User updateUser = userService.updateUser(email,user);
         return ResponseEntity.ok().body(new ApiResponse(true,"Update success!"));
     }

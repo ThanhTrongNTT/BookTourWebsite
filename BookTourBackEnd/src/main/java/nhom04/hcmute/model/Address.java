@@ -23,8 +23,4 @@ public class Address {
     private String street;
     private String district;
     private String city;
-    @CreatedDate
-    private Date createdAt;
-    @LastModifiedDate
-    private Date modifiedAt;
 }

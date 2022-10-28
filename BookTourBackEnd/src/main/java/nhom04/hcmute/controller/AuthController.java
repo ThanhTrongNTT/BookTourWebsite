@@ -2,6 +2,7 @@ package nhom04.hcmute.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import nhom04.hcmute.model.Gender;
 import nhom04.hcmute.model.Role;
 import nhom04.hcmute.model.User;
 import nhom04.hcmute.payload.ApiResponse;
@@ -12,6 +13,7 @@ import nhom04.hcmute.repository.RoleRepository;
 import nhom04.hcmute.repository.UserRepository;
 import nhom04.hcmute.security.jwt.JwtProvider;
 import nhom04.hcmute.service.UserService;
+import nhom04.hcmute.util.GenderType;
 import nhom04.hcmute.util.RoleName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -63,6 +65,10 @@ public class AuthController {
         User user = new User();
         user.setFullName(signUpRequest.getFullName());
         user.setEmail(signUpRequest.getEmail());
+        user.setAvatar("");
+        Gender gender = new Gender();
+        gender.setGenderType(GenderType.MALE);
+        user.setGender(gender);
         user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
 
         Role userRole = roleRepository.findByName(RoleName.TOURIST);
@@ -70,6 +76,7 @@ public class AuthController {
 
 
         User result = userService.saveUser(user);
+
         URI location = ServletUriComponentsBuilder
                 .fromCurrentContextPath().path("/users/{username}")
                 .buildAndExpand(result.getEmail()).toUri();
@@ -89,8 +96,8 @@ public class AuthController {
         log.info("Creating Json Web Token!!");
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        String jwt = jwtProvider.createToken(authentication);
+//        String jwt = jwtProvider.createToken(authentication);
 //        String jwt = "Test Token";
-        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
+        return ResponseEntity.ok(jwtProvider.createToken(authentication));
     }
 }
