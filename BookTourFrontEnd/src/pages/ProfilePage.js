@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import BreadCrumbs from "~/components/breadcrumbs/BreadCrumbs";
 import { WrapperFlex } from "~/components/common";
 import Heading from "~/components/heading/Heading";
-import CardInfo from "~/modules/infor/CardInfo";
+import CardInfo from "~/modules/info/CardInfo";
 
 const ProfilePage = () => {
   return (

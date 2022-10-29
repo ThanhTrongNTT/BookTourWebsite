@@ -17,17 +17,16 @@ export const requestAuthFetchMe = (token) => {
   const decode = jwt_decode(token);
   return axios.get(`user/${decode.sub}`, {
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "Application/json",
+      // Authorization: `Bearer ${token}`,
     },
   });
 };
 
 export const requestRefreshToken = (token) => {
-  if (!token.accessToken) return;
-  const decode = jwt_decode(token.accessToken);
-  return axios.get(`user/${decode.sub}`, {
+  return axios.post(`token/${token}`, {
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "Application/json",
     },
   });
 };

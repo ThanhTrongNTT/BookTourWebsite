@@ -30,9 +30,9 @@ function App() {
         })
       );
     } else {
-      const { access_token } = getToken();
-      if (access_token) {
-        dispatch(authRefreshToken({ accessToken: access_token }));
+      const { refresh_token } = getToken();
+      if (refresh_token) {
+        dispatch(authRefreshToken(refresh_token));
       } else {
         dispatch(authUpdateUser({}));
         logOut();
