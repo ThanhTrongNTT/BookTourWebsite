@@ -5,6 +5,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import nhom04.hcmute.model.User;
 import nhom04.hcmute.payload.ApiResponse;
+import nhom04.hcmute.payload.JwtAuthenticationResponse;
 import nhom04.hcmute.payload.RefreshTokenResponse;
 import nhom04.hcmute.security.jwt.JwtProvider;
 import nhom04.hcmute.service.UserService;
@@ -45,7 +46,7 @@ public class TokenController {
                     .setExpiration(expiryDate)
                     .signWith(SignatureAlgorithm.HS512, jwtSecret)
                     .compact();
-            return ResponseEntity.ok().body(new RefreshTokenResponse(accessToken, true, "Refresh Success!"));
+            return ResponseEntity.ok().body(new JwtAuthenticationResponse(accessToken, refreshToken));
         }
         return ResponseEntity.ok().body(new ApiResponse(false, "Refresh failed!"));
     }
