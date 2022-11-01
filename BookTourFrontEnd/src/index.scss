@@ -80,3 +80,16 @@ input.e-control {
     display: block;
   }
 }
+
+
+.progress-done {
+  border-radius: 20px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 0;
+  opacity: 0;
+  transition: 1s ease 0.3s;
+}

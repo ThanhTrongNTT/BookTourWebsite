@@ -7,8 +7,7 @@ import { WrapperGrid } from "@/common";
 import Describe from "@/describe/Describe";
 import Heading from "@/heading/Heading";
 import Img from "@/img/Img";
-import ButtonSubmitDefault from "~/components/button/ButtonSubmitDefault";
-import { isEmptyObject } from "jquery";
+import { useEffect } from "react";
 
 const SAFE_TRAVLES = [
   {
@@ -40,6 +39,9 @@ const SAFE_TRAVLES = [
   },
 ];
 const HomePage = () => {
+  useEffect(() => {
+    document.title = "TripGuide";
+  }, []);
   const navigate = useNavigate();
   return (
     <div className="px-5 py-10 font-DMSans lg:mx-auto lg:max-w-7xl">

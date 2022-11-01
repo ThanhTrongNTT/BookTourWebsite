@@ -21,10 +21,12 @@ const authSlice = createSlice({
     }),
     authFetchMe: (state, action) => ({
       ...state,
-      ...action.payload,
     }),
     authRefreshToken: (state, action) => ({}),
     authLogOut: (state, action) => ({}),
+    authUpdateAvt: (state, action) => ({
+      ...state,
+    }),
   },
 });
 export const {
@@ -34,5 +36,6 @@ export const {
   authFetchMe,
   authRefreshToken,
   authLogOut,
+  authUpdateAvt,
 } = authSlice.actions;
 export default authSlice.reducer;

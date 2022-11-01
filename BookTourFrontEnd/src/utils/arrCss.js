@@ -6,6 +6,10 @@ export const arrSpacing = [
   "gap-4",
   "gap-5",
   "gap-6",
+  "gap-7",
+  "gap-7",
+  "gap-9",
+  "gap-10",
 ];
 
 export const arrSpacingTop = [
@@ -113,6 +117,10 @@ export const backgroundButton = [
   {
     backgroundColor: "orange",
     backgroundCss: "bg-gradient-to-tr from-orange-700 to-orange-500",
+  },
+  {
+    backgroundColor: "purple",
+    backgroundCss: "bg-purple-400",
   },
 ];
 

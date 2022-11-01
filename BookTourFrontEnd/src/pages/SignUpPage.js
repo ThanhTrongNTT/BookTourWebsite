@@ -39,7 +39,7 @@ const SignUpPage = () => {
   const {
     handleSubmit,
     control,
-    formState: { errors, isValid, isSubmitting },
+    formState: { errors, isSubmitting },
   } = useForm({
     resolver: yupResolver(schame),
     mode: "onSubmit",
@@ -47,10 +47,9 @@ const SignUpPage = () => {
   const dispath = useDispatch();
   const handleSignIn = ({ term, ...values }) => {
     dispath(authRegister(values));
-    //if (!isValid) return; // isValid has a problem to deal with later
-    return new Promise((resolver) => {
+    return new Promise((resolve, reject) => {
       setTimeout(() => {
-        resolver();
+        resolve();
         navigate("/sign-in");
       }, 1000);
     });

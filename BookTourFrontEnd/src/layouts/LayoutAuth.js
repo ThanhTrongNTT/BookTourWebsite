@@ -12,6 +12,7 @@ const LayoutAuth = ({ title, heading, children, textCenter }) => {
 
   useEffect(() => {
     if (user && user.email) navigate("/");
+    document.title = "TripGuide";
   }, [navigate, user]);
 
   if (user && user.email) return null;

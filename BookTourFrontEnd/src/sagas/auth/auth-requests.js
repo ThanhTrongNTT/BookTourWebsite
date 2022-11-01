@@ -18,15 +18,28 @@ export const requestAuthFetchMe = (token) => {
   return axios.get(`user/${decode.sub}`, {
     headers: {
       "Content-Type": "Application/json",
-      // Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   });
 };
 
 export const requestRefreshToken = (token) => {
+  if (!token) return;
   return axios.post(`token/${token}`, {
     headers: {
       "Content-Type": "Application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const requestAuthUpdateAvt = (token) => {
+  const decode = jwt_decode(token);
+  if (!token) return;
+  return axios.put(`user/${decode.sub}`, {
+    headers: {
+      "Content-Type": "Application/json",
+      Authorization: `Bearer ${token}`,
     },
   });
 };

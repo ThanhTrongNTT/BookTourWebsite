@@ -1,21 +1,25 @@
 import { toast } from "react-toastify";
 import { call, put } from "redux-saga/effects";
-import { getToken, logOut, saveToken } from "~/utils/auth";
+import { logOut, saveToken } from "~/utils/auth";
 import {
   requestAuthFetchMe,
   requestAuthLogin,
   requestAuthRegister,
+  requestAuthUpdateAvt,
   requestRefreshToken,
 } from "./auth-requests";
 import { authUpdateUser } from "./auth-slice";
-
 export default function* handleAuthRegister({ payload }) {
   try {
     const response = yield call(requestAuthRegister, payload);
     if (response.status === 201) {
-      toast.success(response.data.message);
+      toast.success(response.data.message, {
+        autoClose: 500,
+      });
     } else if (response.status === 200) {
-      toast.warning(response.data.message);
+      toast.warning(response.data.message, {
+        autoClose: 500,
+      });
       return;
     }
   } catch (error) {}
@@ -24,6 +28,7 @@ export default function* handleAuthRegister({ payload }) {
 function* handleAuthLogin({ payload }) {
   try {
     const response = yield call(requestAuthLogin, payload);
+    console.log("TCL: function*handleAuthLogin -> response", response);
     if (response.data.accessToken && response.data.refreshToken) {
       saveToken(response.data.accessToken, response.data.refreshToken);
       yield call(handleAuthFetchMe, { payload: response.data.accessToken });
@@ -32,22 +37,28 @@ function* handleAuthLogin({ payload }) {
   } catch (error) {
     const { response } = error;
     if (response.status === 400) {
-      toast.error(response.data.message);
+      toast.error(response.data.message, {
+        autoClose: 1000,
+      });
       return;
     }
   }
 }
+
 function* handleAuthFetchMe({ payload }) {
   try {
-    const respone = yield call(requestAuthFetchMe, payload);
-    console.log("TCL: respone", respone);
-    if (respone.status === 200) {
+    const response = yield call(requestAuthFetchMe, payload);
+    if (response.status === 200) {
       yield put(
         authUpdateUser({
-          user: respone.data,
+          user: response.data,
           accessToken: payload,
         })
       );
+      yield call(handleAuthFetchMe, {
+        ...payload,
+        accessToken: response.data.accessToken,
+      });
     }
   } catch (error) {}
 }
@@ -55,7 +66,6 @@ function* handleAuthFetchMe({ payload }) {
 function* handleAuthRefreshToken({ payload }) {
   try {
     const response = yield call(requestRefreshToken, payload);
-    console.log("TCL: response", response);
     if (response.data) {
       saveToken(response.data.accessToken, response.data.refreshToken);
       yield handleAuthFetchMe({
@@ -77,9 +87,18 @@ function* handleAuthLogOut() {
   logOut();
 }
 
+function* handleAuthUpdateAvt({ payload }) {
+  console.log("TCL: payload", payload);
+  try {
+    const response = yield call(requestAuthUpdateAvt, payload);
+    console.log("handleAuthUpdateAvt", response);
+  } catch (error) {}
+}
+
 export {
   handleAuthLogin,
   handleAuthFetchMe,
   handleAuthRefreshToken,
   handleAuthLogOut,
+  handleAuthUpdateAvt,
 };
