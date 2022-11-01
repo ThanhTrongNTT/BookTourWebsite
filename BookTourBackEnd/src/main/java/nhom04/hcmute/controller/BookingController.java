@@ -31,6 +31,10 @@ public class BookingController {
     public ResponseEntity<Booking> getBookingById(@PathVariable("id")String id){
         return ResponseEntity.ok().body(bookingService.getById(id));
     }
+    @GetMapping("/user/{email}")
+    public ResponseEntity<List<Booking>> getBookingByUser(@PathVariable("email")String email){
+        return ResponseEntity.ok().body(bookingService.getBookingByUser(email));
+    }
 
     @PostMapping("/save")
     public ResponseEntity<ApiResponse> saveBooking(@RequestBody Booking booking){

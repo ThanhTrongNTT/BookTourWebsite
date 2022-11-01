@@ -15,10 +15,7 @@ import java.util.Set;
  */
 @Data
 public class SignUpRequest {
-    @NotBlank
     private String fullName;
-    @Email(message = "Email is not valid")
     private String email;
-    @NotBlank
     private String password;
 }

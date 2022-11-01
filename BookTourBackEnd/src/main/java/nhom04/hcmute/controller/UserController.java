@@ -33,8 +33,13 @@ public class UserController {
         return ResponseEntity.ok().body(userService.getUserByEmail(email));
     }
     @PutMapping("/user/{email}")
-    public ResponseEntity<ApiResponse> getUserByEmail(@PathVariable("email")String email,@RequestBody User user){
+    public ResponseEntity<ApiResponse> updateUser(@PathVariable("email")String email,@RequestBody User user){
         User updateUser = userService.updateUser(email,user);
+        return ResponseEntity.ok().body(new ApiResponse(true,"Update success!"));
+    }
+    @PutMapping("/user/avt/{email}")
+    public ResponseEntity<ApiResponse> updateAvatar(@PathVariable("email")String email,@RequestBody String avatar){
+        User updateUser = userService.updateAvatar(email,avatar);
         return ResponseEntity.ok().body(new ApiResponse(true,"Update success!"));
     }
     @DeleteMapping("/user/delete")
