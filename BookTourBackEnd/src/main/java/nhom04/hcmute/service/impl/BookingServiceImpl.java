@@ -30,6 +30,11 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
+    public List<Booking> getBookingByUser(String email) {
+        return bookingRepository.getBookingByUser(email);
+    }
+
+    @Override
     public Booking getById(String id) {
         log.info("Get user by id {}",id);
         return bookingRepository.findById(id)

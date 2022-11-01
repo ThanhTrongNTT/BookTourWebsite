@@ -36,4 +36,6 @@ public interface UserService {
     List<Gender> getAllGenders();
 
     Gender saveGender(Gender gender);
+
+    User updateAvatar(String email, String avatar);
 }

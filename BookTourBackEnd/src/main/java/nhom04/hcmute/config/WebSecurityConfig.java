@@ -80,6 +80,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/v1/booking/delete/**").hasAuthority("ADMIN")
                 .antMatchers("/api/v1/role/**").hasAuthority("ADMIN")
                 .antMatchers("/api/v1/token/**").permitAll()
+                .antMatchers("/swagger-ui.html").permitAll()
                 .anyRequest().authenticated()
                 .and().exceptionHandling()
                 .authenticationEntryPoint(jwtEntryPoint)

@@ -142,6 +142,15 @@ public class UserServiceImpl implements UserService {
         return genderRepository.save(gender);
     }
 
+    @Override
+    public User updateAvatar(String email, String avatar) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException(String.format("User with email %s not found", email)));
+        log.info("Update Avatar!");
+        user.setAvatar(avatar);
+        return userRepository.save(user);
+    }
+
 
     @Override
     public List<Gender> getAllGenders(){

@@ -1,10 +1,9 @@
 package nhom04.hcmute.repository;
 
 import nhom04.hcmute.model.Booking;
-import nhom04.hcmute.model.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
+import java.util.List;
 
 /**
  * Create by: IntelliJ IDEA
@@ -15,5 +14,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface BookingRepository extends MongoRepository<Booking,String> {
-
+    List<Booking> getBookingByUser(String email);
 }
