@@ -1,5 +1,6 @@
 package nhom04.hcmute.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -32,6 +33,7 @@ public class User {
     private String fullName;
     private Address address;
     private Gender gender;
+    @JsonFormat(pattern = "dd/mm/yyy")
     private Date birthDay;
     private String avatar;
     private Set<Role> roles;

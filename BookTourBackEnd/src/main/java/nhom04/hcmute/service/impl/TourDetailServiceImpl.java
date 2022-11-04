@@ -65,4 +65,10 @@ public class TourDetailServiceImpl implements TourDetailService {
         log.info("Deleting Tour Detail");
         tourDetailRepository.delete(deleteTourDetail);
     }
+
+    @Override
+    public List<TourDetail> searchTourDetail(String search) {
+        log.info("Searching TourDetail");
+        return tourDetailRepository.searchTourDetail(search);
+    }
 }
