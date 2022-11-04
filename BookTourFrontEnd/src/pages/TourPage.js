@@ -1,11 +1,16 @@
 import React from "react";
+import { IconCheck } from "~/components/icon";
+import TextTour from "~/components/text/TextTour";
 
 const TourPage = () => {
   return (
     <div>
       <div className="bg-gray-200">
-        <div className="px-5 py-10 font-DMSans lg:mx-auto lg:max-w-7xl flex items-center justify-between">
-          
+        <div className="flex items-center justify-between py-4 font-DMSans lg:mx-auto lg:max-w-7xl">
+          <TextTour icon={<IconCheck />}>Best tour price</TextTour>
+          <TextTour icon={<IconCheck />}>Best quality</TextTour>
+          <TextTour icon={<IconCheck />}>Heartfelt advice</TextTour>
+          <TextTour icon={<IconCheck />}>Flexible payment</TextTour>
         </div>
       </div>
       <div className="px-5 py-10 font-DMSans lg:mx-auto lg:max-w-7xl">

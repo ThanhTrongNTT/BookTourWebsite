@@ -2,17 +2,17 @@ import React from "react";
 import PropTypes from "prop-types";
 import { withErrorBoundary } from "react-error-boundary";
 import { ErrorBoundary } from "../common";
-const TextTour = ({ children, icon }) => {
+const TextTour = ({ children }) => {
   return (
-    <div>
-      {icon && <span>{icon}</span>}
+    <div className="flex items-center justify-center">
+      <img alt="icon-check" src="/check.png" />
       {children}
     </div>
   );
 };
 TextTour.propTypes = {
   children: PropTypes.node,
-  icon: PropTypes.string,
+  icon: PropTypes.node,
 };
 export default withErrorBoundary(TextTour, {
   FallbackComponent: ErrorBoundary,

@@ -19,6 +19,7 @@ import CardAvt from "~/modules/info/CardAvt";
 import useAxiosPrivate from "~/hooks/useAxiosPrivate";
 import { toast } from "react-toastify";
 import DropdownGender from "~/components/dropdown/DropdownGender";
+import { format } from "date-fns";
 
 const ProfilePage = () => {
   const { user } = useSelector((state) => state.auth);
@@ -104,12 +105,11 @@ const ProfilePage = () => {
           window.location.reload(true);
         }, 1000);
       });
+    } else {
+      toast.error(response.data.message, {
+        autoClose: 500,
+      });
     }
-    // else {
-    //   toast.error(response.data.message, {
-    //     autoClose: 500,
-    //   });
-    // }
   };
   return (
     <div>
@@ -193,7 +193,7 @@ const ProfilePage = () => {
                 </WrapperGrid>
                 <WrapperGrid cols="2" spacing="9">
                   <FieldUpdateProfile
-                    type="date"
+                    type="text"
                     name="birthDay"
                     id="birthDay"
                     placeholder="07/12/1997"
@@ -203,7 +203,7 @@ const ProfilePage = () => {
                   >
                     Date Of Birth
                   </FieldUpdateProfile>
-                  <WrapperFlex col spacing="3">
+                  <WrapperFlex col spacing="4">
                     <label
                       htmlFor="genderType"
                       className="font-DMSans text-sm font-bold text-c4"

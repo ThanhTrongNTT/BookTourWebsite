@@ -4,7 +4,7 @@ import useClickOutSideDropdown from "~/hooks/useClickOutSideDropdown";
 import classNames from "~/utils/classNames";
 import { IconGender } from "../icon/IconProfilePage";
 
-const GENDER = [{ type: "MALE" }, { type: "FEMALE" }, { type: "OTHER" }];
+const GENDER = [{ type: "MALE" }, { type: "FEMALE" }, { type: "ANOTHER" }];
 
 const DropdownGender = ({
   control,
