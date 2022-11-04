@@ -5,7 +5,6 @@ import {
   requestAuthFetchMe,
   requestAuthLogin,
   requestAuthRegister,
-  requestAuthUpdateAvt,
   requestRefreshToken,
 } from "./auth-requests";
 import { authUpdateUser } from "./auth-slice";
@@ -28,7 +27,6 @@ export default function* handleAuthRegister({ payload }) {
 function* handleAuthLogin({ payload }) {
   try {
     const response = yield call(requestAuthLogin, payload);
-    console.log("TCL: function*handleAuthLogin -> response", response);
     if (response.data.accessToken && response.data.refreshToken) {
       saveToken(response.data.accessToken, response.data.refreshToken);
       yield call(handleAuthFetchMe, { payload: response.data.accessToken });
@@ -87,18 +85,9 @@ function* handleAuthLogOut() {
   logOut();
 }
 
-function* handleAuthUpdateAvt({ payload }) {
-  console.log("TCL: payload", payload);
-  try {
-    const response = yield call(requestAuthUpdateAvt, payload);
-    console.log("handleAuthUpdateAvt", response);
-  } catch (error) {}
-}
-
 export {
   handleAuthLogin,
   handleAuthFetchMe,
   handleAuthRefreshToken,
   handleAuthLogOut,
-  handleAuthUpdateAvt,
 };

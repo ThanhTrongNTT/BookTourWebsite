@@ -3,9 +3,9 @@ import { Outlet, useNavigate } from "react-router-dom";
 
 import ErrorBoundary from "@/common/ErrorBoundary";
 
-import { Footer, Header, Banner } from "~/modules/partials";
-import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { Banner, Footer, Header } from "~/modules/partials";
 const LayoutDefault = () => {
   const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
@@ -13,10 +13,9 @@ const LayoutDefault = () => {
   useEffect(() => {
     if (!user || !user.email) navigate("/sign-in");
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
-
+  }, [navigate, user]);
   if (!user || !user.email) return null;
-  
+
   return (
     <div className="wrapper">
       <Header />

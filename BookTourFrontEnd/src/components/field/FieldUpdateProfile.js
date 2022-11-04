@@ -12,7 +12,7 @@ const FieldUpdateProfile = ({ children, icon, hasDisable, ...rest }) => {
         htmlFor={rest.id}
         className={classNames(
           "font-DMSans !font-bold leading-none !text-c4",
-          hasDisable && "pointer-events-none select-none"
+          hasDisable && "pointer-events-none select-none bg-gray-100"
         )}
       >
         {children}

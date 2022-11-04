@@ -13,8 +13,12 @@ import {
   IconEmail,
   IconGender,
   IconHouse,
+  IconName,
 } from "@/icon/IconProfilePage";
 import CardAvt from "~/modules/info/CardAvt";
+import useAxiosPrivate from "~/hooks/useAxiosPrivate";
+import { toast } from "react-toastify";
+import DropdownGender from "~/components/dropdown/DropdownGender";
 
 const ProfilePage = () => {
   const { user } = useSelector((state) => state.auth);
@@ -22,33 +26,91 @@ const ProfilePage = () => {
     mode: "onChange",
   });
   const [disable, setDisable] = useState(true);
+  const axiosPrivate = useAxiosPrivate();
 
   useEffect(() => {
     document.title = "Profile";
-    setValue("address", user.address ? user.address : "");
-    setValue("email", user?.email);
-    setValue("dateOfBirth", user?.dateOfBirth);
-    setValue("gender", user?.gender?.genderType);
+    if (user.address) {
+      setValue("street", user.address.street);
+      setValue("district", user.address.district);
+      setValue("city", user.address.city);
+    }
+    setValue("fullName", user.fullName);
+    setValue("email", user.email);
+    setValue(
+      "genderType",
+      user?.gender?.genderType ? user.gender.genderType : ""
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    async function getUser() {
+      try {
+        const response = await axiosPrivate.get(`user/${user.email}`);
+        console.log("getUser ~ response", response);
+      } catch (error) {
+        console.log("getUser ~ error", error);
+      }
+    }
+    getUser();
   }, []);
 
   const handleEditProfile = () => {
     setDisable(false);
-    setFocus("address");
+    setFocus("street");
   };
 
   const handleCancelEdit = () => {
-    const watchFields = watch(["address", "email", "gender"]);
-    if (user?.address) {
-      if (user.address !== watchFields[0]) alert("vinh");
-    }
-    if (user?.gender?.genderType) {
-      if (user.gender.genderType !== watchFields[2]) alert("vinh");
-    }
+    // const watchFields = watch(["address", "email", "gender"]);
+    // if (user?.address) {
+    //   if (user.address !== watchFields[0]) alert("vinh");
+    // }
+    // if (user?.gender?.genderType) {
+    //   if (user.gender.genderType !== watchFields[2]) alert("vinh");
+    // }
     setDisable(true);
   };
 
-  const handleUpdateInfo = (values) => console.log(values);
+  const handleUpdateInfo = async ({
+    street,
+    district,
+    city,
+    genderType,
+    ...values
+  }) => {
+    const request = {
+      address: {
+        street,
+        district,
+        city,
+      },
+      gender: { genderType },
+      ...values,
+    };
+
+    console.log("address", request);
+    const response = await axiosPrivate.put(`/user/${user.email}`, request);
+    const responseUser = await axiosPrivate.get(`user/${user.email}`);
+    console.log(responseUser);
+    if (!response.data) return null;
+    if (response.status !== 202) {
+      toast.success(response.data.message, {
+        autoClose: 500,
+      });
+      return new Promise((resolve) => {
+        setTimeout(async () => {
+          resolve();
+          window.location.reload(true);
+        }, 1000);
+      });
+    }
+    // else {
+    //   toast.error(response.data.message, {
+    //     autoClose: 500,
+    //   });
+    // }
+  };
   return (
     <div>
       <WrapperFlex className="my-10" items="center" spacing="3">
@@ -74,30 +136,66 @@ const ProfilePage = () => {
             </WrapperFlex>
             <form onSubmit={handleSubmit(handleUpdateInfo)} className="mt-10">
               <WrapperGrid rows="3" spacing="8">
-                <FieldUpdateProfile
-                  name="address"
-                  id="address"
-                  placeholder="Enter your address"
-                  control={control}
-                  icon={<IconHouse />}
-                  hasDisable={disable}
-                >
-                  Address
-                </FieldUpdateProfile>
-                <FieldUpdateProfile
-                  name="email"
-                  id="email"
-                  placeholder="Enter your email"
-                  control={control}
-                  icon={<IconEmail />}
-                  hasDisable
-                >
-                  Email
-                </FieldUpdateProfile>
+                <WrapperGrid cols="3" spacing="8">
+                  <FieldUpdateProfile
+                    name="street"
+                    id="street"
+                    placeholder="Enter your street"
+                    control={control}
+                    icon={<IconHouse />}
+                    hasDisable={disable}
+                  >
+                    Street
+                  </FieldUpdateProfile>
+                  <FieldUpdateProfile
+                    name="district"
+                    id="district"
+                    placeholder="Enter your district"
+                    control={control}
+                    icon={<IconHouse />}
+                    hasDisable={disable}
+                  >
+                    District
+                  </FieldUpdateProfile>
+                  <FieldUpdateProfile
+                    name="city"
+                    id="city"
+                    placeholder="Enter your city"
+                    control={control}
+                    icon={<IconHouse />}
+                    hasDisable={disable}
+                  >
+                    City
+                  </FieldUpdateProfile>
+                </WrapperGrid>
+                <WrapperGrid cols="2" spacing="8">
+                  <FieldUpdateProfile
+                    name="fullName"
+                    id="fullName"
+                    placeholder="Enter your full name"
+                    control={control}
+                    icon={<IconName />}
+                    hasDisable={disable}
+                  >
+                    Full Name
+                  </FieldUpdateProfile>
+                  <FieldUpdateProfile
+                    name="email"
+                    id="email"
+                    placeholder="Enter your email"
+                    control={control}
+                    icon={<IconEmail />}
+                    tabIndex={-1}
+                    hasDisable
+                  >
+                    Email
+                  </FieldUpdateProfile>
+                </WrapperGrid>
                 <WrapperGrid cols="2" spacing="9">
                   <FieldUpdateProfile
-                    name="dayOfBirth"
-                    id="dayOfBirth"
+                    type="date"
+                    name="birthDay"
+                    id="birthDay"
                     placeholder="07/12/1997"
                     control={control}
                     icon={<IconCake />}
@@ -105,16 +203,22 @@ const ProfilePage = () => {
                   >
                     Date Of Birth
                   </FieldUpdateProfile>
-                  <FieldUpdateProfile
-                    name="gender"
-                    id="gender"
-                    placeholder="Enter your gender"
-                    control={control}
-                    icon={<IconGender />}
-                    hasDisable={disable}
-                  >
-                    Gender
-                  </FieldUpdateProfile>
+                  <WrapperFlex col spacing="3">
+                    <label
+                      htmlFor="genderType"
+                      className="font-DMSans text-sm font-bold text-c4"
+                    >
+                      Gender
+                    </label>
+                    <DropdownGender
+                      setValue={setValue}
+                      control={control}
+                      id="genderType"
+                      name="genderType"
+                      disable={disable}
+                      dropdownLabel={user.gender.genderType}
+                    />
+                  </WrapperFlex>
                 </WrapperGrid>
               </WrapperGrid>
               <div className="mt-8 inline-block w-full text-right">

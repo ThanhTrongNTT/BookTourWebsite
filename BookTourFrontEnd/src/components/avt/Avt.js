@@ -22,7 +22,7 @@ const Avt = ({ src, sx, className }) => {
         src={src}
         alt="avt"
         loading="lazy"
-        className={classNames("rounded-full object-cover")}
+        className={classNames("h-full w-full rounded-full object-cover")}
       />
     </div>
   );
