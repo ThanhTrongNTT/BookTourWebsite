@@ -2,10 +2,7 @@ package nhom04.hcmute.repository;
 
 import nhom04.hcmute.model.TourDetail;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 /**
  * Create by: IntelliJ IDEA
@@ -16,7 +13,4 @@ import java.util.List;
  */
 @Repository
 public interface TourDetailRepository extends MongoRepository<TourDetail,String> {
-
-    @Query(value = "{'tourName': {/$regex: ?0,/$options: 'i'}}")
-    List<TourDetail> searchTourDetail(String search);
 }

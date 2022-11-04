@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nhom04.hcmute.exception.NotFoundException;
 import nhom04.hcmute.model.Tour;
-import nhom04.hcmute.model.TourDetail;
 import nhom04.hcmute.repository.TourRepository;
 import nhom04.hcmute.service.TourService;
 import nhom04.hcmute.util.TourType;
@@ -70,11 +69,5 @@ public class TourServiceImpl implements TourService {
                 .orElseThrow(()->new NotFoundException(String.format("Tour with id %s not found",id)));
         log.info("Deleting Tour");
         tourRepository.delete(deleteTour);
-    }
-
-    @Override
-    public Tour getTourByTourDetail(TourDetail tourDetail) {
-        log.info("Get Tours by TourDetail");
-        return tourRepository.getTourByTourDetail(tourDetail);
     }
 }

@@ -1,7 +1,6 @@
 package nhom04.hcmute.service;
 
 import nhom04.hcmute.model.Tour;
-import nhom04.hcmute.model.TourDetail;
 import nhom04.hcmute.util.TourType;
 
 import java.util.List;
@@ -20,7 +19,5 @@ public interface TourService {
     Tour saveTour(Tour tour);
     Tour updateTour(String id, Tour tour);
     void deleteTour(String id);
-
-    Tour getTourByTourDetail(TourDetail tourDetail);
 
 }
