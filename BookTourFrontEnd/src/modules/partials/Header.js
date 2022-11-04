@@ -1,7 +1,6 @@
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
 import Tippy from "@tippyjs/react/headless";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import classNames from "~/utils/classNames";
 
@@ -10,13 +9,20 @@ import { IconArrowDownSolid, IconUser } from "@/icon/IconHomePage";
 import Logo from "@/logo/Logo";
 import Notification from "@/notification/Notification";
 import Search from "@/search/Search";
+import { useEffect, useState } from "react";
 import { WrapperFlex } from "~/components/common";
 import Menu from "../menu/Menu";
 
 const Header = () => {
   const { user } = useSelector((state) => state.auth);
+  const [avatar, setAvatar] = useState(user.avatar);
   const navigate = useNavigate();
+  useEffect(() => {
+    setAvatar(user.avatar);
+  }, [user.avatar]);
+
   const handleRedirect = () => navigate("/profile");
+
   return (
     <div className="bg-white">
       <header className="header bg-white px-5 py-[30px] dark:bg-c2 lg:mx-auto lg:max-w-7xl lg:px-10 lg:py-5">
@@ -40,7 +46,7 @@ const Header = () => {
                     <div onClick={handleRedirect}>
                       <Avt
                         sx="default"
-                        src={user?.img || "../none-avt.png"}
+                        src={avatar || "../none-avt.png"}
                         className="bg-c7"
                       />
                     </div>

@@ -1,21 +1,28 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import ButtonSubmitDefault from "~/components/button/ButtonSubmitDefault";
-import { authUpdateAvt } from "~/sagas/auth/auth-slice";
-import { WrapperFlex } from "../../components/common";
-import { IconCheck, IconPen } from "../../components/icon/IconProfilePage";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+
+import ButtonSubmitDefault from "@/button/ButtonSubmitDefault";
+import { WrapperFlex } from "@/common";
+import { IconCheck, IconPen } from "@/icon/IconProfilePage";
+
+import axios from "~/api/axios";
+import useAxiosPrivate from "~/hooks/useAxiosPrivate";
+import { getToken } from "~/utils/auth";
 
 const CardAvt = () => {
   const { user } = useSelector((state) => state.auth);
-  const { handleSubmit, setValue, register } = useForm({
+  const {
+    handleSubmit,
+    setValue,
+    register,
+    formState: { isSubmitting },
+  } = useForm({
     mode: "onChange",
   });
-  const [baseImg, setBaseImg] = useState("");
   const [disable, setDisable] = useState(true);
-  const dispath = useDispatch();
-  const navigate = useNavigate();
+  const [baseImg, setBaseImg] = useState(user.avatar);
   const handleChangeAvt = () => {
     document.getElementById("inp-upload").click();
   };
@@ -41,8 +48,32 @@ const CardAvt = () => {
     });
   };
 
-  const onSubmit = (values) => {
-    dispath(authUpdateAvt(values));
+  const { access_token } = getToken();
+  const onSubmit = async ({ avatar }) => {
+    const response = await axios.put(`/user/avt/${user.email}`, avatar, {
+      headers: {
+        "Content-Type": "text/html; charset=utf-8",
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+
+    setDisable(true);
+    if (!response.data) return null;
+    if (response.status !== 202) {
+      toast.success(response.data.message, {
+        autoClose: 500,
+      });
+      return new Promise((resolve) => {
+        setTimeout(async () => {
+          resolve();
+          window.location.reload(true);
+        }, 1000);
+      });
+    } else {
+      toast.error(response.data.message, {
+        autoClose: 500,
+      });
+    }
   };
 
   return (
@@ -75,7 +106,6 @@ const CardAvt = () => {
               />
             </button>
           </div>
-          {/*  */}
           <p className="dark:text-grayScale-c6 mb-5 font-Roboto text-4xl">
             <b className="">{user.fullName}</b>
           </p>
@@ -114,7 +144,11 @@ const CardAvt = () => {
               setValue("avatar", baseImg);
             }}
           >
-            Upload Avatar
+            {isSubmitting ? (
+              <div className="h-6 w-6 animate-spin rounded-full border-[3px]  border-t-2 border-white border-t-transparent bg-transparent" />
+            ) : (
+              <span>Upload Avatar</span>
+            )}
           </ButtonSubmitDefault>
         </form>
       </div>

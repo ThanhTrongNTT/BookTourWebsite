@@ -32,14 +32,3 @@ export const requestRefreshToken = (token) => {
     },
   });
 };
-
-export const requestAuthUpdateAvt = (token) => {
-  const decode = jwt_decode(token);
-  if (!token) return;
-  return axios.put(`user/${decode.sub}`, {
-    headers: {
-      "Content-Type": "Application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
-};

@@ -1,8 +1,9 @@
-import PropTypes from "prop-types";
-import { memo } from "react";
 import { withErrorBoundary } from "react-error-boundary";
+import PropTypes from "prop-types";
+
 import { backgroundButton, borderRadius } from "~/utils/arrCss";
 import classNames from "~/utils/classNames";
+
 import { ErrorBoundary } from "../common";
 const ButtonSubmitDefault = ({
   radius,
@@ -16,7 +17,6 @@ const ButtonSubmitDefault = ({
   let resultBackgroundButton = backgroundButton.find(
     (item) => item.backgroundColor === background
   );
-  console.log("render");
   return (
     <button
       onClick={onClick}
@@ -33,6 +33,14 @@ const ButtonSubmitDefault = ({
     </button>
   );
 };
-export default withErrorBoundary(memo(ButtonSubmitDefault), {
+ButtonSubmitDefault.propTypes = {
+  background: PropTypes.string,
+  className: PropTypes.string,
+  children: PropTypes.node,
+  radius: PropTypes.string,
+  disable: PropTypes.bool,
+  onClick: PropTypes.func,
+};
+export default withErrorBoundary(ButtonSubmitDefault, {
   FallbackComponent: ErrorBoundary,
 });
