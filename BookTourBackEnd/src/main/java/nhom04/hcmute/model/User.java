@@ -3,6 +3,7 @@ package nhom04.hcmute.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import nhom04.hcmute.util.GenderType;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -32,8 +33,8 @@ public class User {
     private String password;
     private String fullName;
     private Address address;
-    private Gender gender;
-    @JsonFormat(pattern = "dd/mm/yyy")
+    private GenderType gender;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yyyy")
     private Date birthDay;
     private String avatar;
     private Set<Role> roles;

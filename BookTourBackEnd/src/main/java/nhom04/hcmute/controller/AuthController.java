@@ -2,15 +2,12 @@ package nhom04.hcmute.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import nhom04.hcmute.model.Gender;
 import nhom04.hcmute.model.Role;
 import nhom04.hcmute.model.User;
 import nhom04.hcmute.payload.ApiResponse;
-import nhom04.hcmute.payload.JwtAuthenticationResponse;
 import nhom04.hcmute.payload.LoginRequest;
 import nhom04.hcmute.payload.SignUpRequest;
 import nhom04.hcmute.repository.RoleRepository;
-import nhom04.hcmute.repository.UserRepository;
 import nhom04.hcmute.security.jwt.JwtProvider;
 import nhom04.hcmute.service.UserService;
 import nhom04.hcmute.util.GenderType;
@@ -66,9 +63,7 @@ public class AuthController {
         user.setFullName(signUpRequest.getFullName());
         user.setEmail(signUpRequest.getEmail());
         user.setAvatar("");
-        Gender gender = new Gender();
-        gender.setGenderType(GenderType.MALE);
-        user.setGender(gender);
+        user.setGender(GenderType.ANOTHER);
         user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
 
         Role userRole = roleRepository.findByName(RoleName.TOURIST);

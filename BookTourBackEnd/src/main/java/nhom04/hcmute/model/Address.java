@@ -16,10 +16,7 @@ import java.util.Date;
  * Filename : Address
  */
 @Data
-@Document(collection = "address")
 public class Address {
-    @Id
-    private String id;
     private String street;
     private String district;
     private String city;
