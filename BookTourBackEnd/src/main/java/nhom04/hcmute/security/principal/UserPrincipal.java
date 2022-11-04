@@ -1,19 +1,12 @@
 package nhom04.hcmute.security.principal;
 
-import nhom04.hcmute.model.Address;
-import nhom04.hcmute.model.Gender;
-import nhom04.hcmute.model.Role;
 import nhom04.hcmute.model.User;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**

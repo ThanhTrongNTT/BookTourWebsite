@@ -2,6 +2,7 @@ package nhom04.hcmute.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import nhom04.hcmute.util.GenderType;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -22,7 +23,7 @@ public class Passenger {
     @Id
     private String id;
     private String fullName;
-    private Gender gender;
+    private GenderType gender;
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yyyy")
     private Date birthDay;
     @CreatedDate

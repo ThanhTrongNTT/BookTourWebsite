@@ -4,10 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nhom04.hcmute.exception.AppException;
 import nhom04.hcmute.exception.NotFoundException;
-import nhom04.hcmute.model.Gender;
 import nhom04.hcmute.model.Role;
 import nhom04.hcmute.model.User;
-import nhom04.hcmute.repository.GenderRepository;
 import nhom04.hcmute.repository.RoleRepository;
 import nhom04.hcmute.repository.UserRepository;
 import nhom04.hcmute.service.UserService;
@@ -31,7 +29,6 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private final GenderRepository genderRepository;
 
 
     @Override
@@ -45,9 +42,10 @@ public class UserServiceImpl implements UserService {
         User updateUser = userRepository.findByEmail(email)
                 .orElseThrow(() -> new NotFoundException(String.format("User with email %s not found", email)));
         log.info("Updating User");
-        updateUser.setFullName(user.getFullName());
+        if (user.getFullName().equals("")) updateUser.setFullName(user.getFullName());
         if (user.getAddress() != null) updateUser.setAddress(user.getAddress());
-        updateUser.setGender(user.getGender());
+        if (user.getBirthDay()!= null) updateUser.setBirthDay(user.getBirthDay());
+        if (user.getGender()!= null) updateUser.setGender(user.getGender());
         Date date = new Date();
         updateUser.setModifiedAt(date);
         return userRepository.save(updateUser);
@@ -136,11 +134,6 @@ public class UserServiceImpl implements UserService {
         return roleRepository.findAll();
     }
 
-    @Override
-    public Gender saveGender(Gender gender) {
-        log.info("Saving Gender!");
-        return genderRepository.save(gender);
-    }
 
     @Override
     public User updateAvatar(String email, String avatar) {
@@ -152,9 +145,4 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    @Override
-    public List<Gender> getAllGenders(){
-        log.info("Get All Genders!");
-        return genderRepository.findAll();
-    }
 }
