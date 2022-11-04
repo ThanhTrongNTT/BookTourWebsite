@@ -86,10 +86,7 @@ public class AuthController {
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest loginRequest){
         User user = userService.getUserByEmail(loginRequest.getEmail());
 
-        if(user ==null){
-            return new ResponseEntity<>(new ApiResponse(false,"We not have you in my system!"), HttpStatus.BAD_REQUEST);
-        }
-        else if(!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())){
+        if(!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())){
             return new ResponseEntity<>(new ApiResponse(false,"The password was wrong!"), HttpStatus.BAD_REQUEST);
         }
         Authentication authentication = authenticationManager.authenticate(
@@ -99,6 +96,8 @@ public class AuthController {
         log.info("Creating Json Web Token!!");
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
+//        String jwt = jwtProvider.createToken(authentication);
+//        String jwt = "Test Token";
         return ResponseEntity.ok(jwtProvider.createToken(authentication));
     }
 }

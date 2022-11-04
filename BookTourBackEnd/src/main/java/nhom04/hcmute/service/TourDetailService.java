@@ -17,5 +17,4 @@ public interface TourDetailService {
     TourDetail saveTourDetail(TourDetail tourDetail);
     TourDetail updateTourDetail(String id, TourDetail tourDetail);
     void deleteTourDetail(String id);
-    List<TourDetail> searchTourDetail(String search);
 }
