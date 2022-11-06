@@ -1,3 +1,5 @@
+import { Footer } from "~/modules/partials";
+
 const HomePage = () => {
   return (
     <div className="mt-[400px]">

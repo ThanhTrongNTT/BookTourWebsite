@@ -2,7 +2,7 @@ import React from "react";
 
 const TourItem = () => {
   return (
-    <div className="max-w-xs text-blue-900 border-2 round rounded-lg pb-2">
+    <div className="max-w-[350px] text-blue-900 border-2 round rounded-lg pb-2">
       <div className="relative">
         <img
           className="round rounded-t-lg w-full h-[260px] object-cover"
@@ -31,7 +31,7 @@ const TourItem = () => {
           Nơi khởi hành: <strong>Đà Nẵng</strong>
         </p>
         <p className="pb-1 text-lg font-semibold text-red-400">6,990,000₫</p>
-        <div className="flex item-center justify-center gap-3">
+        <div className="flex item-center justify-center gap-7">
           <button className="bg-red-400 round rounded-lg w-36 h-8 font-medium text-white">
             Đặt ngay
           </button>

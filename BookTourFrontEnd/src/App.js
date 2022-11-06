@@ -1,5 +1,7 @@
 import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
+import CustomerList from "./pages/AdminPages/CustomerList";
+import DetailPage from "./pages/DetailPage";
 
 const LayoutDefault = lazy(() => import("~/layouts/LayoutDefault"));
 const LayoutSearch = lazy(() => import("~/layouts/LayoutSearch"));
@@ -22,6 +24,8 @@ function App() {
         </Route>
         <Route element={<LayoutDefault />}>
           <Route path="/" element={<HomePage />} />
+          <Route path="admin" element={<CustomerList />} />
+          <Route path="details" element={<DetailPage />} />
           <Route path="flight" element={<FlightPage />} />
           <Route path="/car" element={<CarePage />} />
         </Route>
