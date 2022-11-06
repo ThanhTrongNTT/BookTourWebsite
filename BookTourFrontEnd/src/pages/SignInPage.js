@@ -48,7 +48,7 @@ const SignInPage = () => {
   const dispath = useDispatch();
   const handleSignIn = (values) => {
     dispath(authLogin(values));
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve();
         const { access_token } = getToken();

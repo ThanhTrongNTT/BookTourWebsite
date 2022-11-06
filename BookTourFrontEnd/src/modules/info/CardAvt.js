@@ -8,7 +8,6 @@ import { WrapperFlex } from "@/common";
 import { IconCheck, IconPen } from "@/icon/IconProfilePage";
 
 import axios from "~/api/axios";
-import useAxiosPrivate from "~/hooks/useAxiosPrivate";
 import { getToken } from "~/utils/auth";
 
 const CardAvt = () => {
@@ -82,7 +81,7 @@ const CardAvt = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="relative inline-block rounded-full">
             <img
-              src={baseImg}
+              src={baseImg || "/none-avt.png"}
               alt="avt"
               className="object-cove mb-4 h-[170px] w-[170px] select-none rounded-full"
             />

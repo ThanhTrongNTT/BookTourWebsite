@@ -34,9 +34,16 @@ function* handleAuthLogin({ payload }) {
     yield 1;
   } catch (error) {
     const { response } = error;
-    if (response.status === 400) {
+    if (response) {
       toast.error(response.data.message, {
+        autoClose: 500,
+        pauseOnHover: false,
+      });
+      return;
+    } else {
+      toast.error(error.message, {
         autoClose: 1000,
+        pauseOnHover: false,
       });
       return;
     }

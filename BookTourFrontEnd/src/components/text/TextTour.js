@@ -1,13 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { withErrorBoundary } from "react-error-boundary";
-import { ErrorBoundary } from "../common";
+import { ErrorBoundary, WrapperFlex } from "../common";
 const TextTour = ({ children }) => {
   return (
-    <div className="flex items-center justify-center">
-      <img alt="icon-check" src="/check.png" />
+    <WrapperFlex
+      className="text-lg font-bold text-c3"
+      center
+      spacing="2"
+    >
+      <img alt="icon-check" className="h-14 w-14" src="/check.png" />
       {children}
-    </div>
+    </WrapperFlex>
   );
 };
 TextTour.propTypes = {

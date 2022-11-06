@@ -19,7 +19,6 @@ import CardAvt from "~/modules/info/CardAvt";
 import useAxiosPrivate from "~/hooks/useAxiosPrivate";
 import { toast } from "react-toastify";
 import DropdownGender from "~/components/dropdown/DropdownGender";
-import { format } from "date-fns";
 
 const ProfilePage = () => {
   const { user } = useSelector((state) => state.auth);
@@ -36,12 +35,10 @@ const ProfilePage = () => {
       setValue("district", user.address.district);
       setValue("city", user.address.city);
     }
+    setValue("birthDay", user?.birthDay ? user.birthDay : "");
     setValue("fullName", user.fullName);
     setValue("email", user.email);
-    setValue(
-      "genderType",
-      user?.gender?.genderType ? user.gender.genderType : ""
-    );
+    setValue("gender", user?.gender ? user.gender : "");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -73,20 +70,13 @@ const ProfilePage = () => {
     setDisable(true);
   };
 
-  const handleUpdateInfo = async ({
-    street,
-    district,
-    city,
-    genderType,
-    ...values
-  }) => {
+  const handleUpdateInfo = async ({ street, district, city, ...values }) => {
     const request = {
       address: {
         street,
         district,
         city,
       },
-      gender: { genderType },
       ...values,
     };
 
@@ -213,10 +203,10 @@ const ProfilePage = () => {
                     <DropdownGender
                       setValue={setValue}
                       control={control}
-                      id="genderType"
-                      name="genderType"
+                      id="gender"
+                      name="gender"
                       disable={disable}
-                      dropdownLabel={user.gender.genderType}
+                      dropdownLabel={user.gender}
                     />
                   </WrapperFlex>
                 </WrapperGrid>

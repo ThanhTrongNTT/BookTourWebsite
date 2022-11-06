@@ -1,31 +1,53 @@
-import React from "react";
-import { IconCheck } from "~/components/icon";
+import CardTourItem from "~/components/card/CardTourItem";
+import { WrapperGrid } from "~/components/common";
+import Describe from "~/components/describe/Describe";
+import Heading from "~/components/heading/Heading";
 import TextTour from "~/components/text/TextTour";
+import CardDomesticTour from "~/modules/card/CardDomesticTour";
+import CardNorthwestTour from "~/modules/card/CardNorthwestTour";
 
+const NORTH_WEST_ROAD = {};
 const TourPage = () => {
   return (
-    <div>
-      <div className="bg-gray-200">
+    <div className="h-screen">
+      <div className="bg-gray-100">
         <div className="flex items-center justify-between py-4 font-DMSans lg:mx-auto lg:max-w-7xl">
-          <TextTour icon={<IconCheck />}>Best tour price</TextTour>
-          <TextTour icon={<IconCheck />}>Best quality</TextTour>
-          <TextTour icon={<IconCheck />}>Heartfelt advice</TextTour>
-          <TextTour icon={<IconCheck />}>Flexible payment</TextTour>
+          <TextTour>Best tour price</TextTour>
+          <TextTour>Best quality</TextTour>
+          <TextTour>Heartfelt advice</TextTour>
+          <TextTour>Flexible payment</TextTour>
         </div>
       </div>
-      <div className="px-5 py-10 font-DMSans lg:mx-auto lg:max-w-7xl">
-        <div className="safe-travel">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Possimus
-          dolore eum, illum nobis minus ipsum ab nihil. Expedita iusto beatae
-          quas sed rerum, neque ducimus velit, harum quis sunt at repellat natus
-          ad nisi exercitationem? Possimus, vitae. Iste, non quasi. Nesciunt,
-          architecto veniam numquam placeat maiores explicabo expedita et.
-          Distinctio similique optio blanditiis sequi hic iure id. Pariatur
-          mollitia suscipit maxime eligendi vitae. Magnam recusandae fugiat
-          obcaecati accusantium suscipit, error sint commodi iusto architecto
-          praesentium ab? Consectetur vel odit quia, eaque rerum laborum
-          veritatis veniam nulla maxime eveniet, doloremque enim, animi quasi
-          atque fuga magni ipsum illo voluptatum. Officia, quam.
+      <div className="px-4 lg:mx-auto lg:max-w-7xl">
+        <div className="domestic-tour">
+          <div className="mt-5 mb-4">
+            <Heading sx="xl-3" color="light">
+              Demestic Tour
+            </Heading>
+            <Describe color="light">Most Checked In</Describe>
+          </div>
+          <div className="card-tour">
+            <CardDomesticTour />
+            <div className=" py-5 text-center font-Helvetica">
+              <button
+                type="button"
+                className="rounded-sm border-2 border-[#26bed6] bg-white  px-4 py-1 text-lg font-semibold text-[#26bed6] transition-all hover:bg-[#26bed6] hover:text-white"
+              >
+                View more
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="north-west-road">
+          <div className="mt-5 mb-4">
+            <Heading sx="xl-3" color="light">
+              North West Road
+            </Heading>
+            <Describe color="light">East Northwest Hung Vi</Describe>
+          </div>
+          <div className="card-northwest-tour">
+            <CardNorthwestTour />
+          </div>
         </div>
       </div>
     </div>
