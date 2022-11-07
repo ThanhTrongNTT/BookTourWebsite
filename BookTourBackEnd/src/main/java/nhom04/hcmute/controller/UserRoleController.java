@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import nhom04.hcmute.model.Role;
 import nhom04.hcmute.payload.ApiResponse;
 import nhom04.hcmute.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,24 @@ public class UserRoleController {
     }
     @PostMapping("/role/addtouser/{email}")
     public ResponseEntity<ApiResponse> addRoleToUser(@PathVariable("email") String email,@RequestBody Role role){
-        userService.addRoleToUser(email,role);
+        Role roleAdd = userService.findByRoleName(role.getRoleName().toString());
+        try {
+            userService.addRoleToUser(email, roleAdd);
+        }
+        catch (Exception ex){
+            System.out.println(ex.getMessage());
+        }
         return ResponseEntity.ok().body(new ApiResponse(true,"Add role to user success"));
+    }
+    @PostMapping("/role/delete/{email}")
+    public ResponseEntity<ApiResponse> deleteRoleFromUser(@PathVariable("email") String email,@RequestBody Role role){
+        Role roleAdd = userService.findByRoleName(role.getRoleName().toString());
+        try {
+            userService.deleteRoleFromUser(email, roleAdd);
+        }
+        catch (Exception ex){
+            System.out.println(ex.getMessage());
+        }
+        return ResponseEntity.ok().body(new ApiResponse(true,"Delete role from user success"));
     }
 }

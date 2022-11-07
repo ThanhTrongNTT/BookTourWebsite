@@ -25,6 +25,7 @@ import java.util.List;
 @Slf4j
 public class TourServiceImpl implements TourService {
     private final TourRepository tourRepository;
+
     @Override
     public List<Tour> getAllTours() {
         log.info("Get All Tours");
@@ -32,17 +33,23 @@ public class TourServiceImpl implements TourService {
     }
 
     @Override
+    public List<Tour> saveAll(List<Tour> tourList) {
+        log.info("Get All Tours");
+        return tourRepository.saveAll(tourList);
+    }
+
+    @Override
     public List<Tour> getTourByType(String typeName) {
-        log.info("Get Tour with type {}",typeName);
+        log.info("Get Tour with type {}", typeName);
         TourType tourType = TourType.findByName(typeName);
         return tourRepository.getTourByType(tourType);
     }
 
     @Override
     public Tour getTourById(String id) {
-        log.info("Get Tour with id {}",id);
+        log.info("Get Tour with id {}", id);
         return tourRepository.findById(id)
-                .orElseThrow(()->new NotFoundException(String.format("Tour with id %s not found",id)));
+                .orElseThrow(() -> new NotFoundException(String.format("Tour with id %s not found", id)));
     }
 
     @Override
@@ -54,7 +61,7 @@ public class TourServiceImpl implements TourService {
     @Override
     public Tour updateTour(String id, Tour tour) {
         Tour updateTour = tourRepository.findById(id)
-                .orElseThrow(()->new NotFoundException(String.format("Tour with id %s not found",id)));
+                .orElseThrow(() -> new NotFoundException(String.format("Tour with id %s not found", id)));
         log.info("Updating Tour");
         updateTour.setTourDetail(tour.getTourDetail());
         updateTour.setPassenger(tour.getPassenger());
@@ -67,7 +74,7 @@ public class TourServiceImpl implements TourService {
     @Override
     public void deleteTour(String id) {
         Tour deleteTour = tourRepository.findById(id)
-                .orElseThrow(()->new NotFoundException(String.format("Tour with id %s not found",id)));
+                .orElseThrow(() -> new NotFoundException(String.format("Tour with id %s not found", id)));
         log.info("Deleting Tour");
         tourRepository.delete(deleteTour);
     }

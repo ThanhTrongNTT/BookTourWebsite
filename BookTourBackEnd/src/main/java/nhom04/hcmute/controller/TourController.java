@@ -35,6 +35,11 @@ public class TourController {
         return ResponseEntity.ok().body(tourService.getAllTours());
     }
 
+    @PostMapping("/tours")
+    public ResponseEntity<List<Tour>> saveAll(@RequestBody List<Tour> tourList) {
+        return ResponseEntity.ok().body(tourService.saveAll(tourList));
+    }
+
     @GetMapping("/tour/{id}")
     public ResponseEntity<Tour> getTourById(@PathVariable("id") String id) {
         return ResponseEntity.ok().body(tourService.getTourById(id));
@@ -64,12 +69,12 @@ public class TourController {
     }
 
     @GetMapping("/tour/search")
-    public ResponseEntity<List<Tour>> searchTour(@RequestParam(value = "search",defaultValue = "") String search) {
+    public ResponseEntity<List<Tour>> searchTour(@RequestParam(value = "search", defaultValue = "") String search) {
         List<TourDetail> tourDetailList = tourDetailService.searchTourDetail(search);
         List<Tour> tourList = new ArrayList<>();
         for (TourDetail tourDetail : tourDetailList) {
             tourList.add(tourService.getTourByTourDetail(tourDetail));
         }
-            return ResponseEntity.ok().body(tourList);
-        }
+        return ResponseEntity.ok().body(tourList);
     }
+}

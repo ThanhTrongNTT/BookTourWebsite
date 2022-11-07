@@ -13,6 +13,7 @@ import java.util.List;
  */
 public interface LocationService {
     List<Location> getAllLocations();
+    List<Location> saveAll(List<Location> locationList);
     Location getLocationById(String id);
     Location saveLocation(Location location);
     Location updateLocation(String id, Location location);

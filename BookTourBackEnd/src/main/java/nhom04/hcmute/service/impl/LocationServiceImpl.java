@@ -31,6 +31,12 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
+    public List<Location> saveAll(List<Location> locationList) {
+        log.info("Get all locations");
+        return locationRepository.saveAll(locationList);
+    }
+
+    @Override
     public Location getLocationById(String id) {
         log.info("Find location with id {}", id);
         return locationRepository.findById(id)

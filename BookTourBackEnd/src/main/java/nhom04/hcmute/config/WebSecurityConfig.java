@@ -6,6 +6,7 @@ import nhom04.hcmute.security.principal.CustomUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -68,20 +69,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/api/v1/auth/**").permitAll()
-                .antMatchers("/api/v1/users/**").hasAuthority("ADMIN")
                 .antMatchers("/api/v1/user/**").hasAnyAuthority("ADMIN","TOURIST","TOUR_GUIDE")
                 .antMatchers("/api/v1/booking/**").hasAnyAuthority("ADMIN","TOURIST")
                 .antMatchers("/api/v1/location/**").hasAnyAuthority("ADMIN","TOURIST")
-                .antMatchers("/api/v1/tours/**").hasAnyAuthority("ADMIN","TOURIST")
+                .antMatchers(HttpMethod.GET,"/api/v1/tours/**").hasAnyAuthority("ADMIN","TOURIST")
                 .antMatchers("/api/v1/tour/**").hasAnyAuthority("ADMIN","TOURIST")
                 .antMatchers("/api/v1/user/delete/**").hasAuthority("ADMIN")
                 .antMatchers("/api/v1/tour/delete/**").hasAuthority("ADMIN")
                 .antMatchers("/api/v1/location/delete/**").hasAuthority("ADMIN")
                 .antMatchers("/api/v1/booking/delete/**").hasAuthority("ADMIN")
-                .antMatchers("/api/v1/role/**").hasAuthority("ADMIN")
                 .antMatchers("/api/v1/token/**").permitAll()
                 .antMatchers("/api/v1/user/avt/**").hasAnyAuthority("ADMIN","TOURIST","TOUR_GUIDE")
-                .antMatchers("/swagger-ui.html").permitAll()
                 .anyRequest().authenticated()
                 .and().exceptionHandling()
                 .authenticationEntryPoint(jwtEntryPoint)

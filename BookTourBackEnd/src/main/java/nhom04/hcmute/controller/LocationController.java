@@ -17,32 +17,36 @@ import java.util.List;
  * Filename : LocationController
  */
 @RestController
-@RequestMapping("/api/v1/location")
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class LocationController {
     private final LocationService locationService;
 
-    @GetMapping("")
+    @GetMapping("/locations")
     public ResponseEntity<List<Location>> getAllLocation(){
         return ResponseEntity.ok().body(locationService.getAllLocations());
     }
-    @GetMapping("/{id}")
+    @PostMapping("/locations")
+    public ResponseEntity<List<Location>> saveAll(@RequestBody List<Location> locationList){
+        return ResponseEntity.ok().body(locationService.saveAll(locationList));
+    }
+    @GetMapping("/location/{id}")
     public ResponseEntity<Location> getLocationById(@PathVariable("id")String id){
         return ResponseEntity.ok().body(locationService.getLocationById(id));
     }
 
-    @PostMapping("/save")
+    @PostMapping("/location/save")
     public ResponseEntity<ApiResponse> saveLocation(@RequestBody Location location){
         Location saveLocation = locationService.saveLocation(location);
         return ResponseEntity.ok().body(new ApiResponse(true,"Save success!"));
     }
-    @PutMapping("/{id}")
+    @PutMapping("/location/{id}")
     public ResponseEntity<ApiResponse> updateLocation(@PathVariable("id")String id, Location location){
         Location updateLocation = locationService.updateLocation(id,location);
         return ResponseEntity.ok().body(new ApiResponse(true,"Update Success!"));
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/location/delete/{id}")
     public ResponseEntity<ApiResponse> deleteLocation(@PathVariable("id")String id){
         locationService.deleteLocation(id);
         return ResponseEntity.ok().body(new ApiResponse(true,"Delete success!"));

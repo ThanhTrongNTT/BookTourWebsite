@@ -20,6 +20,7 @@ public interface UserService {
     Role saveRole(Role role);
 
     void addRoleToUser(String email, Role role);
+    void deleteRoleFromUser(String email, Role role);
 
     User getUserByEmail(String email);
 
@@ -27,11 +28,12 @@ public interface UserService {
 
     Boolean existedByEmail(String email);
     void deleteUser(String email);
-    Boolean checkPassword(String email, String password);
     Boolean changePassword(String password, String email);
     Boolean forgotPassword(String email);
 
     List<Role> getAllRoles();
+
+    Role findByRoleName(String roleName);
 
     User updateAvatar(String email, String avatar);
 }

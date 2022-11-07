@@ -13,6 +13,8 @@ import java.util.List;
  */
 public interface BookingService {
     List<Booking> getAllBookings();
+    List<Booking> saveAll(List<Booking> bookingList);
+
     List<Booking> getBookingByUser(String email);
 
     Booking getById(String id);

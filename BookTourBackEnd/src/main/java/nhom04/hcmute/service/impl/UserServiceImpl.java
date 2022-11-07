@@ -9,6 +9,7 @@ import nhom04.hcmute.model.User;
 import nhom04.hcmute.repository.RoleRepository;
 import nhom04.hcmute.repository.UserRepository;
 import nhom04.hcmute.service.UserService;
+import nhom04.hcmute.util.RoleName;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -66,7 +67,18 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new NotFoundException(String.format("User with email %s not found!", email)));
         user.getRoles().add(role);
+        userRepository.save(user);
+        user.getRoles().remove(role);
         log.info("Add role {} into user {}", role.getRoleName(), user.getFullName());
+    }
+
+    @Override
+    public void deleteRoleFromUser(String email, Role role) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException(String.format("User with email %s not found!", email)));
+        user.getRoles().remove(role);
+        userRepository.save(user);
+        log.info("Delete role {} into user {}", role.getRoleName(), user.getFullName());
     }
 
     @Override
@@ -98,16 +110,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean checkPassword(String email, String password) {
-        User users = userRepository.findByEmail(email)
-                .orElseThrow(() -> new NotFoundException(String.format("User with email %s not found", email)));
-        log.info("Check password!");
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String comparePassword = users.getPassword();
-        return passwordEncoder.matches(password, comparePassword);
-    }
-
-    @Override
     public Boolean changePassword(String password, String email) {
         User userChange = userRepository.findByEmail(email).orElse(null);
         if (userChange == null) {
@@ -132,6 +134,12 @@ public class UserServiceImpl implements UserService {
     public List<Role> getAllRoles() {
         log.info("Get all roles!");
         return roleRepository.findAll();
+    }
+
+    @Override
+    public Role findByRoleName(String roleName) {
+        log.info("Finding Role!");
+        return roleRepository.findByName(RoleName.valueOf(roleName));
     }
 
 
