@@ -1,6 +1,7 @@
 package nhom04.hcmute.service;
 
 import nhom04.hcmute.model.Booking;
+import nhom04.hcmute.payload.PageResponse;
 
 import java.util.List;
 
@@ -13,6 +14,9 @@ import java.util.List;
  */
 public interface BookingService {
     List<Booking> getAllBookings();
+    PageResponse getBookingPaging(int pageNo, int pageSize, String sortBy, String sortDir);
+    List<Booking> saveAll(List<Booking> bookingList);
+
     List<Booking> getBookingByUser(String email);
 
     Booking getById(String id);

@@ -23,8 +23,4 @@ public class Location {
     private String id;
     private String locationName;
     private LocationType locationType;
-    @CreatedDate
-    private Date createdAt;
-    @LastModifiedDate
-    private Date modifiedAt;
 }

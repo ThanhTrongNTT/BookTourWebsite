@@ -2,7 +2,9 @@ package nhom04.hcmute.service;
 
 import nhom04.hcmute.model.Tour;
 import nhom04.hcmute.model.TourDetail;
+import nhom04.hcmute.payload.PageResponse;
 import nhom04.hcmute.util.TourType;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -15,6 +17,7 @@ import java.util.List;
  */
 public interface TourService {
     List<Tour> getAllTours();
+    List<Tour> saveAll(List<Tour> tourList);
     List<Tour> getTourByType(String typeName);
     Tour getTourById(String id);
     Tour saveTour(Tour tour);
@@ -22,5 +25,7 @@ public interface TourService {
     void deleteTour(String id);
 
     Tour getTourByTourDetail(TourDetail tourDetail);
+    PageResponse searchTour(String search, Pageable pageable);
+    PageResponse getTourPaging(int pageNo, int pageSize,String sortBy,String sortDir);
 
 }

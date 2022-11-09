@@ -1,6 +1,7 @@
 package nhom04.hcmute.service;
 
 import nhom04.hcmute.model.Location;
+import nhom04.hcmute.payload.PageResponse;
 
 import java.util.List;
 
@@ -13,6 +14,8 @@ import java.util.List;
  */
 public interface LocationService {
     List<Location> getAllLocations();
+    PageResponse getLocationPaging(int pageNo, int pageSize,String sortBy,String sortDir);
+    List<Location> saveAll(List<Location> locationList);
     Location getLocationById(String id);
     Location saveLocation(Location location);
     Location updateLocation(String id, Location location);

@@ -17,10 +17,7 @@ import java.util.List;
  * Filename : TourDetail
  */
 @Data
-@Document(collection = "tourDetail")
 public class TourDetail {
-    @Id
-    private String id;
     private String tourName;
     private String tourDes;
     private Double price;

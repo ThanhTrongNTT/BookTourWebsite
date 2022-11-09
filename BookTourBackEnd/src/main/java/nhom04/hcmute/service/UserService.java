@@ -2,6 +2,9 @@ package nhom04.hcmute.service;
 
 import nhom04.hcmute.model.Role;
 import nhom04.hcmute.model.User;
+import nhom04.hcmute.payload.PageResponse;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -14,12 +17,14 @@ import java.util.List;
  */
 public interface UserService {
     User saveUser(User user);
+    PageResponse getUserPaging(int pageNo, int pageSize, String sortBy, String sortDir);
 
     User updateUser(String email, User user);
 
     Role saveRole(Role role);
 
     void addRoleToUser(String email, Role role);
+    void deleteRoleFromUser(String email, Role role);
 
     User getUserByEmail(String email);
 
@@ -27,11 +32,14 @@ public interface UserService {
 
     Boolean existedByEmail(String email);
     void deleteUser(String email);
-    Boolean checkPassword(String email, String password);
     Boolean changePassword(String password, String email);
     Boolean forgotPassword(String email);
 
     List<Role> getAllRoles();
 
+    Role findByRoleName(String roleName);
+
     User updateAvatar(String email, String avatar);
+
+    PageResponse searchUser(String search, Pageable paging);
 }

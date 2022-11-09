@@ -24,38 +24,38 @@ public class BookTourBackEndApplication {
         SpringApplication.run(BookTourBackEndApplication.class, args);
     }
 
-    @Bean
-    CommandLineRunner runner(UserService userService, PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
-        return args -> {
-            Date now = new Date();
-            Role roleTourist = new Role();
-            Role roleTourGuide = new Role();
-            Role roleAdmin = new Role();
-            roleTourist.setRoleName(RoleName.TOURIST);
-            roleTourist.setCreatedAt(now);
-            roleTourist.setModifiedAt(now);
-            roleTourGuide.setRoleName(RoleName.TOUR_GUIDE);
-            roleTourGuide.setCreatedAt(now);
-            roleTourGuide.setModifiedAt(now);
-            roleAdmin.setRoleName(RoleName.ADMIN);
-            roleAdmin.setCreatedAt(now);
-            roleAdmin.setModifiedAt(now);
-            userService.saveRole(roleTourist);
-            userService.saveRole(roleTourGuide);
-            userService.saveRole(roleAdmin);
-            User admin = new User();
-            admin.setFullName("Nguyen Thanh Trong");
-            admin.setEmail("admin@booktour.com");
-            admin.setPassword(passwordEncoder.encode("BookTour@@admin"));
-            admin.setAddress(null);
-            admin.setAvatar(null);
-            admin.setGender(GenderType.MALE);
-            Role adminRole = roleRepository.findByName(RoleName.ADMIN);
-            admin.setRoles(Collections.singleton(adminRole));
-            admin.setCreatedAt(now);
-            admin.setModifiedAt(now);
-            userService.saveUser(admin);
-        };
-    }
+//    @Bean
+//    CommandLineRunner runner(UserService userService, PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
+//        return args -> {
+//            Date now = new Date();
+//            Role roleTourist = new Role();
+//            Role roleTourGuide = new Role();
+//            Role roleAdmin = new Role();
+//            roleTourist.setRoleName(RoleName.TOURIST);
+//            roleTourist.setCreatedAt(now);
+//            roleTourist.setModifiedAt(now);
+//            roleTourGuide.setRoleName(RoleName.TOUR_GUIDE);
+//            roleTourGuide.setCreatedAt(now);
+//            roleTourGuide.setModifiedAt(now);
+//            roleAdmin.setRoleName(RoleName.ADMIN);
+//            roleAdmin.setCreatedAt(now);
+//            roleAdmin.setModifiedAt(now);
+//            userService.saveRole(roleTourist);
+//            userService.saveRole(roleTourGuide);
+//            userService.saveRole(roleAdmin);
+//            User admin = new User();
+//            admin.setFullName("Nguyen Thanh Trong");
+//            admin.setEmail("admin@booktour.com");
+//            admin.setPassword(passwordEncoder.encode("BookTour@@admin"));
+//            admin.setAddress(null);
+//            admin.setAvatar(null);
+//            admin.setGender(GenderType.MALE);
+//            Role adminRole = roleRepository.findByName(RoleName.ADMIN);
+//            admin.setRoles(Collections.singleton(adminRole));
+//            admin.setCreatedAt(now);
+//            admin.setModifiedAt(now);
+//            userService.saveUser(admin);
+//        };
+//    }
 }
 
