@@ -1,6 +1,7 @@
-import React from "react";
 import CardTourItem from "~/components/card/CardTourItem";
 import { WrapperGrid } from "~/components/common";
+import WrapperCardTour from "~/components/common/WrapperCardTour";
+import { v4 as uuidv4 } from "uuid";
 const TOUR_LIST = [
   {
     imgThumbnail:
@@ -91,19 +92,22 @@ const TOUR_LIST = [
 ];
 const CardDomesticTour = () => {
   return (
-    <WrapperGrid cols="3" spacing="10">
-      {TOUR_LIST.map((item) => (
-        <CardTourItem
-          imgThumbnail={item.imgThumbnail}
-          ribbonText={item.ribbonText}
-          title={item.title}
-          point={item.point}
-          rate={item.rate}
-          listPros={item.listPros}
-          price={item.price}
-        />
-      ))}
-    </WrapperGrid>
+    <WrapperCardTour heading="Demestic Tour" descibe="Most Checked In">
+      <WrapperGrid cols="3" spacing="10">
+        {TOUR_LIST.map((item) => (
+          <CardTourItem
+            key={uuidv4()}
+            imgThumbnail={item.imgThumbnail}
+            ribbonText={item.ribbonText}
+            title={item.title}
+            point={item.point}
+            rate={item.rate}
+            listPros={item.listPros}
+            price={item.price}
+          />
+        ))}
+      </WrapperGrid>
+    </WrapperCardTour>
   );
 };
 export default CardDomesticTour;
