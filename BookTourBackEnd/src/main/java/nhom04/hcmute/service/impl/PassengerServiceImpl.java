@@ -52,7 +52,6 @@ public class PassengerServiceImpl implements PassengerService {
         updatePassenger.setBirthDay(passenger.getBirthDay());
         updatePassenger.setGender(passenger.getGender());
         Date date = new Date();
-        updatePassenger.setModifiedAt(date);
         return passengerRepository.save(updatePassenger);
     }
 

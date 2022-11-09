@@ -3,7 +3,9 @@ package nhom04.hcmute.controller;
 import lombok.RequiredArgsConstructor;
 import nhom04.hcmute.model.Booking;
 import nhom04.hcmute.payload.ApiResponse;
+import nhom04.hcmute.payload.PageResponse;
 import nhom04.hcmute.service.BookingService;
+import nhom04.hcmute.util.Constants;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +27,20 @@ public class BookingController {
     @GetMapping("/bookings")
     public ResponseEntity<List<Booking>> getAllBookings() {
         return ResponseEntity.ok().body(bookingService.getAllBookings());
+    }
+
+    @GetMapping("/bookings/paging")
+    public ResponseEntity<PageResponse> getAllBookingsPaging(
+            @RequestParam(value = "pageNo", defaultValue = Constants.DEFAULT_PAGE_NUMBER, required = false)
+            int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = Constants.DEFAULT_PAGE_SIZE, required = false)
+            int pageSize,
+            @RequestParam(value = "sortBy", defaultValue = Constants.DEFAULT_SORT_BY, required = false)
+            String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = Constants.DEFAULT_SORT_DIRECTION, required = false)
+            String sortDir
+    ) {
+        return ResponseEntity.ok().body(bookingService.getBookingPaging(pageNo,pageSize,sortBy,sortDir));
     }
 
     @PostMapping("/bookings")

@@ -3,17 +3,18 @@ package nhom04.hcmute.controller;
 import lombok.RequiredArgsConstructor;
 import nhom04.hcmute.model.Tour;
 import nhom04.hcmute.model.TourDetail;
+import nhom04.hcmute.model.User;
 import nhom04.hcmute.payload.ApiResponse;
-import nhom04.hcmute.service.TourDetailService;
+import nhom04.hcmute.payload.PageResponse;
 import nhom04.hcmute.service.TourService;
-import nhom04.hcmute.util.TourType;
+import nhom04.hcmute.util.Constants;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,11 +29,24 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TourController {
     private final TourService tourService;
-    private final TourDetailService tourDetailService;
 
     @GetMapping("/tours")
     public ResponseEntity<List<Tour>> getAllTours() {
         return ResponseEntity.ok().body(tourService.getAllTours());
+    }
+
+    @GetMapping("/tours/paging")
+    public ResponseEntity<PageResponse> getTourPaging(
+            @RequestParam(value = "pageNo", defaultValue = Constants.DEFAULT_PAGE_NUMBER, required = false)
+            int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = Constants.DEFAULT_PAGE_SIZE, required = false)
+            int pageSize,
+            @RequestParam(value = "sortBy", defaultValue = Constants.DEFAULT_SORT_BY, required = false)
+            String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = Constants.DEFAULT_SORT_DIRECTION, required = false)
+            String sortDir
+    ) {
+        return ResponseEntity.ok().body(tourService.getTourPaging(pageNo,pageSize,sortBy,sortDir));
     }
 
     @PostMapping("/tours")
@@ -69,12 +83,18 @@ public class TourController {
     }
 
     @GetMapping("/tour/search")
-    public ResponseEntity<List<Tour>> searchTour(@RequestParam(value = "search", defaultValue = "") String search) {
-        List<TourDetail> tourDetailList = tourDetailService.searchTourDetail(search);
-        List<Tour> tourList = new ArrayList<>();
-        for (TourDetail tourDetail : tourDetailList) {
-            tourList.add(tourService.getTourByTourDetail(tourDetail));
-        }
-        return ResponseEntity.ok().body(tourList);
+    public ResponseEntity<PageResponse> searchTour(
+            @RequestParam(value = "search", defaultValue = "") String search,
+            @RequestParam(value = "pageNo", defaultValue = Constants.DEFAULT_PAGE_NUMBER, required = false)
+            int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = Constants.DEFAULT_PAGE_SIZE, required = false)
+            int pageSize,
+            @RequestParam(value = "sortBy", defaultValue = Constants.DEFAULT_SORT_BY, required = false)
+            String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = Constants.DEFAULT_SORT_DIRECTION, required = false)
+            String sortDir) {
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
+                : Sort.by(sortBy).descending();
+        return ResponseEntity.ok().body(tourService.searchTour(search, PageRequest.of(pageNo, pageSize, sort)));
     }
 }

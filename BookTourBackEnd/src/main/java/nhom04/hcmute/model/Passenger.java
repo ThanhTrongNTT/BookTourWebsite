@@ -18,16 +18,9 @@ import java.util.Date;
  * Filename : Passenger
  */
 @Data
-@Document(collection = "passenger")
 public class Passenger {
-    @Id
-    private String id;
     private String fullName;
     private GenderType gender;
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yyyy")
     private Date birthDay;
-    @CreatedDate
-    private Date createdAt;
-    @LastModifiedDate
-    private Date modifiedAt;
 }

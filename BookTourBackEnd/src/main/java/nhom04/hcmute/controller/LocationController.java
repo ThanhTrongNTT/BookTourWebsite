@@ -3,7 +3,9 @@ package nhom04.hcmute.controller;
 import lombok.RequiredArgsConstructor;
 import nhom04.hcmute.model.Location;
 import nhom04.hcmute.payload.ApiResponse;
+import nhom04.hcmute.payload.PageResponse;
 import nhom04.hcmute.service.LocationService;
+import nhom04.hcmute.util.Constants;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +27,19 @@ public class LocationController {
     @GetMapping("/locations")
     public ResponseEntity<List<Location>> getAllLocation(){
         return ResponseEntity.ok().body(locationService.getAllLocations());
+    }
+    @GetMapping("/locations/paging")
+    public ResponseEntity<PageResponse> getAllLocationPaging(
+            @RequestParam(value = "pageNo", defaultValue = Constants.DEFAULT_PAGE_NUMBER, required = false)
+            int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = Constants.DEFAULT_PAGE_SIZE, required = false)
+            int pageSize,
+            @RequestParam(value = "sortBy", defaultValue = Constants.DEFAULT_SORT_BY, required = false)
+            String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = Constants.DEFAULT_SORT_DIRECTION, required = false)
+            String sortDir
+    ){
+        return ResponseEntity.ok().body(locationService.getLocationPaging(pageNo,pageSize,sortBy,sortDir));
     }
     @PostMapping("/locations")
     public ResponseEntity<List<Location>> saveAll(@RequestBody List<Location> locationList){

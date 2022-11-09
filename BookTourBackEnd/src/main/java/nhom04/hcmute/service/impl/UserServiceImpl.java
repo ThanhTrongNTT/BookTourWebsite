@@ -6,10 +6,16 @@ import nhom04.hcmute.exception.AppException;
 import nhom04.hcmute.exception.NotFoundException;
 import nhom04.hcmute.model.Role;
 import nhom04.hcmute.model.User;
+import nhom04.hcmute.payload.PageResponse;
 import nhom04.hcmute.repository.RoleRepository;
 import nhom04.hcmute.repository.UserRepository;
 import nhom04.hcmute.service.UserService;
 import nhom04.hcmute.util.RoleName;
+import nhom04.hcmute.util.page.SetPageResponse;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -30,12 +36,22 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final SetPageResponse<User> setPageResponse;
 
 
     @Override
     public User saveUser(User user) {
         log.info("Saving User");
         return userRepository.save(user);
+    }
+
+    @Override
+    public PageResponse getUserPaging(int pageNo, int pageSize, String sortBy, String sortDir) {
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
+                : Sort.by(sortBy).descending();
+        Page<User> users = userRepository.findAll(PageRequest.of(pageNo, pageSize, sort));
+        log.info("List of user with paging at page {} with size {} sortBy {}",pageNo,pageSize,sortBy);
+        return setPageResponse.pageResponse(users);
     }
 
     @Override
@@ -68,7 +84,6 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new NotFoundException(String.format("User with email %s not found!", email)));
         user.getRoles().add(role);
         userRepository.save(user);
-        user.getRoles().remove(role);
         log.info("Add role {} into user {}", role.getRoleName(), user.getFullName());
     }
 
@@ -150,6 +165,13 @@ public class UserServiceImpl implements UserService {
         log.info("Update Avatar!");
         user.setAvatar(avatar);
         return userRepository.save(user);
+    }
+
+    @Override
+    public PageResponse searchUser(String search,Pageable paging) {
+        Page<User> searchUser =  userRepository.query(search, paging);
+        log.info("Searching Users!");
+        return setPageResponse.pageResponse(searchUser);
     }
 
 

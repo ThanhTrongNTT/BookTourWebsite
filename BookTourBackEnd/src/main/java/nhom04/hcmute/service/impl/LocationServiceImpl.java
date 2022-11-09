@@ -4,8 +4,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nhom04.hcmute.exception.NotFoundException;
 import nhom04.hcmute.model.Location;
+import nhom04.hcmute.payload.PageResponse;
 import nhom04.hcmute.repository.LocationRepository;
 import nhom04.hcmute.service.LocationService;
+import nhom04.hcmute.util.page.SetPageResponseImpl;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -23,11 +28,21 @@ import java.util.List;
 @Slf4j
 public class LocationServiceImpl implements LocationService {
     private final LocationRepository locationRepository;
+    private final SetPageResponseImpl<Location> setPageResponse;
 
     @Override
     public List<Location> getAllLocations() {
         log.info("Get all locations");
         return locationRepository.findAll();
+    }
+
+    @Override
+    public PageResponse getLocationPaging(int pageNo, int pageSize, String sortBy, String sortDir) {
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
+                : Sort.by(sortBy).descending();
+        Page<Location> locations = locationRepository.findAll(PageRequest.of(pageNo, pageSize, sort));
+        log.info("Get All locations with pagination");
+        return setPageResponse.pageResponse(locations);
     }
 
     @Override
@@ -57,7 +72,6 @@ public class LocationServiceImpl implements LocationService {
         updateLocation.setLocationName(location.getLocationName());
         updateLocation.setLocationType(location.getLocationType());
         Date date = new Date();
-        updateLocation.setModifiedAt(date);
         return locationRepository.save(updateLocation);
     }
 

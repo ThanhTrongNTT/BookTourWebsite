@@ -2,6 +2,7 @@ package nhom04.hcmute.payload;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -14,9 +15,12 @@ import java.util.List;
  */
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class PageResponse {
     private List<?> data;
-    private Integer currentPage;
-    private Integer totalPage;
-    private Integer lastPage;
+    private int pageNo;
+    private int pageSize;
+    private long totalElements;
+    private int totalPages;
+    private boolean last;
 }
