@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Id;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Create by: IntelliJ IDEA
@@ -21,7 +22,7 @@ import java.util.Date;
 public class Tour {
     @Id
     private String id;
-    private Passenger passenger;
+    private List<Passenger> passenger;
     private TourDetail tourDetail;
     private TourType type;
     @CreatedDate

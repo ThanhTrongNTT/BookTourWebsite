@@ -1,7 +1,9 @@
 package nhom04.hcmute.repository;
 
 import nhom04.hcmute.model.Location;
+import nhom04.hcmute.util.LocationType;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -13,4 +15,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface LocationRepository extends MongoRepository<Location,String> {
+
+//    @Query(value = )
+    Location findLocationByLocationNameAndLocationType(String locationName, LocationType type);
 }

@@ -1,5 +1,6 @@
 package nhom04.hcmute.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -22,7 +23,9 @@ public class TourDetail {
     private String tourDes;
     private Double price;
     private List<String> images;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yyyy")
     private Date startDay;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yyyy")
     private Date endDay;
     private Location beginningLocation;
     private Location destinationLocation;

@@ -3,11 +3,14 @@ package nhom04.hcmute.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nhom04.hcmute.exception.NotFoundException;
+import nhom04.hcmute.model.Location;
 import nhom04.hcmute.model.Tour;
 import nhom04.hcmute.model.TourDetail;
 import nhom04.hcmute.payload.PageResponse;
+import nhom04.hcmute.repository.LocationRepository;
 import nhom04.hcmute.repository.TourRepository;
 import nhom04.hcmute.service.TourService;
+import nhom04.hcmute.util.LocationType;
 import nhom04.hcmute.util.TourType;
 import nhom04.hcmute.util.page.SetPageResponse;
 import org.springframework.data.domain.Page;
@@ -31,6 +34,7 @@ import java.util.List;
 @Slf4j
 public class TourServiceImpl implements TourService {
     private final TourRepository tourRepository;
+    private final LocationRepository locationRepository;
     private final SetPageResponse<Tour> setPageResponse;
 
     @Override
@@ -41,7 +45,17 @@ public class TourServiceImpl implements TourService {
 
     @Override
     public List<Tour> saveAll(List<Tour> tourList) {
-        log.info("Get All Tours");
+        log.info("Save All Tours");
+        for (Tour item : tourList) {
+            Location locationBegin = locationRepository.findLocationByLocationNameAndLocationType(
+                    item.getTourDetail().getBeginningLocation().getLocationName()
+                    , LocationType.BEGINNING);
+            Location locationDes = locationRepository.findLocationByLocationNameAndLocationType(
+                    item.getTourDetail().getDestinationLocation().getLocationName()
+                    , LocationType.DESTINATION);
+            item.getTourDetail().setBeginningLocation(locationBegin);
+            item.getTourDetail().setDestinationLocation(locationDes);
+        }
         return tourRepository.saveAll(tourList);
     }
 
@@ -94,7 +108,7 @@ public class TourServiceImpl implements TourService {
 
     @Override
     public PageResponse searchTour(String search, Pageable pageable) {
-        Page<Tour> tours = tourRepository.searchTourPaging(search,pageable);
+        Page<Tour> tours = tourRepository.searchTourPaging(search, pageable);
         log.info("Searching Tours");
         return setPageResponse.pageResponse(tours);
     }
