@@ -98,7 +98,7 @@ public class TourController {
 //                : Sort.by(sortBy).descending();
 //        return ResponseEntity.ok().body(tourService.searchTour(desLocation,begLocation, PageRequest.of(pageNo, pageSize, sort)));
 //    }
-    @GetMapping("/tours/location")
+    @PostMapping("/tours/location")
     public ResponseEntity<PageResponse> searchTour(
             @RequestBody Tour tour,
             @RequestParam(value = "pageNo", defaultValue = Constants.DEFAULT_PAGE_NUMBER, required = false)
