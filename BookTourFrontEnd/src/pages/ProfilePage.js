@@ -186,7 +186,7 @@ const ProfilePage = () => {
                     type="text"
                     name="birthDay"
                     id="birthDay"
-                    placeholder="07/12/1997"
+                    placeholder="dd/mm/yyyy"
                     control={control}
                     icon={<IconCake />}
                     hasDisable={disable}

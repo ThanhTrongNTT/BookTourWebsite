@@ -24,7 +24,7 @@ const LayoutAuth = ({ title, heading, children, textCenter }) => {
         alt="bg"
         className="pointer-events-none absolute bottom-0 left-0 right-0 z-[-1] hidden w-full lg:block"
       /> */}
-      <div className="container mx-auto">
+      <div className="container mx-auto ">
         <img
           srcSet="/bg-ellipse-dark.png 2x"
           alt="bg"
@@ -33,7 +33,7 @@ const LayoutAuth = ({ title, heading, children, textCenter }) => {
         <Link to="/" className="mb-5 inline-block lg:mb-16">
           <img srcSet="/logo.png 2x" alt="crowfunding-app" />
         </Link>
-        <div className="mx-auto w-full max-w-[556px] rounded-xl bg-white px-5 py-8 dark:bg-dark-secondary lg:px-16 lg:py-12">
+        <div className="mx-auto w-full max-w-[556px] rounded-xl bg-white px-5 py-8 shadow-lg dark:bg-dark-secondary lg:px-16 lg:py-12">
           <h1
             className={classNames(
               " dark:text-white lg:text-xl",
