@@ -93,7 +93,7 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    public List<Location> getLocationByNType(String typeName) {
+    public List<Location> getLocationByType(String typeName) {
         LocationType locationType = LocationType.findByName(typeName);
         Location location = new Location();
         location.setLocationType(locationType);
