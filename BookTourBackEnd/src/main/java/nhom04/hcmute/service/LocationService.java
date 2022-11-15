@@ -20,4 +20,5 @@ public interface LocationService {
     Location saveLocation(Location location);
     Location updateLocation(String id, Location location);
     void deleteLocation(String id);
+    Location getLocationByNameAndType(String locationName,String typeName);
 }

@@ -9,6 +9,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
 import java.time.Instant;
 import java.util.Date;
 import java.util.Set;
@@ -28,10 +29,12 @@ import java.util.Set;
 public class User {
     @Id
     private String id;
+    @NotBlank
     private String email;
     @JsonIgnore
     private String password;
     private String fullName;
+    private String phoneNumber;
     private Address address;
     private GenderType gender;
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yyyy")

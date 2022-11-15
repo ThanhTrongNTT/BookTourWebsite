@@ -61,9 +61,16 @@ public class LocationController {
         return ResponseEntity.ok().body(new ApiResponse(true,"Update Success!"));
     }
 
+
     @DeleteMapping("/location/delete/{id}")
     public ResponseEntity<ApiResponse> deleteLocation(@PathVariable("id")String id){
         locationService.deleteLocation(id);
         return ResponseEntity.ok().body(new ApiResponse(true,"Delete success!"));
+    }
+    @GetMapping("/locations/type")
+    public ResponseEntity<Location> getLocationByName(
+            @RequestParam("locationName")String locationName,
+            @RequestParam("typeName")String typeName){
+        return ResponseEntity.ok().body(locationService.getLocationByNameAndType(locationName,typeName));
     }
 }

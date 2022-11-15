@@ -76,6 +76,14 @@ public class TourServiceImpl implements TourService {
     @Override
     public Tour saveTour(Tour tour) {
         log.info("Saving Tour");
+        Location locationBegin = locationRepository.findLocationByLocationNameAndLocationType(
+                tour.getTourDetail().getBeginningLocation().getLocationName()
+                , LocationType.BEGINNING);
+        Location locationDes = locationRepository.findLocationByLocationNameAndLocationType(
+                tour.getTourDetail().getDestinationLocation().getLocationName()
+                , LocationType.DESTINATION);
+        tour.getTourDetail().setBeginningLocation(locationBegin);
+        tour.getTourDetail().setDestinationLocation(locationDes);
         return tourRepository.save(tour);
     }
 
@@ -101,12 +109,6 @@ public class TourServiceImpl implements TourService {
     }
 
     @Override
-    public Tour getTourByTourDetail(TourDetail tourDetail) {
-        log.info("Get Tours by TourDetail");
-        return tourRepository.getTourByTourDetail(tourDetail);
-    }
-
-    @Override
     public PageResponse searchTour(String search, Pageable pageable) {
         Page<Tour> tours = tourRepository.searchTourPaging(search, pageable);
         log.info("Searching Tours");
@@ -119,6 +121,15 @@ public class TourServiceImpl implements TourService {
                 : Sort.by(sortBy).descending();
         Page<Tour> tours = tourRepository.findAll(PageRequest.of(pageNo, pageSize, sort));
         log.info("Get All tours with pagination");
+        return setPageResponse.pageResponse(tours);
+    }
+
+    @Override
+    public PageResponse getTourLocation(String location, int pageNo, int pageSize, String sortBy, String sortDir) {
+        Location destination = locationRepository.findLocationByLocationNameAndLocationType(location,LocationType.DESTINATION);
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
+                : Sort.by(sortBy).descending();
+        Page<Tour> tours = tourRepository.findByLocation(destination,PageRequest.of(pageNo, pageSize, sort));
         return setPageResponse.pageResponse(tours);
     }
 }

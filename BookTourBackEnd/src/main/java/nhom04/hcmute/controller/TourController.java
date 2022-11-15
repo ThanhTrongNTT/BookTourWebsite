@@ -97,4 +97,17 @@ public class TourController {
                 : Sort.by(sortBy).descending();
         return ResponseEntity.ok().body(tourService.searchTour(search, PageRequest.of(pageNo, pageSize, sort)));
     }
+    @GetMapping("/tours/location")
+    public ResponseEntity<PageResponse> getTourByLocation(
+            @RequestParam("location")String location,
+            @RequestParam(value = "pageNo", defaultValue = Constants.DEFAULT_PAGE_NUMBER, required = false)
+            int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = Constants.DEFAULT_PAGE_SIZE, required = false)
+            int pageSize,
+            @RequestParam(value = "sortBy", defaultValue = Constants.DEFAULT_SORT_BY, required = false)
+            String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = Constants.DEFAULT_SORT_DIRECTION, required = false)
+            String sortDir){
+        return ResponseEntity.ok(tourService.getTourLocation(location,pageNo,pageSize,sortBy,sortDir));
+    }
 }

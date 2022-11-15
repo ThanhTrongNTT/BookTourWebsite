@@ -24,8 +24,7 @@ public interface TourService {
     Tour updateTour(String id, Tour tour);
     void deleteTour(String id);
 
-    Tour getTourByTourDetail(TourDetail tourDetail);
     PageResponse searchTour(String search, Pageable pageable);
     PageResponse getTourPaging(int pageNo, int pageSize,String sortBy,String sortDir);
-
+    PageResponse getTourLocation(String location,int pageNo, int pageSize,String sortBy,String sortDir);
 }
