@@ -21,4 +21,7 @@ public interface LocationService {
     Location updateLocation(String id, Location location);
     void deleteLocation(String id);
     Location getLocationByNameAndType(String locationName,String typeName);
+    List<Location> getLocationByNType(String typeName);
+
+    List<Location> getByExample(Location location);
 }

@@ -9,6 +9,7 @@ import nhom04.hcmute.repository.LocationRepository;
 import nhom04.hcmute.service.LocationService;
 import nhom04.hcmute.util.LocationType;
 import nhom04.hcmute.util.page.SetPageResponseImpl;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -89,5 +90,20 @@ public class LocationServiceImpl implements LocationService {
         LocationType locationType = LocationType.findByName(typeName);
         log.info("Get Location By Name: {} and type: {}",locationName,typeName);
         return locationRepository.findLocationByLocationNameAndLocationType(locationName,locationType);
+    }
+
+    @Override
+    public List<Location> getLocationByNType(String typeName) {
+        LocationType locationType = LocationType.findByName(typeName);
+        Location location = new Location();
+        location.setLocationType(locationType);
+        Example<Location> example = Example.of(location);
+        return locationRepository.findAll(example);
+    }
+
+    @Override
+    public List<Location> getByExample(Location location) {
+        Example<Location> example = Example.of(location);
+        return locationRepository.findAll(example);
     }
 }
