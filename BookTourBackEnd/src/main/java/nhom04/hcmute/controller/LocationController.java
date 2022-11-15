@@ -70,7 +70,7 @@ public class LocationController {
     @GetMapping("/locations/type")
     public ResponseEntity<List<Location>> getLocationByName(
             @RequestParam(value = "typeName",defaultValue = "")String typeName){
-        return ResponseEntity.ok().body(locationService.getLocationByNType(typeName));
+        return ResponseEntity.ok().body(locationService.getLocationByType(typeName));
     }
     @GetMapping("/locations/example")
     public ResponseEntity<List<Location>> getLocationByExample(@RequestBody Location location){

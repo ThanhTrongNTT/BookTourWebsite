@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import nhom04.hcmute.exception.NotFoundException;
 import nhom04.hcmute.model.Location;
 import nhom04.hcmute.model.Tour;
-import nhom04.hcmute.model.TourDetail;
 import nhom04.hcmute.payload.PageResponse;
 import nhom04.hcmute.repository.LocationRepository;
 import nhom04.hcmute.repository.TourRepository;
@@ -18,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Create by: IntelliJ IDEA
@@ -44,14 +44,15 @@ public class TourServiceImpl implements TourService {
     public List<Tour> saveAll(List<Tour> tourList) {
         log.info("Save All Tours");
         for (Tour item : tourList) {
-            Location locationBegin = locationRepository.findLocationByLocationNameAndLocationType(
-                    item.getTourDetail().getBeginningLocation().getLocationName()
-                    , LocationType.BEGINNING);
-            Location locationDes = locationRepository.findLocationByLocationNameAndLocationType(
-                    item.getTourDetail().getDestinationLocation().getLocationName()
-                    , LocationType.DESTINATION);
-            item.getTourDetail().setBeginningLocation(locationBegin);
-            item.getTourDetail().setDestinationLocation(locationDes);
+            item.getTourDetail().getBeginningLocation().setLocationType( LocationType.BEGINNING);
+            item.getTourDetail().getDestinationLocation().setLocationType( LocationType.DESTINATION);
+            Example<Location> locationBegin = Example.of(item.getTourDetail().getBeginningLocation());
+            Location begin = locationRepository.findOne(locationBegin).orElse(null);
+            Example<Location> locationDes = Example.of(item.getTourDetail().getDestinationLocation());
+            Location destination = locationRepository.findOne(locationDes).orElse(null);
+
+            item.getTourDetail().setBeginningLocation(begin);
+            item.getTourDetail().setDestinationLocation(destination);
         }
         return tourRepository.saveAll(tourList);
     }
