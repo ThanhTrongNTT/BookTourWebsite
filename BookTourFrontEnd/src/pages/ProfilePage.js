@@ -18,7 +18,7 @@ import {
 import CardAvt from "~/modules/info/CardAvt";
 import useAxiosPrivate from "~/hooks/useAxiosPrivate";
 import { toast } from "react-toastify";
-import DropdownGender from "~/components/dropdown/DropdownGender";
+import DropdownList from "~/components/dropdown/DropdownList";
 
 const ProfilePage = () => {
   const { user } = useSelector((state) => state.auth);
@@ -200,12 +200,18 @@ const ProfilePage = () => {
                     >
                       Gender
                     </label>
-                    <DropdownGender
+                    <DropdownList
                       setValue={setValue}
                       control={control}
                       id="gender"
                       name="gender"
                       disable={disable}
+                      list={[
+                        { type: "MALE" },
+                        { type: "FEMALE" },
+                        { type: "ANOTHER" },
+                      ]}
+                      icon={<IconGender />}
                       dropdownLabel={user.gender}
                     />
                   </WrapperFlex>

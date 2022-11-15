@@ -7,22 +7,47 @@ import { RenderPlaceHot } from "../tippy/renders";
 
 import ButtonSubmitDefault from "@/button/ButtonSubmitDefault";
 import { WrapperFlex, WrapperGrid } from "@/common";
-import DropdownList from "@/dropdown/DropdownList";
-import { IconCalendar } from "@/icon";
+import { IconCalendar, IconLocationRegular } from "@/icon";
 import Label from "@/label/Label";
 import { format } from "date-fns";
-
+import { createBrowserHistory } from "history";
+import DropdownList from "~/components/dropdown/DropdownList";
+import { useEffect } from "react";
+import axios from "~/api/axios";
+const history = createBrowserHistory();
 const SearchBoxTour = () => {
   const { handleSubmit, control, setValue } = useForm({
     defaultValues: {
-      date: new Date(),
+      startDay: new Date(),
     },
     mode: "onSubmit",
   });
 
+  useEffect(
+    () => setValue("beginningLocation", "TP. Hồ Chí Minh"),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
+
   const handleSearch = (value) => {
-    value.date = format(value.date, "dd/MM/yyyy");
-    console.log(value);
+    const tour = {
+      tourDetail: {
+        beginningLocation: {
+          locationName: value.beginningLocation,
+        },
+        destinationLocation: {
+          locationName: value.destinationLocation,
+        },
+        startDay: format(value.startDay, "dd/MM/yyyy"),
+      },
+    };
+    const response = axios.get("/tours/location",tour);
+    console.log(response);
+    console.log(tour);
+    history.push({
+      path: "/tour",
+      search: `?beginningLocation=${value.beginningLocation}&destinationLocation=${value.destinationLocation}&startDay=${value.startDay}`,
+    });
   };
 
   return (
@@ -47,12 +72,12 @@ const SearchBoxTour = () => {
               <span className="z-50 text-black">
                 <Controller
                   control={control}
-                  name="date"
+                  name="startDay"
                   render={({ field }) => (
                     <Fragment>
-                      <Label htmlFor="depart-date">Depart Date</Label>
+                      <Label htmlFor="start-date">Depart Date</Label>
                       <ReactDatePicker
-                        id="depart-date"
+                        id="start-date"
                         minDate={new Date()}
                         dateFormat="dd/MM/yyyy"
                         onChange={field.onChange}
@@ -65,7 +90,21 @@ const SearchBoxTour = () => {
             </WrapperFlex>
           </WrapperGrid>
           <WrapperGrid col="5">
-            <DropdownList />
+            <DropdownList
+              setValue={setValue}
+              dropdownLabel="TP. Hồ Chí Minh"
+              bg="bg-white"
+              icon={<IconLocationRegular />}
+              control={control}
+              radius="4"
+              id="beginning-location"
+              name="beginningLocation"
+              list={[
+                { type: "Hà Nội" },
+                { type: "TP. Hồ Chí Minh" },
+                { type: "Cao Lãnh" },
+              ]}
+            />
           </WrapperGrid>
           <WrapperGrid col="2">
             <ButtonSubmitDefault background="blue" radius="4">

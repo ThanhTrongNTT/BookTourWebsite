@@ -6,13 +6,15 @@ import { IconPlaneEnd, IconPlaneStart } from "@/icon";
 import TippyDateRange from "~/modules/tippy/TippyDateRange";
 import { RenderFormRooms as TippyRenderFormRooms } from "~/modules/tippy/renders";
 import RenderAirport from "../tippy/renders/RenderAirport";
-
+import { createBrowserHistory } from "history";
 const SearchBoxFlight = () => {
   const { handleSubmit, control, setValue } = useForm({
     mode: "onSubmit",
   });
 
-  const handleSearch = (value) => console.log(value);
+  const handleSearch = (values) => {
+    console.log(values);
+  };
   return (
     <form
       autoComplete="off"

@@ -33,7 +33,7 @@ const LayoutAuth = ({ title, heading, children, textCenter }) => {
         <Link to="/" className="mb-5 inline-block lg:mb-16">
           <img srcSet="/logo.png 2x" alt="crowfunding-app" />
         </Link>
-        <div className="mx-auto w-full max-w-[556px] rounded-xl bg-white px-5 py-8 shadow-lg dark:bg-dark-secondary lg:px-16 lg:py-12">
+        <div className="mx-auto w-full max-w-[556px] rounded-xl bg-white px-5 py-8 shadow-[0_0_20px_5px_rgb(0,0,0,0.05)] dark:bg-dark-secondary lg:px-16 lg:py-12">
           <h1
             className={classNames(
               " dark:text-white lg:text-xl",

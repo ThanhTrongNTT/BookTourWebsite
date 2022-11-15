@@ -6,7 +6,7 @@ import Input from "@/input/Input";
 import ListPlace from "~/components/list/ListPlace";
 import Wrapper from "@/popper/Wrapper";
 
-const RenderPlaceHot = ({ setValue, control }) => {
+const RenderPlaceHot = ({ setValue, control, name }) => {
   //framer-motion
   const springConfig = { damping: 15, stiffness: 300 };
   const initialScale = 0.5;
@@ -52,7 +52,8 @@ const RenderPlaceHot = ({ setValue, control }) => {
               setValue={setValue}
               heading="The place is hot"
               control={control}
-              name="location"
+              name="destinationLocation"
+              // name={name}
             />
           </Wrapper>
         )}
@@ -64,7 +65,7 @@ const RenderPlaceHot = ({ setValue, control }) => {
           <Input
             control={control}
             type="text"
-            name="location"
+            name="destinationLocation"
             className="h-full w-full bg-transparent py-4 pl-12 text-c3"
             placeholder="Enter destination..."
           />
