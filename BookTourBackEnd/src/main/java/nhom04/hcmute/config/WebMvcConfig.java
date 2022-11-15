@@ -16,13 +16,16 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebMvcConfig implements WebMvcConfigurer {
     private final long MAX_AGE_SECS = 3600;
 
-    @Value("${app.cors.allowedOrigins}")
-    private String[] allowedOrigins;
+//    @Value("${app.cors.allowedOrigins}")
+//    private String[] allowedOrigins;
+//    @Value("${app.cors.allowedOriginsAdmin}")
+//    private String[] allowedOriginsAdmin;
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins(allowedOrigins)
+                .allowedOrigins("http://localhost:4000")
+                .allowedOrigins("http://localhost:3000")
                 .allowedMethods("HEAD", "OPTIONS", "GET", "POST", "PUT", "PATCH", "DELETE")
                 .maxAge(MAX_AGE_SECS);
     }

@@ -7,6 +7,7 @@ import nhom04.hcmute.model.Location;
 import nhom04.hcmute.payload.PageResponse;
 import nhom04.hcmute.repository.LocationRepository;
 import nhom04.hcmute.service.LocationService;
+import nhom04.hcmute.util.LocationType;
 import nhom04.hcmute.util.page.SetPageResponseImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -81,5 +82,12 @@ public class LocationServiceImpl implements LocationService {
                 .orElseThrow(() ->new NotFoundException(String.format("Location with id %s not found", id)));
         log.info("Deleting location");
         locationRepository.delete(deleteLocation);
+    }
+
+    @Override
+    public Location getLocationByNameAndType(String locationName, String typeName) {
+        LocationType locationType = LocationType.findByName(typeName);
+        log.info("Get Location By Name: {} and type: {}",locationName,typeName);
+        return locationRepository.findLocationByLocationNameAndLocationType(locationName,locationType);
     }
 }

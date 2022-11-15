@@ -8,5 +8,15 @@ package nhom04.hcmute.util;
  * Filename : LocationType
  */
 public enum LocationType {
-    DESTINATION, BEGINNING
+    DESTINATION, BEGINNING;
+    public static LocationType findByName(String name) {
+        LocationType result = null;
+        for (LocationType locationType : values()) {
+            if (locationType.name().equalsIgnoreCase(name)) {
+                result = locationType;
+                break;
+            }
+        }
+        return result;
+    }
 }

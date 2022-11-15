@@ -10,14 +10,15 @@ import nhom04.hcmute.payload.PageResponse;
 import nhom04.hcmute.repository.RoleRepository;
 import nhom04.hcmute.repository.UserRepository;
 import nhom04.hcmute.service.UserService;
+import nhom04.hcmute.util.Constants;
 import nhom04.hcmute.util.RoleName;
+import nhom04.hcmute.service.ClientService;
 import nhom04.hcmute.util.page.SetPageResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -37,6 +38,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final SetPageResponse<User> setPageResponse;
+    private final ClientService clientService;
 
 
     @Override
@@ -140,9 +142,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean forgotPassword(String email) {
-        // Send Email To User To reset Password
-        // Implement Algorithm
-        return null;
+        User user = userRepository.findByEmail(email).orElse(null);
+        if(user!= null){
+            user.setPassword(Constants.generateTempPwd(8));
+            clientService.forgotPassword(user, user.getPassword());
+            user.setPassword(BCrypt.hashpw(user.getPassword(),BCrypt.gensalt(12)));
+            userRepository.save(user);
+            return true;
+        }
+        return false;
     }
 
     @Override

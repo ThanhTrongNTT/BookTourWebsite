@@ -1,5 +1,6 @@
 package nhom04.hcmute.repository;
 
+import nhom04.hcmute.model.Location;
 import nhom04.hcmute.model.Tour;
 import nhom04.hcmute.model.TourDetail;
 import nhom04.hcmute.util.TourType;
@@ -22,9 +23,6 @@ import java.util.List;
 public interface TourRepository extends MongoRepository<Tour,String> {
     List<Tour> getTourByType(TourType type);
 
-    @Query(value = "{'tourDetail' : ?0}")
-    Tour getTourByTourDetail(TourDetail tourDetail);
-
     @Query(value = "{'tourDetail.tourName': {/$regex: ?0,$options:'i'}," +
             "'tourDetail.price': {/$regex: ?0,$options:'i'}," +
             "'tourDetail.startDay': {/$regex: ?0,$options:'i'}" +
@@ -32,4 +30,7 @@ public interface TourRepository extends MongoRepository<Tour,String> {
             "'tourDetail.beginningLocation': {/$regex: ?0,$options:'i'}," +
             "'tourDetail.destinationLocation': {/$regex: ?0,$options:'i'}}")
     Page<Tour> searchTourPaging(String search, Pageable page);
+
+    @Query(value = "{'tourDetail.destinationLocation' : ?0}")
+    Page<Tour> findByLocation(Location location, Pageable pageable);
 }

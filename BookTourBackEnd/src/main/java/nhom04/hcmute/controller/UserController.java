@@ -10,6 +10,7 @@ import nhom04.hcmute.util.Constants;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -73,6 +74,14 @@ public class UserController {
     public ResponseEntity<ApiResponse> changePassword(@PathVariable("email") String email) {
         userService.changePassword("trong", email);
         return ResponseEntity.ok().body(new ApiResponse(true, "Change password success!"));
+    }
+    @PostMapping("/forgotPass/{email}")
+    public ResponseEntity<ApiResponse> forgotPassword(@PathVariable("email") String email) {
+        Boolean forgot = userService.forgotPassword( email);
+        return forgot ? new ResponseEntity<>(
+                new ApiResponse(true, "Reset Password success"), HttpStatus.OK)
+                : new ResponseEntity<>(
+                new ApiResponse(false, "Username Or Email does not existed !"), HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("/users/search")
