@@ -23,13 +23,8 @@ import java.util.List;
 public interface TourRepository extends MongoRepository<Tour,String> {
     List<Tour> getTourByType(TourType type);
 
-    @Query(value = "{'tourDetail.tourName': {/$regex: ?0,$options:'i'}," +
-            "'tourDetail.price': {/$regex: ?0,$options:'i'}," +
-            "'tourDetail.startDay': {/$regex: ?0,$options:'i'}" +
-            ",'tourDetail.endDay': {/$regex: ?0,$options:'i'}," +
-            "'tourDetail.beginningLocation': {/$regex: ?0,$options:'i'}," +
-            "'tourDetail.destinationLocation': {/$regex: ?0,$options:'i'}}")
-    Page<Tour> searchTourPaging(String search, Pageable page);
+    @Query(value = "{'tourDetail.beginningLocation':?0,'tourDetail.destinationLocation':?1}")
+    Page<Tour> searchTourPaging(Location beginning, Location destination, Pageable page);
 
     @Query(value = "{'tourDetail.destinationLocation' : ?0}")
     Page<Tour> findByLocation(Location location, Pageable pageable);

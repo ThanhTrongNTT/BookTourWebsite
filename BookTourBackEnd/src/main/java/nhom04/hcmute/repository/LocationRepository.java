@@ -16,6 +16,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LocationRepository extends MongoRepository<Location,String> {
 
-    @Query(value = "{'locationName' : ?0,'type':?0}")
+    @Query(value = "{'locationName' : ?0}")
     Location findLocationByLocationNameAndLocationType(String locationName, LocationType type);
 }

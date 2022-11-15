@@ -84,7 +84,8 @@ public class TourController {
 
     @GetMapping("/tour/search")
     public ResponseEntity<PageResponse> searchTour(
-            @RequestParam(value = "search", defaultValue = "") String search,
+            @RequestParam(value = "desLocation") String desLocation,
+            @RequestParam(value = "begLocation",defaultValue = "") String begLocation,
             @RequestParam(value = "pageNo", defaultValue = Constants.DEFAULT_PAGE_NUMBER, required = false)
             int pageNo,
             @RequestParam(value = "pageSize", defaultValue = Constants.DEFAULT_PAGE_SIZE, required = false)
@@ -95,11 +96,11 @@ public class TourController {
             String sortDir) {
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
                 : Sort.by(sortBy).descending();
-        return ResponseEntity.ok().body(tourService.searchTour(search, PageRequest.of(pageNo, pageSize, sort)));
+        return ResponseEntity.ok().body(tourService.searchTour(desLocation,begLocation, PageRequest.of(pageNo, pageSize, sort)));
     }
     @GetMapping("/tours/location")
     public ResponseEntity<PageResponse> getTourByLocation(
-            @RequestParam("location")String location,
+            @RequestBody Tour tour,
             @RequestParam(value = "pageNo", defaultValue = Constants.DEFAULT_PAGE_NUMBER, required = false)
             int pageNo,
             @RequestParam(value = "pageSize", defaultValue = Constants.DEFAULT_PAGE_SIZE, required = false)
@@ -108,6 +109,6 @@ public class TourController {
             String sortBy,
             @RequestParam(value = "sortDir", defaultValue = Constants.DEFAULT_SORT_DIRECTION, required = false)
             String sortDir){
-        return ResponseEntity.ok(tourService.getTourLocation(location,pageNo,pageSize,sortBy,sortDir));
+        return ResponseEntity.ok(tourService.getTourLocation(tour,pageNo,pageSize,sortBy,sortDir));
     }
 }

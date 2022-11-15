@@ -68,9 +68,12 @@ public class LocationController {
         return ResponseEntity.ok().body(new ApiResponse(true,"Delete success!"));
     }
     @GetMapping("/locations/type")
-    public ResponseEntity<Location> getLocationByName(
-            @RequestParam("locationName")String locationName,
-            @RequestParam("typeName")String typeName){
-        return ResponseEntity.ok().body(locationService.getLocationByNameAndType(locationName,typeName));
+    public ResponseEntity<List<Location>> getLocationByName(
+            @RequestParam(value = "typeName",defaultValue = "")String typeName){
+        return ResponseEntity.ok().body(locationService.getLocationByNType(typeName));
+    }
+    @GetMapping("/locations/example")
+    public ResponseEntity<List<Location>> getLocationByExample(@RequestBody Location location){
+        return ResponseEntity.ok().body(locationService.getByExample(location));
     }
 }

@@ -13,10 +13,7 @@ import nhom04.hcmute.service.TourService;
 import nhom04.hcmute.util.LocationType;
 import nhom04.hcmute.util.TourType;
 import nhom04.hcmute.util.page.SetPageResponse;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -109,8 +106,12 @@ public class TourServiceImpl implements TourService {
     }
 
     @Override
-    public PageResponse searchTour(String search, Pageable pageable) {
-        Page<Tour> tours = tourRepository.searchTourPaging(search, pageable);
+    public PageResponse searchTour(String desLocation,String begLocation, Pageable pageable) {
+        Location destination = locationRepository
+                .findLocationByLocationNameAndLocationType(desLocation,LocationType.DESTINATION);
+        Location beginning = locationRepository
+                .findLocationByLocationNameAndLocationType(begLocation,LocationType.BEGINNING);
+        Page<Tour> tours = tourRepository.searchTourPaging(beginning,destination, pageable);
         log.info("Searching Tours");
         return setPageResponse.pageResponse(tours);
     }
@@ -125,11 +126,14 @@ public class TourServiceImpl implements TourService {
     }
 
     @Override
-    public PageResponse getTourLocation(String location, int pageNo, int pageSize, String sortBy, String sortDir) {
-        Location destination = locationRepository.findLocationByLocationNameAndLocationType(location,LocationType.DESTINATION);
+    public PageResponse getTourLocation(Tour tour, int pageNo, int pageSize, String sortBy, String sortDir) {
+//        Location destination = locationRepository.findLocationByLocationNameAndLocationType(location,LocationType.DESTINATION);
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
                 : Sort.by(sortBy).descending();
-        Page<Tour> tours = tourRepository.findByLocation(destination,PageRequest.of(pageNo, pageSize, sort));
+//        Page<Tour> tours = tourRepository.findByLocation(destination,PageRequest.of(pageNo, pageSize, sort));
+//        return setPageResponse.pageResponse(tours);
+        Example<Tour> example = Example.of(tour);
+        Page<Tour> tours = tourRepository.findAll(example,PageRequest.of(pageNo, pageSize, sort));
         return setPageResponse.pageResponse(tours);
     }
 }
