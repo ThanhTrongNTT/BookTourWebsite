@@ -1,10 +1,9 @@
-import Tippy from "@tippyjs/react/headless";
-import React from "react";
-import { useSpring } from "framer-motion";
 import { IconLocationRegular } from "@/icon";
 import Input from "@/input/Input";
-import ListPlace from "~/components/list/ListPlace";
 import Wrapper from "@/popper/Wrapper";
+import Tippy from "@tippyjs/react/headless";
+import { useSpring } from "framer-motion";
+import ListPlace from "~/components/list/ListPlace";
 
 const RenderPlaceHot = ({ setValue, control, name }) => {
   //framer-motion
@@ -29,6 +28,7 @@ const RenderPlaceHot = ({ setValue, control, name }) => {
     scale.set(initialScale);
     opacity.set(0);
   }
+
   return (
     <span>
       <Tippy
@@ -36,7 +36,6 @@ const RenderPlaceHot = ({ setValue, control, name }) => {
         interactive
         zIndex={9999}
         placement="bottom-start"
-        hideOnClick
         offset={[0]}
         animation={true}
         onMount={onMount}
@@ -53,7 +52,6 @@ const RenderPlaceHot = ({ setValue, control, name }) => {
               heading="The place is hot"
               control={control}
               name="destinationLocation"
-              // name={name}
             />
           </Wrapper>
         )}

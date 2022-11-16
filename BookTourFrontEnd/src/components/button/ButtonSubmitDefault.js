@@ -12,6 +12,7 @@ const ButtonSubmitDefault = ({
   className,
   disable,
   onClick,
+  icon,
 }) => {
   let resultRadius = borderRadius.find((item) => item.radius === radius);
   let resultBackgroundButton = backgroundButton.find(
@@ -26,9 +27,11 @@ const ButtonSubmitDefault = ({
         radius && resultRadius.radiusCss,
         className,
         background && resultBackgroundButton.backgroundCss,
-        disable && "pointer-events-none select-none bg-opacity-50"
+        disable && "pointer-events-none select-none bg-opacity-50",
+        icon && "flex items-center"
       )}
     >
+      {icon && <span>{icon}</span>}
       {children}
     </button>
   );

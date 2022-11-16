@@ -24,7 +24,6 @@ const DropdownList = ({
     name,
     defaultValue: "", // default value before the render
   });
-  console.log("dropdownValue", dropdownValue);
   const handleClickDropdownItem = (e) => {
     setValue(name, e.target.dataset.value);
     setShow(false);
@@ -33,11 +32,16 @@ const DropdownList = ({
   const [label, setLabel] = useState(dropdownLabel);
 
   return (
-    <div className="relative" ref={nodeRef}>
+    <div
+      className={classNames(
+        "relative",
+        disable && "pointer-events-none select-none bg-gray-100"
+      )}
+      ref={nodeRef}
+    >
       <div
         className={classNames(
           "border-gray100 flex h-full cursor-pointer items-center  gap-4 border p-3 text-c4",
-          disable && "pointer-events-none select-none bg-gray-100",
           bg ? bg : "bg-transparent",
           radius ? resultBorderRadius.radiusCss : "rounded-lg"
         )}

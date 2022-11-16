@@ -42,17 +42,17 @@ const ProfilePage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    async function getUser() {
-      try {
-        const response = await axiosPrivate.get(`user/${user.email}`);
-        console.log("getUser ~ response", response);
-      } catch (error) {
-        console.log("getUser ~ error", error);
-      }
-    }
-    getUser();
-  }, []);
+  // useEffect(() => {
+  //   async function getUser() {
+  //     try {
+  //       const response = await axiosPrivate.get(`user/${user.email}`);
+  //       console.log("getUser ~ response", response);
+  //     } catch (error) {
+  //       console.log("getUser ~ error", error);
+  //     }
+  //   }
+  //   getUser();
+  // }, []);
 
   const handleEditProfile = () => {
     setDisable(false);

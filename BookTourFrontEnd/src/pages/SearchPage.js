@@ -1,132 +1,158 @@
-import React from "react";
-import ButtonSelect from "~/components/button/ButtonSelect";
+import { format } from "date-fns";
+import { Fragment, useEffect } from "react";
+import ReactDatePicker from "react-datepicker";
+import { Controller, useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+
+import ButtonSubmitDefault from "@/button/ButtonSubmitDefault";
+import { WrapperFlex, WrapperGrid } from "@/common";
+import Describe from "@/describe/Describe";
+import DropdownList from "@/dropdown/DropdownList";
+import Heading from "@/heading/Heading";
+import { IconCalendar, IconLocationRegular } from "@/icon";
+import Label from "@/label/Label";
+
+import { useNavigate } from "react-router-dom";
+import axios from "~/api/axios";
+import CardTourPage from "~/modules/card/CardTourPage";
+import { RenderPlaceHot } from "~/modules/tippy/renders";
+import { tourDetail } from "~/sagas/tour/tour-slice";
+
 const SearchPage = () => {
+  const { listTour } = useSelector((state) => state.tour);
+  const dispath = useDispatch();
+  const navigate = useNavigate();
+  function getQueryVariable(variable) {
+    return (
+      decodeURIComponent(
+        (new RegExp("[?|&]" + variable + "=" + "([^&;]+?)(&|#|;|$)").exec(
+          window.location.search
+          // eslint-disable-next-line no-sparse-arrays
+        ) || [, ""])[1].replace(/\+/g, "%20")
+      ) || null
+    );
+  }
+  useEffect(() => {
+    setValue("beginningLocation", getQueryVariable("beginningLocation"));
+    setValue("destinationLocation", getQueryVariable("destinationLocation"));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const { handleSubmit, control, setValue } = useForm({
+    defaultValues: {
+      startDay: Date.parse(getQueryVariable("startDay")),
+    },
+  });
+  const onSubmit = (value) => {
+    const tour = {
+      tourDetail: {
+        beginningLocation: {
+          locationName: value.beginningLocation,
+        },
+        destinationLocation: {
+          locationName: value.destinationLocation,
+        },
+        startDay: format(value.startDay, "dd/MM/yyyy"),
+      },
+      type: "TOUR_BASIC",
+    };
+    axios.post("/tours/location", tour).then((response) => {
+      dispath(tourDetail(response.data));
+      navigate(
+        `?beginningLocation=${value.beginningLocation}&destinationLocation=${value.destinationLocation}&startDay=${value.startDay}`
+      );
+    });
+  };
   return (
-    <div>
-      <div className="tour-search">
-        <div className="mx-auto w-full max-w-6xl">
-          <ul className="">
-            <li className="inline-block text-[13px] font-normal">Link 1 »</li>
-            <li className="inline-block text-[13px] ml-[5px] font-normal">
-              Link 2 »
-            </li>
-            <li className="inline-block text-[13px] ml-[5px] font-normal">
-              Link 3
-            </li>
-          </ul>
+    <div className="h-[1000px] px-5 lg:mx-auto lg:max-w-7xl">
+      <form
+        className="rounded-br-md rounded-bl-md bg-[#0000001a] p-5"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <WrapperGrid cols="12" spacing="4">
+          <WrapperGrid col="3">
+            <DropdownList
+              setValue={setValue}
+              dropdownLabel={getQueryVariable("beginningLocation")}
+              bg="bg-white"
+              icon={<IconLocationRegular />}
+              control={control}
+              radius="4"
+              id="beginning-location"
+              name="beginningLocation"
+              list={[
+                { type: "Hà Nội" },
+                { type: "TP. Hồ Chí Minh" },
+                { type: "Cao Lãnh" },
+              ]}
+            />
+          </WrapperGrid>
+          <WrapperGrid col="3">
+            <WrapperFlex
+              items="center"
+              spacing="3"
+              radius="4"
+              className="bg-white"
+            >
+              <span className="pl-4 text-c4">
+                <IconCalendar />
+              </span>
+              <span className="z-50 text-black">
+                <Controller
+                  control={control}
+                  name="startDay"
+                  render={({ field }) => (
+                    <Fragment>
+                      <Label htmlFor="start-date">Depart Date</Label>
+                      <ReactDatePicker
+                        id="start-date"
+                        dateFormat="dd/MM/yyyy"
+                        onChange={field.onChange}
+                        selected={field.value}
+                      />
+                    </Fragment>
+                  )}
+                />
+              </span>
+            </WrapperFlex>
+          </WrapperGrid>
+
+          <WrapperGrid col="4">
+            <RenderPlaceHot control={control} setValue={setValue} />
+          </WrapperGrid>
+          <WrapperGrid col="2">
+            <ButtonSubmitDefault
+              onClick={() => {}}
+              background="blue"
+              radius="4"
+              className="text-lg font-semibold text-white"
+            >
+              Search
+            </ButtonSubmitDefault>
+          </WrapperGrid>
+        </WrapperGrid>
+      </form>
+      <div className="breadcurmb my-4 py-2">breadcrumb</div>
+      <Heading sx="xl-4" className="text-center">
+        List of tours from {getQueryVariable("beginningLocation")} to{" "}
+        {getQueryVariable("destinationLocation")}
+      </Heading>
+      {/* <Describe color="light" className="mt-4">
+        Đà Lạt mộng mơ nơi mimosa và ngàn hoa khoe sắc, từ đồi Robin ngắm Hồ
+        Tuyền Lâm, núi Voi, viếng Thiền Viện Trúc Lâm, thăm Dinh Bảo Đại, tản bộ
+        dưới những tán thông, ngắm biệt thự cổ, nhấm nháp ly café ấm áp trong
+        thời tiết se lạnh. Những chuyến xe ngựa thổ mộ chạy quanh Hồ Xuân Hương
+        cũng là nét duyên của Đà Lạt mờ sương.
+      </Describe> */}
+      <div className="mt-6">
+        <div className="my-3 text-c3">
+          We found <b>{listTour?.totalElements}</b> tours
         </div>
-      </div>
-      <div className="w-full">
-        <div className="flex max-w-7xl mx-auto">
-          <aside className="w-full max-w-[318px] bg-slate-100">
-            <p className="px-4 font-bold text-xl py-5">Results</p>
-            <div className="px-4 bg-primary-blue text-white font-bold py-1.5">
-              <p>Country</p>
-            </div>
-            <div className="px-3 py-4">
-              <div className="mb-3">
-                <select className="w-full border-2">
-                  <option value="volvo">Volvo</option>
-                  <option value="saab">Saab</option>
-                  <option value="mercedes">Mercedes</option>
-                </select>
-                <button className="px-4 w-full bg-primary-blue text-white mt-1">
-                  <p>Domestic</p>
-                </button>
-              </div>
-            </div>
-            <div className="px-4 py-1.5 mb-3">
-              <p className="font-bold mb-3">Tour type</p>
-              <select className="w-full border-2">
-                <option value="none">--Select Tour Type--</option>
-                <option value="packageTour">Package Tour</option>
-                <option value="familyTour">Family Tour</option>
-              </select>
-            </div>
-            <div className="px-4 py-1.5 mb-3">
-              <p className="font-bold mb-3">Destination</p>
-              <select className="w-full border-2">
-                <option value="none">--Select Tour Type--</option>
-                <option value="packageTour">Package Tour</option>
-                <option value="familyTour">Family Tour</option>
-              </select>
-            </div>
-            <div className="px-4 py-1.5 mb-3">
-              <p className="font-bold mb-3">Days travel</p>
-              <div className="grid grid-cols-2 gap-4 place-content-stretch">
-                <ButtonSelect className="rounded h-10 w-full">
-                  1-3 days
-                </ButtonSelect>
-                <ButtonSelect className="rounded h-10 w-full">
-                  4-7 days
-                </ButtonSelect>
-                <ButtonSelect className="rounded h-10 w-full">
-                  8-14 days
-                </ButtonSelect>
-                <ButtonSelect className="rounded h-10 w-full bg-primary-blue">
-                  Over 14 days
-                </ButtonSelect>
-              </div>
-            </div>
-            <div className="px-4 py-1.5 mb-3">
-              <p className="font-bold mb-3">Depart day</p>
-              <input id="myID" placeholder="01/01/0001" className="w-full" />
-            </div>
-            <div className="px-4 py-1.5 mb-3">
-              <p className="font-bold mb-3">Members</p>
-              <div className="grid grid-cols-2 gap-4 place-content-stretch">
-                <ButtonSelect className="rounded h-10 w-full">
-                  1 Person
-                </ButtonSelect>
-                <ButtonSelect className="rounded h-10 w-full">
-                  2 Persons
-                </ButtonSelect>
-                <ButtonSelect className="rounded h-10 w-full">
-                  3-5 Persons
-                </ButtonSelect>
-                <ButtonSelect className="rounded h-10 w-full bg-primary-blue">
-                  5+ Person
-                </ButtonSelect>
-              </div>
-            </div>
-            <div className="px-4 py-1.5 mb-3">
-              <p className="font-bold mb-3">Tour Kind</p>
-              <div className="grid grid-cols-2 gap-4 place-content-stretch">
-                <ButtonSelect className="rounded h-10 w-full">
-                  High-Luxury
-                </ButtonSelect>
-                <ButtonSelect className="rounded h-10 w-full">
-                  Standard
-                </ButtonSelect>
-                <ButtonSelect className="rounded h-10 w-full">
-                  Save
-                </ButtonSelect>
-                <ButtonSelect className="rounded h-10 w-full bg-primary-blue">
-                  Good Price
-                </ButtonSelect>
-              </div>
-            </div>
-            <div className="flex px-4 py-1.5 mb-3">
-              <p className="font-bold mb-3">Search Filters</p>
-              <hr className="flex-1 mt-3"></hr>
-              <div className="grid grid-cols-2 gap-4 place-content-stretch"></div>
-            </div>
-            <div className="px-4 py-1.5 mb-3">
-              <p className="font-bold mb-3">Budget</p>
-              <div className="price-input grid grid-cols-2 gap-2">
-                <div className="min flex flex-row gap-2">
-                  <span>Min</span>
-                  <input type="number" className="w-full bg-c6"></input>
-                </div>
-                <div className="max flex flex-row gap-2">
-                  <span>Max</span>
-                  <input type="number" className="w-full bg-c6"></input>
-                </div>
-              </div>
-            </div>
-          </aside>
-          <div className="flex-1">right</div>
-        </div>
+        <WrapperGrid cols="4" spacing="7">
+          {listTour?.data?.map((item, index) => (
+            <CardTourPage tourDetail={item.tourDetail} key={index} />
+          ))}
+        </WrapperGrid>
       </div>
     </div>
   );

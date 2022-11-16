@@ -46,7 +46,7 @@ function App() {
         <Route path="sign-up" element={<SignUpPage />} />
         <Route path="sign-in" element={<SignInPage />} />
         <Route element={<LayoutSearch />}>
-          <Route path="search-page" element={<SearchPage />} />
+        <Route path="search-page" element={<SearchPage />} />
         </Route>
         <Route element={<LayoutSetting />}>
           <Route path="profile" element={<ProfilePage />} />

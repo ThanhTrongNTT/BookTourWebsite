@@ -1,7 +1,10 @@
-import { Fragment } from "react";
+import { format } from "date-fns";
+import { Fragment, useEffect } from "react";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Controller, useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import { RenderPlaceHot } from "../tippy/renders";
 
@@ -9,13 +12,13 @@ import ButtonSubmitDefault from "@/button/ButtonSubmitDefault";
 import { WrapperFlex, WrapperGrid } from "@/common";
 import { IconCalendar, IconLocationRegular } from "@/icon";
 import Label from "@/label/Label";
-import { format } from "date-fns";
-import { createBrowserHistory } from "history";
-import DropdownList from "~/components/dropdown/DropdownList";
-import { useEffect } from "react";
 import axios from "~/api/axios";
-const history = createBrowserHistory();
+import DropdownList from "~/components/dropdown/DropdownList";
+import { tourDetail } from "~/sagas/tour/tour-slice";
+
 const SearchBoxTour = () => {
+  const navigate = useNavigate();
+  const dispath = useDispatch();
   const { handleSubmit, control, setValue } = useForm({
     defaultValues: {
       startDay: new Date(),
@@ -23,11 +26,10 @@ const SearchBoxTour = () => {
     mode: "onSubmit",
   });
 
-  useEffect(
-    () => setValue("beginningLocation", "TP. Hồ Chí Minh"),
+  useEffect(() => {
+    setValue("beginningLocation", "TP. Hồ Chí Minh");
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
+  }, []);
 
   const handleSearch = (value) => {
     const tour = {
@@ -40,13 +42,14 @@ const SearchBoxTour = () => {
         },
         startDay: format(value.startDay, "dd/MM/yyyy"),
       },
+      type: "TOUR_BASIC",
     };
-    const response = axios.get("/tours/location",tour);
-    console.log(response);
-    console.log(tour);
-    history.push({
-      path: "/tour",
-      search: `?beginningLocation=${value.beginningLocation}&destinationLocation=${value.destinationLocation}&startDay=${value.startDay}`,
+    axios.post("/tours/location", tour).then((response) => {
+      dispath(tourDetail(response.data));
+      // localStorage.setItem("tour", JSON.stringify(response.data));
+      navigate(
+        `search-page?beginningLocation=${value.beginningLocation}&destinationLocation=${value.destinationLocation}&startDay=${value.startDay}`
+      );
     });
   };
 
@@ -78,7 +81,7 @@ const SearchBoxTour = () => {
                       <Label htmlFor="start-date">Depart Date</Label>
                       <ReactDatePicker
                         id="start-date"
-                        minDate={new Date()}
+                        // minDate={new Date()}
                         dateFormat="dd/MM/yyyy"
                         onChange={field.onChange}
                         selected={field.value}

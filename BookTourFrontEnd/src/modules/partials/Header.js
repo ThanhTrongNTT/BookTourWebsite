@@ -15,11 +15,11 @@ import Menu from "../menu/Menu";
 
 const Header = () => {
   const { user } = useSelector((state) => state.auth);
-  const [avatar, setAvatar] = useState(user.avatar);
+  const [avatar, setAvatar] = useState(user?.avatar);
   const navigate = useNavigate();
   useEffect(() => {
-    setAvatar(user.avatar);
-  }, [user.avatar]);
+    setAvatar(user?.avatar);
+  }, [user?.avatar]);
 
   const handleRedirect = () => navigate("/profile");
 
@@ -46,7 +46,7 @@ const Header = () => {
                     <div onClick={handleRedirect}>
                       <Avt
                         sx="default"
-                        src={avatar || "../none-avt.png"}
+                        src={avatar ? avatar : "../none-avt.png"}
                         className="bg-c7"
                       />
                     </div>
