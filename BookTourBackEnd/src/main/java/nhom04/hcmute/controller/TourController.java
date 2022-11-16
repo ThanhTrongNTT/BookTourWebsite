@@ -74,9 +74,9 @@ public class TourController {
     }
 
     @PostMapping("/tour/save")
-    public ResponseEntity<ApiResponse> saveTour(@RequestBody Tour tour) {
+    public ResponseEntity<Tour> saveTour(@RequestBody Tour tour) {
         Tour saveTour = tourService.saveTour(tour);
-        return ResponseEntity.ok().body(new ApiResponse(true, "Save success!"));
+        return ResponseEntity.ok().body(saveTour);
     }
 
     @PutMapping("/tour/{id}")
