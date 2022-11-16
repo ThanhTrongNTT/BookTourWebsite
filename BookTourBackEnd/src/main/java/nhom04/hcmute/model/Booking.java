@@ -21,7 +21,7 @@ public class Booking {
     @Id
     private String id;
     private User user;
-    private boolean enable;
+    private boolean enable = false;
     private Tour tour;
     @CreatedDate
     private Date createdAt;

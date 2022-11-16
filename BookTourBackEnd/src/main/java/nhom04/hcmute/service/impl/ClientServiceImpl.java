@@ -36,4 +36,18 @@ public class ClientServiceImpl implements ClientService {
 
         emailSender.sendHtml(dataMail, ConstantMail.TEMPLATE_FILE_NAME.CLIENT_FORGET_PASSWORD);
     }
+
+    @Override
+    public void activeBooking(String email) {
+        DataMail dataMail = new DataMail();
+
+        dataMail.setTo(email);
+        dataMail.setSubject(ConstantMail.SEND_MAIL.CLIENT_ACTIVE_BOOKING);
+
+        Map<String, Object> props = new HashMap<>();
+        props.put("email",email);
+        dataMail.setProps(props);
+
+        emailSender.sendHtml(dataMail, ConstantMail.TEMPLATE_FILE_NAME.CLIENT_ACTIVE_BOOKING);
+    }
 }

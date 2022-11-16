@@ -4,11 +4,17 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nhom04.hcmute.exception.NotFoundException;
 import nhom04.hcmute.model.Booking;
+import nhom04.hcmute.model.Tour;
 import nhom04.hcmute.model.User;
+import nhom04.hcmute.payload.BookingRequest;
 import nhom04.hcmute.payload.PageResponse;
 import nhom04.hcmute.repository.BookingRepository;
+import nhom04.hcmute.repository.TourRepository;
+import nhom04.hcmute.repository.UserRepository;
 import nhom04.hcmute.service.BookingService;
+import nhom04.hcmute.service.ClientService;
 import nhom04.hcmute.util.page.SetPageResponseImpl;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -29,12 +35,11 @@ import java.util.List;
 @Slf4j
 public class BookingServiceImpl implements BookingService {
     private final BookingRepository bookingRepository;
+    private final UserRepository userRepository;
+    private final TourRepository tourRepository;
+
+    private final ClientService clientService;
     private final SetPageResponseImpl<Booking> setPageResponse;
-    @Override
-    public List<Booking> getAllBookings() {
-        log.info("Get all bookings");
-        return bookingRepository.findAll();
-    }
 
     @Override
     public PageResponse getBookingPaging(int pageNo, int pageSize, String sortBy, String sortDir) {
@@ -45,15 +50,17 @@ public class BookingServiceImpl implements BookingService {
         return setPageResponse.pageResponse(bookings);
     }
 
-    @Override
-    public List<Booking> saveAll(List<Booking> bookingList) {
-        log.info("Save all bookings");
-        return bookingRepository.saveAll(bookingList);
-    }
 
     @Override
     public List<Booking> getBookingByUser(String email) {
-        return bookingRepository.getBookingByUser(email);
+        Booking booking = new Booking();
+        User user = new User();
+        user.setEmail(email);
+        booking.setUser(user);
+        Example<Booking> example = Example.of(booking);
+        log.info("Looking Booking");
+        List<Booking> bookings = bookingRepository.findAll(example);
+        return bookings;
     }
 
     @Override
@@ -64,9 +71,15 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Booking saveBooking(Booking booking) {
+    public Booking createBooking(BookingRequest booking) {
+        Booking save = new Booking();
+        User user = userRepository.findByEmail(booking.getEmail()).orElse(null);
+        Tour tour = tourRepository.findById(booking.getTourId()).orElse(null);
+        save.setUser(user);
+        save.setTour(tour);
+        clientService.activeBooking(booking.getEmail());
         log.info("Saving Booking");
-        return bookingRepository.save(booking);
+        return bookingRepository.save(save);
     }
 
     @Override

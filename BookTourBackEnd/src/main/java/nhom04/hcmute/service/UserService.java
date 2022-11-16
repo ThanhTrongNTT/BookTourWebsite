@@ -27,19 +27,13 @@ public interface UserService {
     void deleteRoleFromUser(String email, Role role);
 
     User getUserByEmail(String email);
-
     List<User> getAllUsers();
-
     Boolean existedByEmail(String email);
     void deleteUser(String email);
     Boolean changePassword(String password, String email);
     Boolean forgotPassword(String email);
-
     List<Role> getAllRoles();
-
     Role findByRoleName(String roleName);
-
     User updateAvatar(String email, String avatar);
-
     PageResponse searchUser(String search, Pageable paging);
 }

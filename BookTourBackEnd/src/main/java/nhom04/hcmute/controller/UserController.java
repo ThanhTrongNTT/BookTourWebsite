@@ -1,6 +1,7 @@
 package nhom04.hcmute.controller;
 
 import lombok.RequiredArgsConstructor;
+import nhom04.hcmute.model.Role;
 import nhom04.hcmute.model.User;
 import nhom04.hcmute.payload.ApiResponse;
 import nhom04.hcmute.payload.DeleteRequest;
@@ -75,9 +76,10 @@ public class UserController {
         userService.changePassword("trong", email);
         return ResponseEntity.ok().body(new ApiResponse(true, "Change password success!"));
     }
+
     @PostMapping("/forgotPass/{email}")
     public ResponseEntity<ApiResponse> forgotPassword(@PathVariable("email") String email) {
-        Boolean forgot = userService.forgotPassword( email);
+        Boolean forgot = userService.forgotPassword(email);
         return forgot ? new ResponseEntity<>(
                 new ApiResponse(true, "Reset Password success"), HttpStatus.OK)
                 : new ResponseEntity<>(
@@ -89,6 +91,6 @@ public class UserController {
                                                    @RequestParam(defaultValue = "0") int page,
                                                    @RequestParam(defaultValue = "3") int size) {
         Pageable paging = PageRequest.of(page, size);
-        return ResponseEntity.ok().body( userService.searchUser(search, paging));
+        return ResponseEntity.ok().body(userService.searchUser(search, paging));
     }
 }

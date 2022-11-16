@@ -2,6 +2,7 @@ package nhom04.hcmute.controller;
 
 import lombok.RequiredArgsConstructor;
 import nhom04.hcmute.model.Booking;
+import nhom04.hcmute.payload.BookingRequest;
 import nhom04.hcmute.payload.ApiResponse;
 import nhom04.hcmute.payload.PageResponse;
 import nhom04.hcmute.service.BookingService;
@@ -25,12 +26,7 @@ public class BookingController {
     private final BookingService bookingService;
 
     @GetMapping("/bookings")
-    public ResponseEntity<List<Booking>> getAllBookings() {
-        return ResponseEntity.ok().body(bookingService.getAllBookings());
-    }
-
-    @GetMapping("/bookings/paging")
-    public ResponseEntity<PageResponse> getAllBookingsPaging(
+    public ResponseEntity<PageResponse> getAllBookings(
             @RequestParam(value = "pageNo", defaultValue = Constants.DEFAULT_PAGE_NUMBER, required = false)
             int pageNo,
             @RequestParam(value = "pageSize", defaultValue = Constants.DEFAULT_PAGE_SIZE, required = false)
@@ -43,25 +39,26 @@ public class BookingController {
         return ResponseEntity.ok().body(bookingService.getBookingPaging(pageNo,pageSize,sortBy,sortDir));
     }
 
-    @PostMapping("/bookings")
-    public ResponseEntity<List<Booking>> saveAll(@RequestBody List<Booking> bookingList) {
-        return ResponseEntity.ok().body(bookingService.saveAll(bookingList));
-    }
-
     @GetMapping("/booking/{id}")
     public ResponseEntity<Booking> getBookingById(@PathVariable("id") String id) {
         return ResponseEntity.ok().body(bookingService.getById(id));
     }
 
-    @GetMapping("/booking/user/{email}")
+    @GetMapping("/bookings/user/{email}")
     public ResponseEntity<List<Booking>> getBookingByUser(@PathVariable("email") String email) {
         return ResponseEntity.ok().body(bookingService.getBookingByUser(email));
     }
 
-    @PostMapping("/booking/save")
-    public ResponseEntity<ApiResponse> saveBooking(@RequestBody Booking booking) {
-        Booking saveBooking = bookingService.saveBooking(booking);
-        return ResponseEntity.ok().body(new ApiResponse(true, "Save Booking success!"));
+    @PostMapping("/booking/create")
+    public ResponseEntity<ApiResponse> createBooking(@RequestBody BookingRequest booking) {
+        Booking saveBooking = bookingService.createBooking(booking);
+        return ResponseEntity.ok().body(new ApiResponse(true, "Create Booking success!"));
+    }
+
+    @PostMapping("/booking/active")
+    public ResponseEntity<ApiResponse> activeBooking(@RequestBody Booking booking){
+
+        return ResponseEntity.ok().body(new ApiResponse(true,"Active success!"));
     }
 
     @PutMapping("/booking/{id}")
