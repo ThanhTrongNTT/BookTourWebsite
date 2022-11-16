@@ -22,7 +22,8 @@ import java.util.List;
 public class Tour {
     @Id
     private String id;
-    private List<Passenger> passenger;
+    private Integer hotelRooms;
+    private Integer flightClass;
     private TourDetail tourDetail;
     private TourType type;
     @CreatedDate

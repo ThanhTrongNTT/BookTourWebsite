@@ -45,6 +45,16 @@ public class LocationController {
     public ResponseEntity<List<Location>> saveAll(@RequestBody List<Location> locationList){
         return ResponseEntity.ok().body(locationService.saveAll(locationList));
     }
+    @GetMapping("/locations/search")
+    public ResponseEntity<List<Location>> searchLocation(@RequestBody Location location){
+        return ResponseEntity.ok().body(locationService.searchLocation(location));
+    }
+    @GetMapping("/locations/type")
+    public ResponseEntity<List<Location>> getLocationByName(
+            @RequestParam(value = "typeName",defaultValue = "")String typeName){
+        return ResponseEntity.ok().body(locationService.getLocationByType(typeName));
+    }
+
     @GetMapping("/location/{id}")
     public ResponseEntity<Location> getLocationById(@PathVariable("id")String id){
         return ResponseEntity.ok().body(locationService.getLocationById(id));
@@ -66,14 +76,5 @@ public class LocationController {
     public ResponseEntity<ApiResponse> deleteLocation(@PathVariable("id")String id){
         locationService.deleteLocation(id);
         return ResponseEntity.ok().body(new ApiResponse(true,"Delete success!"));
-    }
-    @GetMapping("/locations/type")
-    public ResponseEntity<List<Location>> getLocationByName(
-            @RequestParam(value = "typeName",defaultValue = "")String typeName){
-        return ResponseEntity.ok().body(locationService.getLocationByType(typeName));
-    }
-    @GetMapping("/locations/example")
-    public ResponseEntity<List<Location>> getLocationByExample(@RequestBody Location location){
-        return ResponseEntity.ok().body(locationService.getByExample(location));
     }
 }

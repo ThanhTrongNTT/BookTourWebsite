@@ -49,6 +49,20 @@ public class TourController {
         return ResponseEntity.ok().body(tourService.getTourPaging(pageNo,pageSize,sortBy,sortDir));
     }
 
+    @PostMapping("/tours/search")
+    public ResponseEntity<PageResponse> searchTour(
+            @RequestBody Tour tour,
+            @RequestParam(value = "pageNo", defaultValue = Constants.DEFAULT_PAGE_NUMBER, required = false)
+            int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = Constants.DEFAULT_PAGE_SIZE, required = false)
+            int pageSize,
+            @RequestParam(value = "sortBy", defaultValue = Constants.DEFAULT_SORT_BY, required = false)
+            String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = Constants.DEFAULT_SORT_DIRECTION, required = false)
+            String sortDir){
+        return ResponseEntity.ok(tourService.getTourLocation(tour,pageNo,pageSize,sortBy,sortDir));
+    }
+
     @PostMapping("/tours")
     public ResponseEntity<List<Tour>> saveAll(@RequestBody List<Tour> tourList) {
         return ResponseEntity.ok().body(tourService.saveAll(tourList));
@@ -77,38 +91,4 @@ public class TourController {
         return ResponseEntity.ok().body(new ApiResponse(true, "Delete Success"));
     }
 
-    @GetMapping("/tour/type/{typeName}")
-    public ResponseEntity<List<Tour>> getTourByType(@PathVariable("typeName") String typeName) {
-        return ResponseEntity.ok().body(tourService.getTourByType(typeName));
-    }
-
-//    @GetMapping("/tour/search")
-//    public ResponseEntity<PageResponse> searchTour(
-//            @RequestParam(value = "desLocation") String desLocation,
-//            @RequestParam(value = "begLocation",defaultValue = "") String begLocation,
-//            @RequestParam(value = "pageNo", defaultValue = Constants.DEFAULT_PAGE_NUMBER, required = false)
-//            int pageNo,
-//            @RequestParam(value = "pageSize", defaultValue = Constants.DEFAULT_PAGE_SIZE, required = false)
-//            int pageSize,
-//            @RequestParam(value = "sortBy", defaultValue = Constants.DEFAULT_SORT_BY, required = false)
-//            String sortBy,
-//            @RequestParam(value = "sortDir", defaultValue = Constants.DEFAULT_SORT_DIRECTION, required = false)
-//            String sortDir) {
-//        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
-//                : Sort.by(sortBy).descending();
-//        return ResponseEntity.ok().body(tourService.searchTour(desLocation,begLocation, PageRequest.of(pageNo, pageSize, sort)));
-//    }
-    @PostMapping("/tours/location")
-    public ResponseEntity<PageResponse> searchTour(
-            @RequestBody Tour tour,
-            @RequestParam(value = "pageNo", defaultValue = Constants.DEFAULT_PAGE_NUMBER, required = false)
-            int pageNo,
-            @RequestParam(value = "pageSize", defaultValue = Constants.DEFAULT_PAGE_SIZE, required = false)
-            int pageSize,
-            @RequestParam(value = "sortBy", defaultValue = Constants.DEFAULT_SORT_BY, required = false)
-            String sortBy,
-            @RequestParam(value = "sortDir", defaultValue = Constants.DEFAULT_SORT_DIRECTION, required = false)
-            String sortDir){
-        return ResponseEntity.ok(tourService.getTourLocation(tour,pageNo,pageSize,sortBy,sortDir));
-    }
 }

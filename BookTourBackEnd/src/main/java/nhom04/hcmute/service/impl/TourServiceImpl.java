@@ -57,12 +57,6 @@ public class TourServiceImpl implements TourService {
         return tourRepository.saveAll(tourList);
     }
 
-    @Override
-    public List<Tour> getTourByType(String typeName) {
-        log.info("Get Tour with type {}", typeName);
-        TourType tourType = TourType.findByName(typeName);
-        return tourRepository.getTourByType(tourType);
-    }
 
     @Override
     public Tour getTourById(String id) {
@@ -74,14 +68,14 @@ public class TourServiceImpl implements TourService {
     @Override
     public Tour saveTour(Tour tour) {
         log.info("Saving Tour");
-        Location locationBegin = locationRepository.findLocationByLocationNameAndLocationType(
-                tour.getTourDetail().getBeginningLocation().getLocationName()
-                , LocationType.BEGINNING);
-        Location locationDes = locationRepository.findLocationByLocationNameAndLocationType(
-                tour.getTourDetail().getDestinationLocation().getLocationName()
-                , LocationType.DESTINATION);
-        tour.getTourDetail().setBeginningLocation(locationBegin);
-        tour.getTourDetail().setDestinationLocation(locationDes);
+        tour.getTourDetail().getBeginningLocation().setLocationType( LocationType.BEGINNING);
+        tour.getTourDetail().getDestinationLocation().setLocationType( LocationType.DESTINATION);
+        Example<Location> locationBegin = Example.of(tour.getTourDetail().getBeginningLocation());
+        Location begin = locationRepository.findOne(locationBegin).orElse(null);
+        Example<Location> locationDes = Example.of(tour.getTourDetail().getDestinationLocation());
+        Location destination = locationRepository.findOne(locationDes).orElse(null);
+        tour.getTourDetail().setBeginningLocation(begin);
+        tour.getTourDetail().setDestinationLocation(destination);
         return tourRepository.save(tour);
     }
 
@@ -91,7 +85,6 @@ public class TourServiceImpl implements TourService {
                 .orElseThrow(() -> new NotFoundException(String.format("Tour with id %s not found", id)));
         log.info("Updating Tour");
         updateTour.setTourDetail(tour.getTourDetail());
-        updateTour.setPassenger(tour.getPassenger());
         updateTour.setType(tour.getType());
         Date date = new Date();
         updateTour.setModifiedAt(date);
