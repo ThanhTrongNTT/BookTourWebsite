@@ -11,4 +11,5 @@ import nhom04.hcmute.model.User;
  */
 public interface ClientService {
     void forgotPassword(User user, String password);
+    void activeBooking(String email);
 }

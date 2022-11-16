@@ -23,5 +23,5 @@ public interface LocationService {
     Location getLocationByNameAndType(String locationName,String typeName);
     List<Location> getLocationByType(String typeName);
 
-    List<Location> getByExample(Location location);
+    List<Location> searchLocation(Location location);
 }

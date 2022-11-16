@@ -49,7 +49,7 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public List<Location> saveAll(List<Location> locationList) {
-        log.info("Get all locations");
+        log.info("Saving all locations");
         return locationRepository.saveAll(locationList);
     }
 
@@ -102,7 +102,7 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    public List<Location> getByExample(Location location) {
+    public List<Location> searchLocation(Location location) {
         Example<Location> example = Example.of(location);
         return locationRepository.findAll(example);
     }
