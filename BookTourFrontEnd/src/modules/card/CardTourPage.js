@@ -1,14 +1,20 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import ButtonSubmitDefault from "~/components/button/ButtonSubmitDefault";
 import { WrapperFlex } from "~/components/common";
 import { IconCart } from "~/components/icon";
+import { authFetchMe } from "~/sagas/auth/auth-slice";
 
 const CardTourPage = ({ tourDetail }) => {
   return (
     <div className="flex flex-col">
       <div className="w-[300px]- h-[300px] rounded-lg">
         <img
-          src="https://images.unsplash.com/photo-1657662075319-3ced8dee4c10?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
+          src={
+            tourDetail?.images[0] ||
+            "https://images.unsplash.com/photo-1657662075319-3ced8dee4c10?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
+          }
+          // src="https://images.unsplash.com/photo-1657662075319-3ced8dee4c10?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
           alt="img-tour"
           className="h-full w-full rounded-tl-lg rounded-tr-lg object-cover"
         />

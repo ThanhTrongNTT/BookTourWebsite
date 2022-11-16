@@ -56,7 +56,7 @@ const SearchPage = () => {
       },
       type: "TOUR_BASIC",
     };
-    axios.post("/tours/location", tour).then((response) => {
+    axios.post("/tours/search", tour).then((response) => {
       dispath(tourDetail(response.data));
       navigate(
         `?beginningLocation=${value.beginningLocation}&destinationLocation=${value.destinationLocation}&startDay=${value.startDay}`

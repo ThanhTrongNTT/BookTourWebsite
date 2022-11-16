@@ -44,7 +44,7 @@ const SearchBoxTour = () => {
       },
       type: "TOUR_BASIC",
     };
-    axios.post("/tours/location", tour).then((response) => {
+    axios.post("/tours/search", tour).then((response) => {
       dispath(tourDetail(response.data));
       // localStorage.setItem("tour", JSON.stringify(response.data));
       navigate(
