@@ -10,11 +10,11 @@ const LayoutDefault = () => {
   const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!user || !user.email) navigate("/sign-in");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [navigate, user]);
-  if (!user || !user.email) return null;
+  // useEffect(() => {
+  //   if (!user || !user.email) navigate("/sign-in");
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [navigate, user]);
+  // if (!user || !user.email) return null;
 
   return (
     <div className="wrapper">
