@@ -1,20 +1,25 @@
-import { Outlet } from "react-router-dom";
 import { withErrorBoundary } from "react-error-boundary";
+import { Outlet, useNavigate } from "react-router-dom";
 
 import ErrorBoundary from "@/common/ErrorBoundary";
-import { Header, Footer } from "~/modules/partials";
-import Banner from "~/modules/partials/Banner";
-import SearchBox from "~/modules/search/SearchBox";
+
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { Banner, Footer, Header } from "~/modules/partials";
 const LayoutDefault = () => {
+  const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user || !user.email) navigate("/sign-in");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [navigate, user]);
+  if (!user || !user.email) return null;
+
   return (
     <div className="wrapper">
       <Header />
-      <div className="relative">
-        <Banner />
-        <div className="absolute bottom-0 translate-y-2/4 left-2/4 -translate-x-2/4 w-[85%]  bg-white">
-          <SearchBox />
-        </div>
-      </div>
+      <Banner />
       <Outlet />
       <Footer />
     </div>

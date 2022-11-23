@@ -1,10 +1,13 @@
-import React from "react";
+import { memo } from "react";
+import { withErrorBoundary } from "react-error-boundary";
 import { Link } from "react-router-dom";
+
 import classNames from "~/utils/classNames";
+import { ErrorBoundary } from "@/common";
 
 const Logo = ({ className = "" }) => {
   return (
-    <Link to="/">
+    <Link to="/" tabIndex={-1}>
       <div
         className={classNames(
           "header-left flex cursor-pointer select-none items-center gap-[10px]",
@@ -24,4 +27,8 @@ const Logo = ({ className = "" }) => {
   );
 };
 
-export default Logo;
+export default memo(
+  withErrorBoundary(Logo, {
+    FallbackComponent: ErrorBoundary,
+  })
+);

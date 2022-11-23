@@ -1,11 +1,20 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: "class",
-  content: ["./src/**/*.{html,js}"],
+  // content: ["./src/**/*.{html,js}"],
+  content: [
+    "./src/**/*.{html,js}",
+    "node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}",
+  ],
+  plugins: [require("flowbite/plugin")],
   theme: {
     extend: {
+      backgroundImage: {
+        "icon-moon": "url('/public/icon-moon.svg')",
+      },
       fontFamily: {
         Poppins: ["Poppins", "sans-serif"],
+        Helvetica: ["Helvatica", "sans-serif"],
         OpenSans: ["Open Sans", "sans-serif"],
         Roboto: ["Roboto", "sans-serif"],
         DMSans: ["DM Sans", "sans-serif"],
@@ -15,6 +24,7 @@ module.exports = {
       },
       colors: {
         dark: {
+          blue: "#003c71",
           primary: "#13131A",
           secondary: "#1C1C24",
           soft: "#22222C",

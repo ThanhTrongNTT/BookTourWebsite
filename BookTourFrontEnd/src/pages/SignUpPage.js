@@ -16,9 +16,12 @@ import Input from "~/components/input/Input";
 import Label from "@/label/Label";
 import TextAuth from "@/text/TextAuth";
 import TogglePassword from "@/toggle/TogglePassword";
+import { useDispatch } from "react-redux";
+import { authRegister } from "~/sagas/auth/auth-slice";
+import { useEffect } from "react";
 
 const schame = Yup.object({
-  fullname: Yup.string().required("Please enter your full name"),
+  fullName: Yup.string().required("Please enter your full name"),
   // email: Yup.string().email().required("Email is required"),
   email: Yup.string()
     .required("Please enter your emaill address")
@@ -36,26 +39,33 @@ const SignUpPage = () => {
   const {
     handleSubmit,
     control,
-    formState: { errors, isValid, isSubmitting },
+    formState: { errors, isSubmitting },
   } = useForm({
     resolver: yupResolver(schame),
     mode: "onSubmit",
   });
-  const handleSignIn = (values) => {
-    //if (!isValid) return; // isValid has a problem to deal with later
-    return new Promise((resolve) => {
+  const dispath = useDispatch();
+  const handleSignIn = ({ term, ...values }) => {
+    dispath(authRegister(values));
+    return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve();
-        console.log("TCL: handleSignIn -> values", values);
-        toast.success("Register success! Please confirm in email", {
-          delay: 50,
-          draggable: true,
-          pauseOnHover: false,
-        });
         navigate("/sign-in");
-      }, 2000);
+      }, 1000);
     });
   };
+  useEffect(() => {
+    const arrErrors = Object.values(errors);
+    if (arrErrors.length > 0) {
+      toast.error(arrErrors[0]?.message, {
+        autoClose: 1000,
+        pauseOnHover: false,
+        draggable: true,
+        delay: 50,
+      });
+    }
+  }, [errors]);
+
   const { value: showPassword, handleToggleValue: handleTogglePassword } =
     useToggleValue();
   const { value: acceptTerm, handleToggleValue: handleToggleTerm } =
@@ -68,24 +78,26 @@ const SignUpPage = () => {
         to="/sign-in"
       />
       <ButtonGoogle>Sign up with google</ButtonGoogle>
-      <p className="mb-5 text-center text-xs text-grayScale-c3 dark:text-grayScale-c4 lg:text-sm">
+      <p className="text-grayScale-c3 dark:text-grayScale-c4 mb-5 text-center text-xs lg:text-sm">
         Or sign up with email
       </p>
       <form onSubmit={handleSubmit(handleSignIn)}>
         <FormGroup>
           <Label htmlFor="fullname">Full Name*</Label>
           <Input
+            variant={"outlined"}
             control={control}
             id="fullname"
-            name="fullname"
+            name="fullName"
             type="text"
             placeholder="Jhon Doe"
-            error={errors.fullname?.message}
+            error={errors.fullName?.message}
           />
         </FormGroup>
         <FormGroup>
           <Label htmlFor="email">Email*</Label>
           <Input
+            variant={"outlined"}
             control={control}
             id="email"
             name="email"
@@ -97,6 +109,7 @@ const SignUpPage = () => {
         <FormGroup>
           <Label htmlFor="password">Password*</Label>
           <Input
+            variant={"outlined"}
             control={control}
             id="password"
             name="password"
@@ -136,7 +149,7 @@ const SignUpPage = () => {
           disabled={isSubmitting || !acceptTerm}
           isLoading={isSubmitting}
         >
-          Sign in
+          Sign up
         </ButtonSubmitAuth>
       </form>
     </LayoutAuth>

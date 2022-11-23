@@ -1,22 +1,26 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
-import { useEffect } from "react";
 
-import { LayoutAuth } from "~/layouts";
 import useToggleValue from "~/hooks/useToggleValue";
+import { LayoutAuth } from "~/layouts";
 
 import ButtonGoogle from "@/button/ButtonGoogle";
-import TextAuth from "@/text/TextAuth";
-import FormGroup from "@/common/FormGroup";
-import Label from "@/label/Label";
-import Input from "~/components/input/Input";
-import TogglePassword from "@/toggle/TogglePassword";
 import ButtonSubmitAuth from "@/button/ButtonSubmitAuth";
-import TextForgotPassword from "~/components/text/TextForgotPassword";
 
+import TextAuth from "@/text/TextAuth";
+import TextForgotPassword from "@/text/TextForgotPassword";
+
+import FormGroup from "@/common/FormGroup";
+import Input from "@/input/Input";
+import Label from "@/label/Label";
+import TogglePassword from "@/toggle/TogglePassword";
+
+import { authLogin } from "~/sagas/auth/auth-slice";
 const schame = Yup.object({
   email: Yup.string()
     .required("Please enter your emaill address")
@@ -40,32 +44,23 @@ const SignInPage = () => {
     resolver: yupResolver(schame),
     mode: "onSubmit",
   });
+  const dispath = useDispatch();
   const handleSignIn = (values) => {
-    // if (!isValid) return; isValid has a problem to deal with later
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve();
-        console.log("TCL: handleSignIn -> values", values);
-        toast.success("Login success!", {
-          delay: 50,
-          draggable: true,
-          pauseOnHover: false,
-        });
-        navigate("/");
-      }, 2000);
-    });
+    dispath(authLogin(values));
   };
+
   useEffect(() => {
     const arrErrors = Object.values(errors);
-    console.log("TCL: SignInPage -> arrErrors", arrErrors);
     if (arrErrors.length > 0) {
       toast.error(arrErrors[0]?.message, {
+        autoClose: 2000,
         pauseOnHover: false,
         draggable: true,
         delay: 50,
       });
     }
   }, [errors]);
+
   const { value: showPassword, handleToggleValue: handleTogglePassword } =
     useToggleValue();
   return (
@@ -76,6 +71,7 @@ const SignInPage = () => {
         <FormGroup>
           <Label htmlFor="email">Email*</Label>
           <Input
+            variant={"outlined"}
             control={control}
             id="email"
             name="email"
@@ -87,6 +83,7 @@ const SignInPage = () => {
         <FormGroup>
           <Label htmlFor="password">Password*</Label>
           <Input
+            variant={"outlined"}
             control={control}
             id="password"
             name="password"

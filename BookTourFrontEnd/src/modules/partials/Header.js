@@ -1,49 +1,94 @@
-import React, { useState } from "react";
+import Tippy from "@tippyjs/react/headless";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+import classNames from "~/utils/classNames";
+
+import Avt from "@/avt/Avt";
+import { IconArrowDownSolid, IconUser } from "@/icon/IconHomePage";
 import Logo from "@/logo/Logo";
 import Notification from "@/notification/Notification";
-import Search from "~/components/search/Search";
-import { IconArrowDownSolid, IconUser } from "~/components/icon";
-import { useNavigate } from "react-router-dom";
-import classNames from "~/utils/classNames";
-import Avt from "~/components/avt/Avt";
+import Search from "@/search/Search";
+import { useEffect, useState } from "react";
+import { WrapperFlex } from "~/components/common";
+import Menu from "../menu/Menu";
 
 const Header = () => {
+  const { user } = useSelector((state) => state.auth);
+  const [avatar, setAvatar] = useState(user?.avatar);
   const navigate = useNavigate();
-  const [user, setUser] = useState(true);
+  useEffect(() => {
+    setAvatar(user?.avatar);
+  }, [user?.avatar]);
+
+  const handleRedirect = () => navigate("/profile");
+
   return (
-    <header className="header bg-white px-5 py-[30px] dark:bg-c2 lg:px-10 lg:py-5">
-      <div className="container-header flex items-center justify-between  2xl:container 2xl:mx-auto">
-        <Logo />
-        <div className={classNames("flex items-center", !!user && "gap-4")}>
-          <Search />
-          {!!user ? (
-            <div className="header-right flex h-8 items-center font-Roboto justify-between">
-              <Notification />
-              <div className="mr-5 h-full w-[1px] bg-c5 dark:bg-c3" />
-              <div className="flex items-center gap-3">
-                <Avt
-                  sx="default"
-                  src="https://images.unsplash.com/photo-1441123694162-e54a981ceba5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
-                />
-                <div className="flex items-center gap-4">
-                  <p className="font-semibold text-sm inline-block">VinhQuoc</p>
-                  <span className="text-c3">
-                    <IconArrowDownSolid />
-                  </span>
-                </div>
-              </div>
+    <div className="bg-white">
+      <header className="header bg-white px-5 py-[30px] dark:bg-c2 lg:mx-auto lg:max-w-7xl lg:px-10 lg:py-5">
+        <WrapperFlex
+          spacing="4"
+          className="lg:gap-10 2xl:container 2xl:mx-auto"
+          center
+        >
+          <Logo />
+          <WrapperFlex justify="end" flex1>
+            <div className={classNames("flex items-center", !!user && "gap-4")}>
+              <Search />
+              {user ? (
+                <WrapperFlex
+                  className="header-right h-8 font-Roboto"
+                  items="center"
+                >
+                  <Notification />
+                  <div className="mr-5 h-full w-[1px] bg-c5 dark:bg-c3" />
+                  <WrapperFlex spacing="3" items="center">
+                    <div onClick={handleRedirect}>
+                      <Avt
+                        sx="default"
+                        src={avatar ? avatar : "../none-avt.png"}
+                        className="bg-c7"
+                      />
+                    </div>
+                    <div className="flex items-center">
+                      <p className="inline-block select-none text-sm font-semibold">
+                        {user.fullName}
+                      </p>
+                      <Tippy
+                        interactive
+                        delay={[0, 200]}
+                        offset={[0, 10]}
+                        moveTransition
+                        render={(attrs) => (
+                          <div
+                            className="w-[238px] rounded-2xl"
+                            tabIndex="-1"
+                            {...attrs}
+                          >
+                            <Menu />
+                          </div>
+                        )}
+                      >
+                        <span className="cursor-pointer px-2 py-4 text-c3">
+                          <IconArrowDownSolid />
+                        </span>
+                      </Tippy>
+                    </div>
+                  </WrapperFlex>
+                </WrapperFlex>
+              ) : (
+                <span
+                  className="cursor-pointer px-4 text-c4"
+                  onClick={() => navigate("/sign-in")}
+                >
+                  <IconUser />
+                </span>
+              )}
             </div>
-          ) : (
-            <span
-              className="text-c3 px-4 cursor-pointer"
-              onClick={() => navigate("/sign-in")}
-            >
-              <IconUser />
-            </span>
-          )}
-        </div>
-      </div>
-    </header>
+          </WrapperFlex>
+        </WrapperFlex>
+      </header>
+    </div>
   );
 };
 
