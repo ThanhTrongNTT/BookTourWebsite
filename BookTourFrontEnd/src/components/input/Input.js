@@ -36,7 +36,7 @@ const Input = ({
       break;
   }
   return (
-    <div className="relative">
+    <div className="relative w-full">
       <input
         type={type}
         className={classNames(

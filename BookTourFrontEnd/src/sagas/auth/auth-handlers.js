@@ -30,6 +30,9 @@ function* handleAuthLogin({ payload }) {
     if (response.data.accessToken && response.data.refreshToken) {
       saveToken(response.data.accessToken, response.data.refreshToken);
       yield call(handleAuthFetchMe, { payload: response.data.accessToken });
+      toast.success("Login seccess!", {
+        autoClose: 500,
+      });
     }
     yield 1;
   } catch (error) {

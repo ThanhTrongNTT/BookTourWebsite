@@ -1,9 +1,8 @@
-import { format } from "date-fns";
 import { Fragment, useEffect } from "react";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Controller, useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { RenderPlaceHot } from "../tippy/renders";
@@ -15,10 +14,12 @@ import Label from "@/label/Label";
 import axios from "~/api/axios";
 import DropdownList from "~/components/dropdown/DropdownList";
 import { tourDetail } from "~/sagas/tour/tour-slice";
+import { format } from "date-fns";
+import { pushParmURL } from "~/utils/pushParamURL";
 
 const SearchBoxTour = () => {
   const navigate = useNavigate();
-  const dispath = useDispatch();
+  const dispatch = useDispatch();
   const { handleSubmit, control, setValue } = useForm({
     defaultValues: {
       startDay: new Date(),
@@ -27,30 +28,47 @@ const SearchBoxTour = () => {
   });
 
   useEffect(() => {
-    setValue("beginningLocation", "TP. Hồ Chí Minh");
+    setValue("beginningLocation", "Hồ Chí Minh");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSearch = (value) => {
-    const tour = {
-      tourDetail: {
-        beginningLocation: {
-          locationName: value.beginningLocation,
-        },
-        destinationLocation: {
-          locationName: value.destinationLocation,
-        },
-        startDay: format(value.startDay, "dd/MM/yyyy"),
-      },
-      type: "TOUR_BASIC",
-    };
-    axios.post("/tours/search", tour).then((response) => {
-      dispath(tourDetail(response.data));
-      // localStorage.setItem("tour", JSON.stringify(response.data));
-      navigate(
-        `search-page?beginningLocation=${value.beginningLocation}&destinationLocation=${value.destinationLocation}&startDay=${value.startDay}`
-      );
-    });
+    // const tour = {
+    //   tourDetail: {
+    //     beginningLocation: {
+    //       locationName: value.beginningLocation,
+    //       locationType: "BEGINNING",
+    //     },
+    //     destinationLocation: {
+    //       locationName: value.destinationLocation,
+    //       locationType: "DESTINATION",
+    //     },
+    //     // startDay: format(value.startDay, "dd/MM/yyyy"),
+    //   },
+    //   // type: "TOUR_BASIC",
+    // };
+    // const location = {
+    //   beginningLocation: value.beginningLocation,
+    //   destinationLocation: value.destinationLocation,
+    //   // startDay: format(value.startDay, "dd/MM/yyyy"),
+    //   startDay: value.startDay,
+    // };
+
+    // axios.post("/tours/search?pageSize=4", tour).then((response) => {
+    //   dispatch(tourDetail(response.data));
+    //   localStorage.setItem("searchTour", JSON.stringify(response.data));
+    //   localStorage.setItem("tourLocation", JSON.stringify(location));
+    //   console.log(format(value.startDay, "dd/MM/yyyy"));
+    if (value.destinationLocation === "Bà Rịa - Vũng Tàu") {
+      value.destinationLocation = "Bà Rịa Vũng Tàu";
+    }
+    navigate(
+      `search-page?beginningLocation=${pushParmURL(
+        value.beginningLocation
+      )}&destinationLocation=${pushParmURL(
+        value.destinationLocation
+      )}&startDay=${format(value.startDay, "dd/MM/yyyy")}`
+    );
   };
 
   return (
@@ -95,7 +113,7 @@ const SearchBoxTour = () => {
           <WrapperGrid col="5">
             <DropdownList
               setValue={setValue}
-              dropdownLabel="TP. Hồ Chí Minh"
+              dropdownLabel="Hồ Chí Minh"
               bg="bg-white"
               icon={<IconLocationRegular />}
               control={control}
@@ -104,7 +122,7 @@ const SearchBoxTour = () => {
               name="beginningLocation"
               list={[
                 { type: "Hà Nội" },
-                { type: "TP. Hồ Chí Minh" },
+                { type: "Hồ Chí Minh" },
                 { type: "Cao Lãnh" },
               ]}
             />

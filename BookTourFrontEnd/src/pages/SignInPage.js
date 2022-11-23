@@ -21,7 +21,6 @@ import Label from "@/label/Label";
 import TogglePassword from "@/toggle/TogglePassword";
 
 import { authLogin } from "~/sagas/auth/auth-slice";
-import { getToken } from "~/utils/auth";
 const schame = Yup.object({
   email: Yup.string()
     .required("Please enter your emaill address")
@@ -48,19 +47,6 @@ const SignInPage = () => {
   const dispath = useDispatch();
   const handleSignIn = (values) => {
     dispath(authLogin(values));
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve();
-        const { access_token } = getToken();
-        if (!access_token) return;
-        toast.success("Login success!", {
-          autoClose: 500,
-          draggable: true,
-          pauseOnHover: false,
-        });
-        navigate("/");
-      }, 500);
-    });
   };
 
   useEffect(() => {

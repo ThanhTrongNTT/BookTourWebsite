@@ -34,6 +34,8 @@
     "redux-logger": "^3.0.6",
     "redux-persist": "^6.0.0",
     "redux-saga": "^1.2.1",
+    "flowbite": "^1.5.3",
+    "flowbite-react": "^0.2.1",
     "sass": "^1.55.0",
     "swiper": "^8.4.2",
     "use-react-router-breadcrumbs": "^4.0.1",
