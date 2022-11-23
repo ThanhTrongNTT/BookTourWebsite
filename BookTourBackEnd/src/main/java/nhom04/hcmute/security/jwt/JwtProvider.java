@@ -10,8 +10,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 
@@ -40,8 +42,14 @@ public class JwtProvider {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
         Date expiryRefreshDate = new Date(now.getTime() + jwtRefreshExpirationInMs);
-
+        Predicate<GrantedAuthority> filter = item -> item.getAuthority().equals("ADMIN");
+        Collection<GrantedAuthority> roles = userPrincipal.getAuthorities().stream().filter(filter).collect(Collectors.toList());
+        Boolean admin = false;
+        if (roles.size() > 0) {
+            admin = true;
+        }
         String accessToken = Jwts.builder().setSubject(userPrincipal.getUsername())
+                .claim("admin",admin)
                 .setIssuedAt(new Date())
                 .setExpiration(expiryDate)
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)

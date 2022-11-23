@@ -24,6 +24,7 @@ public interface UserRepository extends MongoRepository<User,String> {
 
     Boolean existsByEmail(String email);
 
-    @Query(value = "{ $or: [ { 'fullName' : {$regex:?0,$options:'i'} }, { 'email' : {$regex:?0,$options:'i'} } ] }")
+    @Query(value = "{ $or: [ { 'fullName' : {$regex:?0,$options:'i'} }," +
+            " { 'email' : {$regex:?0,$options:'i'} } ] }")
     Page<User> query(String query, Pageable page);
 }
