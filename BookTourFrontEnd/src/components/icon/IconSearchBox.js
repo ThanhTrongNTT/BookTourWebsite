@@ -1,3 +1,5 @@
+import classNames from "~/utils/classNames";
+
 export const IconCalendar = () => {
   return (
     <svg
@@ -131,11 +133,15 @@ export const IconPeopleGroup = () => {
   );
 };
 
-export const IconPlus = () => {
+export const IconPlus = ({ width, height }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      className="inline-block h-6 w-6"
+      className={classNames(
+        "inline-block",
+        width ? width : "w-6",
+        height ? height : "h-6"
+      )}
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor"
@@ -150,11 +156,15 @@ export const IconPlus = () => {
   );
 };
 
-export const IconMinus = () => {
+export const IconMinus = ({ width, height }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      className="inline-block h-6 w-6"
+      className={classNames(
+        "inline-block",
+        width ? width : "w-6",
+        height ? height : "h-6"
+      )}
       viewBox="0 0 20 20"
       fill="currentColor"
     >

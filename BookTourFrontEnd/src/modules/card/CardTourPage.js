@@ -1,14 +1,11 @@
-import React from "react";
-import { useSelector } from "react-redux";
 import ButtonSubmitDefault from "~/components/button/ButtonSubmitDefault";
 import { WrapperFlex } from "~/components/common";
 import { IconCart } from "~/components/icon";
-import { authFetchMe } from "~/sagas/auth/auth-slice";
 
-const CardTourPage = ({ tourDetail }) => {
+const CardTourPage = ({ tourDetail, ...props }) => {
   return (
-    <div className="flex flex-col">
-      <div className="w-[300px]- h-[300px] rounded-lg">
+    <div className="flex flex-col" {...props}>
+      <div className="w-[250px]- h-[250px] rounded-lg">
         <img
           src={
             tourDetail?.images[0] ||

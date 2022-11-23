@@ -25,7 +25,7 @@ const Heading = ({ children, sx, color, deal, total, font, className }) => {
       )}
       <h2
         className={classNames(
-          "font-Poppins",
+          // "font-Poppins",
           font ? font : "font-semibold",
           sx && resultTextSize.textCss,
           color && resultTextColor.colorCss,

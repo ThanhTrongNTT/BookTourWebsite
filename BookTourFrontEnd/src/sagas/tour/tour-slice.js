@@ -1,17 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+const tourItems = localStorage.getItem("searchTour");
 const tourSlice = createSlice({
   name: "tour",
   initialState: {
-    listTour: [],
+    listTour: tourItems ? JSON.parse(tourItems) : [],
   },
   reducers: {
     tourDetail: (state, { payload }) => ({
       listTour: payload,
-      // state.listTour.push(payload);
     }),
   },
 });
 
-export const { tourDetail } = tourSlice.actions;
+export const { tourDetail, tourLocation } = tourSlice.actions;
 export default tourSlice.reducer;

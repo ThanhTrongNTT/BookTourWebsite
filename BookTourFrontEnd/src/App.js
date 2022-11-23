@@ -12,10 +12,12 @@ const HomePage = lazy(() => import("~/pages/HomePage"));
 const FlightPage = lazy(() => import("~/pages/FlightPage"));
 const SignInPage = lazy(() => import("~/pages/SignInPage"));
 const SignUpPage = lazy(() => import("~/pages/SignUpPage"));
-const TourPage = lazy(() => import("~/pages/TourPage"));
-const SearchPage = lazy(() => import("~/pages/SearchPage"));
 const NotFoundPage = lazy(() => import("~/pages/NotFoundPage"));
 const ProfilePage = lazy(() => import("~/pages/ProfilePage"));
+
+const SearchPage = lazy(() => import("~/pages/SearchPage"));
+const TourDetailPage = lazy(() => import("~/pages/TourDetailPage"));
+const TourPage = lazy(() => import("~/pages/TourPage"));
 
 function App() {
   const { user } = useSelector((state) => state.auth);
@@ -46,7 +48,8 @@ function App() {
         <Route path="sign-up" element={<SignUpPage />} />
         <Route path="sign-in" element={<SignInPage />} />
         <Route element={<LayoutSearch />}>
-        <Route path="search-page" element={<SearchPage />} />
+          <Route path="search-page" element={<SearchPage />} />
+          <Route path="detail-page" element={<TourDetailPage />} />
         </Route>
         <Route element={<LayoutSetting />}>
           <Route path="profile" element={<ProfilePage />} />

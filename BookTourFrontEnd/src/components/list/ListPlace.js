@@ -2,7 +2,7 @@ import Card from "@/card/Card";
 const PLACES_HOT = [
   {
     id: "1",
-    locationName: "Vũng Tàu",
+    locationName: "Bà Rịa - Vũng Tàu",
     numberHotel: 112,
     src: "https://images.unsplash.com/photo-1623596711744-c10ed15581d9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=849&q=80",
   },
@@ -20,7 +20,7 @@ const PLACES_HOT = [
   },
   {
     id: "4",
-    locationName: "Nha Trang",
+    locationName: "Cần Thơ",
     numberHotel: 496,
     src: "https://images.unsplash.com/photo-1593152399172-9277bfd12c6e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1332&q=80",
   },

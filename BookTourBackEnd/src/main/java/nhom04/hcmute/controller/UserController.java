@@ -65,9 +65,9 @@ public class UserController {
         return ResponseEntity.ok().body(new ApiResponse(true, "Update success!"));
     }
 
-    @DeleteMapping("/user/delete")
-    public ResponseEntity<ApiResponse> deleteUser(@RequestBody DeleteRequest deleteRequest) {
-        userService.deleteUser(deleteRequest.getDeleteField());
+    @DeleteMapping("/user/delete/{email}")
+    public ResponseEntity<ApiResponse> deleteUser(@PathVariable("email") String email) {
+        userService.deleteUser(email);
         return ResponseEntity.ok().body(new ApiResponse(true, "Delete success"));
     }
 

@@ -30,7 +30,7 @@ const RenderPlaceHot = ({ setValue, control, name }) => {
   }
 
   return (
-    <span>
+    <div>
       <Tippy
         trigger="click"
         interactive
@@ -56,7 +56,7 @@ const RenderPlaceHot = ({ setValue, control, name }) => {
           </Wrapper>
         )}
       >
-        <div className="relative z-10 h-full cursor-pointer rounded-[4px] bg-white">
+        <div className="relative z-10 flex h-full cursor-pointer rounded-[4px] bg-white">
           <span className="absolute left-0 top-0 bottom-0 mx-4 flex items-center py-4 text-c4">
             <IconLocationRegular />
           </span>
@@ -69,7 +69,7 @@ const RenderPlaceHot = ({ setValue, control, name }) => {
           />
         </div>
       </Tippy>
-    </span>
+    </div>
   );
 };
 

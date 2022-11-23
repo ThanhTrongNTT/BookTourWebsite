@@ -15,9 +15,48 @@
 @import "swiper/css";
 @import "swiper/css/pagination";
 
-// :root {
-//   --font-family: 'Helvatica', sans-serif;
-// }
+
+@font-face {
+  font-family: 'Helvetica';
+  src: url('../public/asset/fonts/Helvetica.woff2') format('woff2'),
+    url('../public/asset/fonts/Helvetica.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Helvetica';
+  src: url('../public/asset/fonts/Helvetica-Bold.woff2') format('woff2'),
+    url('../public/asset/fonts/Helvetica-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Helvetica';
+  src: url('../public/asset/fonts/Helvetica-Light.woff2') format('woff2'),
+    url('../public/asset/fonts/Helvetica-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Helvetica World';
+  src: url('../public/asset/fonts/HelveticaWorld-Regular.woff2') format('woff2'),
+    url('../public/asset/fonts/HelveticaWorld-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+
+:root {
+  --font-family: 'Helvatica', sans-serif;
+}
 
 // // Fonts emmbeded
 // @font-face {
@@ -68,7 +107,9 @@
   }
 
   body {
-    @apply font-Poppins;
+    // @apply font-Poppins;
+    font-family: var(--font-family);
+    font-weight: 400;
 
     input {
       @apply outline-none;
