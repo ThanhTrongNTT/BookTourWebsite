@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { WrapperFlex } from "~/components/common";
 import WrapperTour from "~/components/common/WrapperTour";
@@ -23,19 +23,11 @@ const TourDetailPage = ({ price }) => {
       tourId: id,
     };
     axiosPrivate.post(`/booking/create`, request);
-    // navigate(`/booking?id=${id}`);
     toast.success("Please check your email to active booking!", {
       autoClose: 2000,
     });
     navigate("../");
   };
-  // useEffect(() => {
-  //   axios.get(`tour/${id}`).then((response) => {
-  //     console.log(response.data.tourDetail);
-  //     setTourDetail(response.data.tourDetail);
-  //   });
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
 
   return (
     <WrapperTour>
