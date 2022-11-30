@@ -2,7 +2,7 @@ import React from "react";
 import { useController } from "react-hook-form";
 import classNames from "~/utils/classNames";
 
-const InputDefault = ({ name, control, className, ...props }) => {
+const InputDefault = ({ name, control, className, bg, ...props }) => {
   const { filed } = useController({
     name,
     control,
@@ -13,7 +13,11 @@ const InputDefault = ({ name, control, className, ...props }) => {
       <input
         {...filed}
         {...props}
-        className={classNames("h-full w-full bg-transparent", className)}
+        className={classNames(
+          "h-full w-full",
+          className,
+          bg ? bg : "bg-transparent"
+        )}
       />
     </div>
   );

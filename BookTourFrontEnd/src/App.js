@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
+import TourBooking from "./pages/TourBooking";
 import { authRefreshToken, authUpdateUser } from "./sagas/auth/auth-slice";
 import { getToken, logOut } from "./utils/auth";
 
@@ -50,6 +51,7 @@ function App() {
         <Route element={<LayoutSearch />}>
           <Route path="search-page" element={<SearchPage />} />
           <Route path="detail-page" element={<TourDetailPage />} />
+          <Route path="booking" element={<TourBooking />} />
         </Route>
         <Route element={<LayoutSetting />}>
           <Route path="profile" element={<ProfilePage />} />
