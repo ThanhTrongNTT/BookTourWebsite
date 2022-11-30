@@ -77,7 +77,7 @@ public class BookingServiceImpl implements BookingService {
         Tour tour = tourRepository.findById(booking.getTourId()).orElse(null);
         save.setUser(user);
         save.setTour(tour);
-        clientService.activeBooking(booking.getEmail());
+        clientService.activeBooking(booking.getEmail(),booking.getTourId());
         log.info("Saving Booking");
         return bookingRepository.save(save);
     }
@@ -101,5 +101,24 @@ public class BookingServiceImpl implements BookingService {
                 .orElseThrow(()-> new NotFoundException(String.format("User with id %s not found",id)));
         log.info("Deleting booking");
         bookingRepository.delete(deleteBooking);
+    }
+
+    @Override
+    public Boolean activeBooking(String email, String id) {
+        Booking booking = new Booking();
+        Tour tour = new Tour();
+        User user = new User();
+        tour.setId(id);
+        user.setEmail(email);
+        booking.setTour(tour);
+        booking.setUser(user);
+        Example<Booking> example = Example.of(booking);
+        Booking activeBooking = bookingRepository.findOne(example).orElse(null);
+        if(activeBooking!=null){
+            activeBooking.setEnable(true);
+            bookingRepository.save(activeBooking);
+            return true;
+        }
+        return false;
     }
 }

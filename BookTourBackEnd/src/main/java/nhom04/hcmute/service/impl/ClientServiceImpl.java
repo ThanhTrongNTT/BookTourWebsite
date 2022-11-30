@@ -38,7 +38,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public void activeBooking(String email) {
+    public void activeBooking(String email,String id) {
         DataMail dataMail = new DataMail();
 
         dataMail.setTo(email);
@@ -46,6 +46,7 @@ public class ClientServiceImpl implements ClientService {
 
         Map<String, Object> props = new HashMap<>();
         props.put("email",email);
+        props.put("id",id);
         dataMail.setProps(props);
 
         emailSender.sendHtml(dataMail, ConstantMail.TEMPLATE_FILE_NAME.CLIENT_ACTIVE_BOOKING);

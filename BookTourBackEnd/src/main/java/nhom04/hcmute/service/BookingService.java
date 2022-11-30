@@ -25,4 +25,5 @@ public interface BookingService {
     Booking updateBooking(String id, Booking booking);
 
     void deleteBooking(String id);
+    Boolean activeBooking (String email,String id);
 }
