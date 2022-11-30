@@ -2,16 +2,15 @@ import ButtonSubmitDefault from "~/components/button/ButtonSubmitDefault";
 import { WrapperFlex } from "~/components/common";
 import { IconCart } from "~/components/icon";
 
-const CardTourPage = ({ tourDetail, ...props }) => {
+const CardTourPage = ({ tourDetail, onClick, booking }) => {
   return (
-    <div className="flex flex-col" {...props}>
+    <div className="flex flex-col">
       <div className="w-[250px]- h-[250px] rounded-lg">
         <img
           src={
             tourDetail?.images[0] ||
             "https://images.unsplash.com/photo-1657662075319-3ced8dee4c10?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
           }
-          // src="https://images.unsplash.com/photo-1657662075319-3ced8dee4c10?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
           alt="img-tour"
           className="h-full w-full rounded-tl-lg rounded-tr-lg object-cover"
         />
@@ -20,7 +19,10 @@ const CardTourPage = ({ tourDetail, ...props }) => {
         <div className="flex h-full flex-col p-4">
           <div>
             <span className="text-sm text-c4">{tourDetail.startDay}</span>
-            <p className="mt-1 cursor-pointer font-semibold text-[#2d4d71] hover:text-[#4d4aef]">
+            <p
+              onClick={onClick}
+              className="mt-1 cursor-pointer text-justify font-semibold text-[#2d4d71] hover:text-[#4d4aef]"
+            >
               {tourDetail.tourName}
             </p>
           </div>
@@ -42,13 +44,14 @@ const CardTourPage = ({ tourDetail, ...props }) => {
               className="mt-2 font-DMSans"
             >
               <ButtonSubmitDefault
+                onClick={booking}
                 className="gap-1 rounded-[4px] bg-[#fd5056] px-4 py-1 text-sm text-white transition-all hover:bg-[#d74449]"
                 icon={<IconCart />}
               >
                 Book
               </ButtonSubmitDefault>
               <button
-                type="submit"
+                type="button"
                 className="rounded-[4px] border border-primary-blue py-1 px-4 text-sm  text-primary-blue transition-all hover:bg-primary-blue hover:text-white"
               >
                 View detail
