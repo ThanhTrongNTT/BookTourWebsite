@@ -1,25 +1,30 @@
-import { useEffect, useState } from "react";
-import axios from "~/api/axios";
+import { Navigate, useNavigate } from "react-router-dom";
 import { WrapperFlex } from "~/components/common";
+import WrapperTour from "~/components/common/WrapperTour";
 import Heading from "~/components/heading/Heading";
 import Rating from "~/components/text/Rating";
+import { useGetTourById } from "~/hooks/useGetTour";
 import ContentBookingTour from "~/modules/booking/ContentBookingTour";
 import FormBooking from "~/modules/booking/FormBooking";
+import getQueryVariable from "~/utils/getQueryVariable";
 
 const TourDetailPage = ({ price }) => {
-  const [tourDetail, setTourDetail] = useState([]);
-  const id = localStorage.getItem("tourId");
-
-  useEffect(() => {
-    axios.get(`tour/${id}`).then((response) => {
-      console.log(response.data.tourDetail);
-      setTourDetail(response.data.tourDetail);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const navigate = useNavigate();
+  const id = getQueryVariable("id");
+  const { tourDetail } = useGetTourById(id);
+  const handleBooking = (id) => {
+    navigate(`/booking?id=${id}`);
+  };
+  // useEffect(() => {
+  //   axios.get(`tour/${id}`).then((response) => {
+  //     console.log(response.data.tourDetail);
+  //     setTourDetail(response.data.tourDetail);
+  //   });
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   return (
-    <div className="select-none px-5 py-[30px] dark:bg-c2 lg:mx-auto lg:max-w-7xl lg:px-10 lg:py-5">
+    <WrapperTour>
       <div className="h-10 w-full">
         <nav></nav>
         <div className="breadcrum"></div>
@@ -33,10 +38,14 @@ const TourDetailPage = ({ price }) => {
           <div className="flex flex-1 flex-col">
             <ContentBookingTour />
           </div>
-          <FormBooking tourDetail={tourDetail} />
+          <FormBooking
+            onClick={() => handleBooking(id)}
+            className="sticky top-0"
+            tourDetail={tourDetail}
+          />
         </WrapperFlex>
       </div>
-    </div>
+    </WrapperTour>
   );
 };
 

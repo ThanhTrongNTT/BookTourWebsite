@@ -21,6 +21,7 @@ import java.util.List;
 public class TourDetail {
     private String tourName;
     private String tourDes;
+    private String tourDetailDes;
     private Double price;
     private List<String> images;
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yyyy")

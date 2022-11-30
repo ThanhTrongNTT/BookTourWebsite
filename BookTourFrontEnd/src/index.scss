@@ -211,3 +211,40 @@ input.e-control {
   left: 0;
   bottom: 50%;
 }
+
+.rate {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  color: #fff;
+  background: #fdc432;
+  width: 42px;
+  height: 32px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  position: relative;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  margin-right: 11px;
+}
+
+.rate::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #fdc432;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1;
+}

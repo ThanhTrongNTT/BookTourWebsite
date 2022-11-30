@@ -91,12 +91,16 @@ const SearchPage = () => {
   };
   const handleShowDetailTour = (id) => {
     console.log(id);
-    localStorage.setItem("tourId", id);
+    // localStorage.setItem("tourId", id);
     navigate(
       `/detail-page?beginningLocation=${pushParmURL(
         location.beginningLocation
       )}&id=${id}`
     );
+  };
+
+  const handleBooking = (id) => {
+    navigate(`/booking?id=${id}`);
   };
 
   useEffect(() => {
@@ -227,6 +231,7 @@ const SearchPage = () => {
               {listTour?.data?.map((item, index) => (
                 <CardTourPage
                   onClick={() => handleShowDetailTour(item.id)}
+                  booking={() => handleBooking(item.id)}
                   tourDetail={item.tourDetail}
                   key={index}
                 />
