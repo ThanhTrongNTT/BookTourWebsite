@@ -3,6 +3,7 @@ package nhom04.hcmute.controller;
 import lombok.RequiredArgsConstructor;
 import nhom04.hcmute.model.Location;
 import nhom04.hcmute.payload.ApiResponse;
+import nhom04.hcmute.payload.ApiResponseDelete;
 import nhom04.hcmute.payload.PageResponse;
 import nhom04.hcmute.service.LocationService;
 import nhom04.hcmute.util.Constants;
@@ -50,9 +51,11 @@ public class LocationController {
         return ResponseEntity.ok().body(locationService.searchLocation(location));
     }
     @GetMapping("/locations/type")
-    public ResponseEntity<List<Location>> getLocationByName(
+    public ResponseEntity<PageResponse> getLocationByName(
             @RequestParam(value = "typeName",defaultValue = "")String typeName){
-        return ResponseEntity.ok().body(locationService.getLocationByType(typeName));
+        PageResponse pageResponse = new PageResponse();
+        pageResponse.setData(locationService.getLocationByType(typeName));
+        return ResponseEntity.ok().body(pageResponse);
     }
 
     @GetMapping("/location/{id}")
@@ -66,15 +69,15 @@ public class LocationController {
         return ResponseEntity.ok().body(new ApiResponse(true,"Save success!"));
     }
     @PutMapping("/location/{id}")
-    public ResponseEntity<ApiResponse> updateLocation(@PathVariable("id")String id, Location location){
+    public ResponseEntity<ApiResponse> updateLocation(@PathVariable("id")String id,@RequestBody Location location){
         Location updateLocation = locationService.updateLocation(id,location);
         return ResponseEntity.ok().body(new ApiResponse(true,"Update Success!"));
     }
 
 
     @DeleteMapping("/location/delete/{id}")
-    public ResponseEntity<ApiResponse> deleteLocation(@PathVariable("id")String id){
+    public ResponseEntity<ApiResponseDelete> deleteLocation(@PathVariable("id")String id){
         locationService.deleteLocation(id);
-        return ResponseEntity.ok().body(new ApiResponse(true,"Delete success!"));
+        return ResponseEntity.ok().body(new ApiResponseDelete(true,"Delete success!",200));
     }
 }
