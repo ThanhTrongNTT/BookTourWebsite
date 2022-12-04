@@ -16,7 +16,8 @@
 <ul>
   <li>
 
-    <a href="http://localhost:3000/active"><h3>Click here to active!</h3></a>
+<!--    <a href=`http://localhost:3000/active/${email}`><h3>Click here to active!</h3></a>-->
+    <a th:href="${'http://localhost:3000/active?email=' + email+'&id='+id}"><h3>Click here to active!</h3></a>
   </li>
 </ul>
 

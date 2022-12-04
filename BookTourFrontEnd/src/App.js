@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
+import ActivePage from "./pages/ActivePage";
 import TourBooking from "./pages/TourBooking";
 import { authRefreshToken, authUpdateUser } from "./sagas/auth/auth-slice";
 import { getToken, logOut } from "./utils/auth";
@@ -46,6 +47,7 @@ function App() {
   return (
     <Suspense fallback={<></>}>
       <Routes>
+        <Route path="active" element={<ActivePage />} />
         <Route path="sign-up" element={<SignUpPage />} />
         <Route path="sign-in" element={<SignInPage />} />
         <Route element={<LayoutSearch />}>

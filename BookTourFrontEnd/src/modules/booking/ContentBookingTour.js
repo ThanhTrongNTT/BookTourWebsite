@@ -3,7 +3,7 @@ import WrapperContent from "~/components/common/WrapperContent";
 import Heading from "~/components/heading/Heading";
 import { IconLocationRegular } from "~/components/icon";
 
-const ContentBookingTour = () => {
+const ContentBookingTour = ({ tourDetailDes }) => {
   const description = `<h3 class="font-semibold text-2xl mt-4 mb-3 px-4 text-dark-blue">Qu&ecirc; hương xứ Nẫu Quy Nhơn</h3>
   <div class="px-4">
   <p class="text-justify">'Xứ Nẫu' hay Quy Nhơn (B&igrave;nh Định) được thi&ecirc;n nhi&ecirc;n ban tặng phong cảnh n&ecirc;n thơ, hữu t&igrave;nh v&agrave; những b&atilde;i biển trải d&agrave;i tuyệt đẹp. Quy Nhơn hội tụ đầy đủ c&aacute;c yếu tố của một điểm nghĩ dưỡng h&agrave;ng đầu với những b&atilde;i biển trong xanh, c&aacute;c khu resorts đẳng cấp quốc tế, ẩm thực đặc sắc c&ugrave;ng với c&aacute;c danh lam thắng cảnh như Kỳ Co - Eo Gi&oacute; được v&iacute; như Maldives phi&ecirc;n bản Việt, ch&ugrave;a &ocirc;ng N&uacute;i với tượng phật lớn nhất Đ&ocirc;ng Nam &Aacute; hay Th&aacute;p Đ&ocirc;i - một kiến tr&uacute;c Champa độc đ&aacute;o được x&acirc;y dựng từ thế kỷ 12.</p>
@@ -38,11 +38,11 @@ const ContentBookingTour = () => {
         </div>
       </div>
       <WrapperContent className="mt-2 shadow-[0_0_20px_5px_rgb(0,0,0,0.05)]">
-        <div dangerouslySetInnerHTML={{ __html: description }} />
+        <div dangerouslySetInnerHTML={{ __html: tourDetailDes }} />
       </WrapperContent>
-      <WrapperContent className="mt-2 shadow-[0_0_20px_5px_rgb(0,0,0,0.05)]">
+      {/* <WrapperContent className="mt-2 shadow-[0_0_20px_5px_rgb(0,0,0,0.05)]">
         <div dangerouslySetInnerHTML={{ __html: detail }} />
-      </WrapperContent>
+      </WrapperContent> */}
     </Fragment>
   );
 };

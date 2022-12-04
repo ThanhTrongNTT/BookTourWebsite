@@ -56,9 +56,12 @@ public class BookingController {
     }
 
     @PostMapping("/booking/active")
-    public ResponseEntity<ApiResponse> activeBooking(@RequestBody Booking booking){
-
+    public ResponseEntity<ApiResponse> activeBooking(@RequestParam("email") String email,
+                                                     @RequestParam("id") String id){
+    Boolean active = bookingService.activeBooking(email,id);
+    if(active)
         return ResponseEntity.ok().body(new ApiResponse(true,"Active success!"));
+    else return ResponseEntity.ok().body(new ApiResponse(false,"Active failed!"));
     }
 
     @PutMapping("/booking/{id}")
