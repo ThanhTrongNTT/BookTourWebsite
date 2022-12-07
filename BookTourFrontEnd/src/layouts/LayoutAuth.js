@@ -7,15 +7,23 @@ const LayoutAuth = ({ title, heading, children, textCenter }) => {
   const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   useEffect(() => {
-    document.title = title;
-  }, [title]);
-
-  useEffect(() => {
-    if (user && user.email) navigate("/");
-    document.title = "TripGuide";
-  }, [navigate, user]);
-
+    if (user && user.email) {
+      navigate("/");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
   if (user && user.email) return null;
+  // useEffect(() => {
+  //   document.title = title;
+  // }, [title]);
+
+  // useEffect(() => {
+  //   if (user && user.email) navigate("/");
+  //   document.title = "TripGuide";
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [user]);
+
+  // if (user && user.email) return null;
 
   return (
     <div className="relative isolate w-full bg-[#FCFCFD] px-6 pt-6 pb-14 font-Epilogue dark:bg-dark-primary lg:min-h-screen lg:px-10 lg:pt-10 lg:pb-64">

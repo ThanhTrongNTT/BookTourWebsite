@@ -1,8 +1,7 @@
 import { lazy, Suspense, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
-import ActivePage from "./pages/ActivePage";
-import TourBooking from "./pages/TourBooking";
+
 import { authRefreshToken, authUpdateUser } from "./sagas/auth/auth-slice";
 import { getToken, logOut } from "./utils/auth";
 
@@ -20,6 +19,8 @@ const ProfilePage = lazy(() => import("~/pages/ProfilePage"));
 const SearchPage = lazy(() => import("~/pages/SearchPage"));
 const TourDetailPage = lazy(() => import("~/pages/TourDetailPage"));
 const TourPage = lazy(() => import("~/pages/TourPage"));
+const ActivePage = lazy(() => import("~/pages/ActivePage"));
+const TourBooking = lazy(() => import("~/pages/TourBooking"));
 
 function App() {
   const { user } = useSelector((state) => state.auth);
