@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
         User updateUser = userRepository.findByEmail(email)
                 .orElseThrow(() -> new NotFoundException(String.format("User with email %s not found", email)));
         log.info("Updating User");
-        if (user.getFullName().equals("")) updateUser.setFullName(user.getFullName());
+        if (!user.getFullName().equals("")) updateUser.setFullName(user.getFullName());
         if (user.getAddress() != null) updateUser.setAddress(user.getAddress());
         if (user.getBirthDay()!= null) updateUser.setBirthDay(user.getBirthDay());
         if (user.getGender()!= null) updateUser.setGender(user.getGender());
@@ -118,11 +118,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(String email) {
-        User userDelete = userRepository.findByEmail(email)
-                .orElseThrow(() -> new NotFoundException(String.format("User with email %s not found", email
+    public void deleteUser(String id) {
+        User userDelete = userRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(String.format("User with id %s not found", id
                 )));
-        log.info("Deleting user with email {}", email);
+        log.info("Deleting user with email {}", id);
         userRepository.delete(userDelete);
     }
 

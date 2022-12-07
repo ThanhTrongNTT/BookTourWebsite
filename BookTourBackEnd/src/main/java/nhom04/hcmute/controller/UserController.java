@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import nhom04.hcmute.model.Role;
 import nhom04.hcmute.model.User;
 import nhom04.hcmute.payload.ApiResponse;
+import nhom04.hcmute.payload.ApiResponseDelete;
 import nhom04.hcmute.payload.DeleteRequest;
 import nhom04.hcmute.payload.PageResponse;
 import nhom04.hcmute.service.UserService;
@@ -65,10 +66,10 @@ public class UserController {
         return ResponseEntity.ok().body(new ApiResponse(true, "Update success!"));
     }
 
-    @DeleteMapping("/user/delete/{email}")
-    public ResponseEntity<ApiResponse> deleteUser(@PathVariable("email") String email) {
-        userService.deleteUser(email);
-        return ResponseEntity.ok().body(new ApiResponse(true, "Delete success"));
+    @DeleteMapping("/user/delete/{id}")
+    public ResponseEntity<ApiResponseDelete> deleteUser(@PathVariable("id") String id) {
+        userService.deleteUser(id);
+        return ResponseEntity.ok().body(new ApiResponseDelete(true,"Delete success!",200));
     }
 
     @PostMapping("/user/changePass/{email}")

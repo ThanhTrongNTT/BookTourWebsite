@@ -29,7 +29,7 @@ public interface UserService {
     User getUserByEmail(String email);
     List<User> getAllUsers();
     Boolean existedByEmail(String email);
-    void deleteUser(String email);
+    void deleteUser(String id);
     Boolean changePassword(String password, String email);
     Boolean forgotPassword(String email);
     List<Role> getAllRoles();

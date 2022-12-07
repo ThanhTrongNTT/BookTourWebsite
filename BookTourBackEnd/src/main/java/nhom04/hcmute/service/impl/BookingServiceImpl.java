@@ -53,14 +53,20 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public List<Booking> getBookingByUser(String email) {
-        Booking booking = new Booking();
-        User user = new User();
-        user.setEmail(email);
-        booking.setUser(user);
-        Example<Booking> example = Example.of(booking);
+//        Booking booking = new Booking();
+//        User user = new User();
+        User userSearch = userRepository.findByEmail(email).orElseThrow(
+                ()-> new  NotFoundException(String.format("User with user name %s not found",email))
+        );
+        if(userSearch!= null){
         log.info("Looking Booking");
-        List<Booking> bookings = bookingRepository.findAll(example);
-        return bookings;
+            return bookingRepository.getBookingByUser(email);
+        }
+//        user.setEmail(email);
+//        booking.setUser(user);
+//        Example<Booking> example = Example.of(booking);
+//        List<Booking> bookings = bookingRepository.findAll(example);
+        return null;
     }
 
     @Override
@@ -73,7 +79,9 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public Booking createBooking(BookingRequest booking) {
         Booking save = new Booking();
-        User user = userRepository.findByEmail(booking.getEmail()).orElse(null);
+        User user = userRepository.findByEmail(booking.getEmail()).orElseThrow(
+                ()-> new  NotFoundException(String.format("User with email %s not found",booking.getEmail()))
+        );
         Tour tour = tourRepository.findById(booking.getTourId()).orElse(null);
         save.setUser(user);
         save.setTour(tour);

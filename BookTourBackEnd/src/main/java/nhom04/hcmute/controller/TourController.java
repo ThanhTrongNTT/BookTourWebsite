@@ -5,6 +5,7 @@ import nhom04.hcmute.model.Tour;
 import nhom04.hcmute.model.TourDetail;
 import nhom04.hcmute.model.User;
 import nhom04.hcmute.payload.ApiResponse;
+import nhom04.hcmute.payload.ApiResponseDelete;
 import nhom04.hcmute.payload.PageResponse;
 import nhom04.hcmute.service.TourService;
 import nhom04.hcmute.util.Constants;
@@ -86,9 +87,9 @@ public class TourController {
     }
 
     @DeleteMapping("/tour/delete/{id}")
-    public ResponseEntity<ApiResponse> deleteTour(@PathVariable("id") String id) {
+    public ResponseEntity<ApiResponseDelete> deleteTour(@PathVariable("id") String id) {
         tourService.deleteTour(id);
-        return ResponseEntity.ok().body(new ApiResponse(true, "Delete Success"));
+        return ResponseEntity.ok().body(new ApiResponseDelete(true,"Delete success!",200));
     }
 
 }
