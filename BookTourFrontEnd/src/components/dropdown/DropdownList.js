@@ -52,7 +52,7 @@ const DropdownList = ({
       </div>
       <div
         className={classNames(
-          "absolute top-full left-0 w-full rounded-lg bg-white shadow-md",
+          "absolute top-full left-0 z-20 w-full rounded-lg bg-white shadow-md",
           show ? "" : "invisible opacity-0"
         )}
         // className={`absolute top-full left-0 w-full rounded-lg bg-white ${

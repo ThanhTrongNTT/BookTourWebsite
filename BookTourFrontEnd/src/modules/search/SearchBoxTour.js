@@ -2,7 +2,6 @@ import { Fragment, useEffect } from "react";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Controller, useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { RenderPlaceHot } from "../tippy/renders";
@@ -11,15 +10,12 @@ import ButtonSubmitDefault from "@/button/ButtonSubmitDefault";
 import { WrapperFlex, WrapperGrid } from "@/common";
 import { IconCalendar, IconLocationRegular } from "@/icon";
 import Label from "@/label/Label";
-import axios from "~/api/axios";
-import DropdownList from "~/components/dropdown/DropdownList";
-import { tourDetail } from "~/sagas/tour/tour-slice";
 import { format } from "date-fns";
+import DropdownList from "~/components/dropdown/DropdownList";
 import { pushParmURL } from "~/utils/pushParamURL";
 
 const SearchBoxTour = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const { handleSubmit, control, setValue } = useForm({
     defaultValues: {
       startDay: new Date(),
@@ -33,32 +29,6 @@ const SearchBoxTour = () => {
   }, []);
 
   const handleSearch = (value) => {
-    // const tour = {
-    //   tourDetail: {
-    //     beginningLocation: {
-    //       locationName: value.beginningLocation,
-    //       locationType: "BEGINNING",
-    //     },
-    //     destinationLocation: {
-    //       locationName: value.destinationLocation,
-    //       locationType: "DESTINATION",
-    //     },
-    //     // startDay: format(value.startDay, "dd/MM/yyyy"),
-    //   },
-    //   // type: "TOUR_BASIC",
-    // };
-    // const location = {
-    //   beginningLocation: value.beginningLocation,
-    //   destinationLocation: value.destinationLocation,
-    //   // startDay: format(value.startDay, "dd/MM/yyyy"),
-    //   startDay: value.startDay,
-    // };
-
-    // axios.post("/tours/search?pageSize=4", tour).then((response) => {
-    //   dispatch(tourDetail(response.data));
-    //   localStorage.setItem("searchTour", JSON.stringify(response.data));
-    //   localStorage.setItem("tourLocation", JSON.stringify(location));
-    //   console.log(format(value.startDay, "dd/MM/yyyy"));
     if (value.destinationLocation === "Bà Rịa - Vũng Tàu") {
       value.destinationLocation = "Bà Rịa Vũng Tàu";
     }

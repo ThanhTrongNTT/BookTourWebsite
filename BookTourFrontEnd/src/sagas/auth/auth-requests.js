@@ -1,4 +1,5 @@
-const { default: axios } = require("~/api/axios");
+import axios from "~/api/axios";
+
 const { default: jwt_decode } = require("jwt-decode");
 export const requestAuthRegister = (data) => {
   return axios.post("auth/signup", {
@@ -23,12 +24,12 @@ export const requestAuthFetchMe = (token) => {
   });
 };
 
-export const requestRefreshToken = (token) => {
+export const requestAuthRefreshToken = (token) => {
   if (!token) return;
   return axios.post(`token/${token}`, {
     headers: {
       "Content-Type": "Application/json",
-      Authorization: `Bearer ${token}`,
+      // Authorization: `Bearer ${token}`,
     },
   });
 };
