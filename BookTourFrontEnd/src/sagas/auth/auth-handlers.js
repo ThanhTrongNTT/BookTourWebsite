@@ -32,8 +32,10 @@ function* handleAuthLogin({ payload }) {
     }
   } catch (error) {
     const response = error.response.data;
-    if (response.statusCode === 403) {
-      toast.error(response.error.message);
+    console.log("TCL: function*handleAuthLogin -> response", response);
+    console.log("TCL: function*handleAuthLogin -> response", response.message);
+    if (!response.success) {
+      toast.error(response.message);
       return;
     }
   }

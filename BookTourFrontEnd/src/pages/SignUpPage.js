@@ -16,7 +16,7 @@ import Input from "~/components/input/Input";
 import Label from "@/label/Label";
 import TextAuth from "@/text/TextAuth";
 import TogglePassword from "@/toggle/TogglePassword";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { authRegister } from "~/sagas/auth/auth-slice";
 import { useEffect } from "react";
 
@@ -54,6 +54,7 @@ const SignUpPage = () => {
       }, 1000);
     });
   };
+
   useEffect(() => {
     const arrErrors = Object.values(errors);
     if (arrErrors.length > 0) {
