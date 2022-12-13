@@ -77,15 +77,21 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Booking createBooking(BookingRequest booking) {
+    public Booking createBooking(Booking booking) {
         Booking save = new Booking();
-        User user = userRepository.findByEmail(booking.getEmail()).orElseThrow(
+        User user = userRepository.findByEmail(booking.getUser().getEmail()).orElseThrow(
                 ()-> new  NotFoundException(String.format("User with email %s not found",booking.getEmail()))
         );
-        Tour tour = tourRepository.findById(booking.getTourId()).orElse(null);
+        Tour tour = tourRepository.findById(booking.getTour().getId()).orElse(null);
         save.setUser(user);
         save.setTour(tour);
-        clientService.activeBooking(booking.getEmail(),booking.getTourId());
+        save.setEmail(booking.getEmail());
+        save.setFullName(booking.getFullName());
+        save.setAddress(booking.getAddress());
+        save.setPhoneNumber(booking.getPhoneNumber());
+        save.setPassenger(booking.getPassenger());
+        save.setTotalPrice(booking.getTotalPrice());
+        clientService.activeBooking(booking.getEmail(),booking.getTour().getId());
         log.info("Saving Booking");
         return bookingRepository.save(save);
     }
@@ -115,11 +121,9 @@ public class BookingServiceImpl implements BookingService {
     public Boolean activeBooking(String email, String id) {
         Booking booking = new Booking();
         Tour tour = new Tour();
-        User user = new User();
         tour.setId(id);
-        user.setEmail(email);
         booking.setTour(tour);
-        booking.setUser(user);
+        booking.setEmail(email);
         Example<Booking> example = Example.of(booking);
         Booking activeBooking = bookingRepository.findOne(example).orElse(null);
         if(activeBooking!=null){
