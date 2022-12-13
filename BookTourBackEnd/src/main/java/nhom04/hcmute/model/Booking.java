@@ -20,6 +20,12 @@ import java.util.Date;
 public class Booking {
     @Id
     private String id;
+    private String fullName;
+    private String email;
+    private String phoneNumber;
+    private  String address;
+    private Integer passenger;
+    private Float totalPrice;
     private User user;
     private boolean enable = false;
     private Tour tour;

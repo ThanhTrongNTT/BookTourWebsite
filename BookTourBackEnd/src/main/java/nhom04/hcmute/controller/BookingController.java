@@ -50,7 +50,7 @@ public class BookingController {
     }
 
     @PostMapping("/booking/create")
-    public ResponseEntity<ApiResponse> createBooking(@RequestBody BookingRequest booking) {
+    public ResponseEntity<ApiResponse> createBooking(@RequestBody Booking booking) {
         Booking saveBooking = bookingService.createBooking(booking);
         return ResponseEntity.ok().body(new ApiResponse(true, "Create Booking success!"));
     }

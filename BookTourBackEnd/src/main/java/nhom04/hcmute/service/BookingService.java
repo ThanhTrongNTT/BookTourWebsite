@@ -20,7 +20,7 @@ public interface BookingService {
 
     Booking getById(String id);
 
-    Booking createBooking(BookingRequest booking);
+    Booking createBooking(Booking booking);
 
     Booking updateBooking(String id, Booking booking);
 
