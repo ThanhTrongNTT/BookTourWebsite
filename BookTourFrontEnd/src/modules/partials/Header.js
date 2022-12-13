@@ -34,7 +34,7 @@ const Header = () => {
           <Logo />
           <WrapperFlex justify="end" flex1>
             <div className={classNames("flex items-center", !!user && "gap-4")}>
-              <Search />
+              {/* <Search /> */}
               {user ? (
                 <WrapperFlex
                   className="header-right h-8 font-Roboto"

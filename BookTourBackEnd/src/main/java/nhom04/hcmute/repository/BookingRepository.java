@@ -17,6 +17,6 @@ import java.util.List;
 @Repository
 public interface BookingRepository extends MongoRepository<Booking,String> {
 
-//    @Query(value = "{'user':?0}")
-    List<Booking> getBookingByUser(User user);
+    @Query(value = "{'user.email':?0}")
+    List<Booking> getBookingByUser(String email);
 }

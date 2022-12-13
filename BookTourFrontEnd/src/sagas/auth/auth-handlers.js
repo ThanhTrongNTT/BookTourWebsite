@@ -4,50 +4,36 @@ import { logOut, saveToken } from "~/utils/auth";
 import {
   requestAuthFetchMe,
   requestAuthLogin,
+  requestAuthRefreshToken,
   requestAuthRegister,
-  requestRefreshToken,
 } from "./auth-requests";
 import { authUpdateUser } from "./auth-slice";
-export default function* handleAuthRegister({ payload }) {
+
+export default function* handleAuthRegister(action) {
+  const { payload } = action;
   try {
     const response = yield call(requestAuthRegister, payload);
     if (response.status === 201) {
-      toast.success(response.data.message, {
-        autoClose: 500,
-      });
-    } else if (response.status === 200) {
-      toast.warning(response.data.message, {
-        autoClose: 500,
-      });
-      return;
+      toast.success("Created new account successfully");
     }
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 }
-
 function* handleAuthLogin({ payload }) {
   try {
     const response = yield call(requestAuthLogin, payload);
     if (response.data.accessToken && response.data.refreshToken) {
       saveToken(response.data.accessToken, response.data.refreshToken);
       yield call(handleAuthFetchMe, { payload: response.data.accessToken });
-      toast.success("Login seccess!", {
+      toast.success("Login success!", {
         autoClose: 500,
       });
     }
-    yield 1;
   } catch (error) {
-    const { response } = error;
-    if (response) {
-      toast.error(response.data.message, {
-        autoClose: 500,
-        pauseOnHover: false,
-      });
-      return;
-    } else {
-      toast.error(error.message, {
-        autoClose: 1000,
-        pauseOnHover: false,
-      });
+    const response = error.response.data;
+    if (response.statusCode === 403) {
+      toast.error(response.error.message);
       return;
     }
   }
@@ -63,20 +49,17 @@ function* handleAuthFetchMe({ payload }) {
           accessToken: payload,
         })
       );
-      yield call(handleAuthFetchMe, {
-        ...payload,
-        accessToken: response.data.accessToken,
-      });
     }
+    // response.data -> userInfo
   } catch (error) {}
 }
 
 function* handleAuthRefreshToken({ payload }) {
   try {
-    const response = yield call(requestRefreshToken, payload);
+    const response = yield call(requestAuthRefreshToken, payload);
     if (response.data) {
       saveToken(response.data.accessToken, response.data.refreshToken);
-      yield handleAuthFetchMe({
+      yield call(handleAuthFetchMe, {
         payload: response.data.accessToken,
       });
     } else {
