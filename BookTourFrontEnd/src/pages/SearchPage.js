@@ -3,7 +3,7 @@ import { Pagination } from "flowbite-react";
 import { Fragment, useEffect, useState } from "react";
 import ReactDatePicker from "react-datepicker";
 import { Controller, useForm } from "react-hook-form";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import ButtonSubmitDefault from "@/button/ButtonSubmitDefault";
 import { WrapperFlex, WrapperGrid } from "@/common";
@@ -36,6 +36,7 @@ const SearchPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [listTour, setListTour] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   const location = configLocationToParam();
