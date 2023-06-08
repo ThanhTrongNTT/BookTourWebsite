@@ -3,7 +3,7 @@ import { useController } from "react-hook-form";
 import classNames from "~/utils/classNames";
 
 const InputDefault = ({ name, control, className, bg, ...props }) => {
-  const { filed } = useController({
+  const { field } = useController({
     name,
     control,
     defaultValue: "",
@@ -11,7 +11,7 @@ const InputDefault = ({ name, control, className, bg, ...props }) => {
   return (
     <div className="w-full">
       <input
-        {...filed}
+        {...field}
         {...props}
         className={classNames(
           "h-full w-full",

@@ -1,21 +1,61 @@
-import { useState } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import ButtonSubmitDefault from "~/components/button/ButtonSubmitDefault";
-import { WrapperFlex, WrapperGrid } from "~/components/common";
-import WrapperTour from "~/components/common/WrapperTour";
-import Heading from "~/components/heading/Heading";
-import { IconCalendar, IconMinus, IconPlus } from "~/components/icon";
-import InputDefault from "~/components/input/InputDefault";
-import Label from "~/components/label/Label";
-import DetailTourInner from "~/components/text/DetailTourInner";
-import Service from "~/components/text/Service";
+import { toast } from "react-toastify";
+import * as Yup from "yup";
+
+import ButtonSubmitDefault from "@/button/ButtonSubmitDefault";
+import { WrapperFlex, WrapperGrid } from "@/common";
+import WrapperTour from "@/common/WrapperTour";
+import Heading from "@/heading/Heading";
+import { IconCalendar, IconMinus, IconPlus } from "@/icon";
+import InputDefault from "@/input/InputDefault";
+import Label from "@/label/Label";
+import DetailTourInner from "@/text/DetailTourInner";
+import Service from "@/text/Service";
+
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { useGetTourById } from "~/hooks/useGetTour";
 import getQueryVariable from "~/utils/getQueryVariable";
+import useAxiosPrivate from "~/hooks/useAxiosPrivate";
+
+const schame = Yup.object({
+  fullName: Yup.string().required("Please enter your full name."),
+  email: Yup.string()
+    .required("Please enter your email.")
+    .matches(
+      // eslint-disable-next-line no-control-regex
+      /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/,
+      { message: "Please enter valid email address" }
+    ),
+  phoneNumber: Yup.string()
+    .required("Please enter your phone number.")
+    .matches(
+      // eslint-disable-next-line no-control-regex
+      /(84|0[3|5|7|8|9])+([0-9]{8})\b/,
+      { message: "Please enter valid phone number" }
+    ),
+  address: Yup.string().required("Please enter your address"),
+});
 
 const TourBooking = () => {
   const id = getQueryVariable("id");
+  const { user } = useSelector((state) => state.auth);
   const { tourDetail, loading } = useGetTourById(id);
-  const { handleSubmit, control } = useForm();
+  const navigate = useNavigate();
+  const axiosPrivate = useAxiosPrivate();
+
+  const {
+    handleSubmit,
+    control,
+    register,
+    setValue,
+    formState: { errors },
+  } = useForm({
+    // resolver: yupResolver(schame),
+    // mode: "onSubmit",
+  });
   const [passenger, setPassenger] = useState(1);
 
   const handleIncrement = () => {
@@ -25,8 +65,47 @@ const TourBooking = () => {
     if (passenger === 1) return;
     setPassenger((passenger) => passenger - 1);
   };
+  useEffect(() => {
+    const arrErrors = Object.values(errors);
+    if (arrErrors.length > 0) {
+      toast.error(arrErrors[0]?.message, {
+        autoClose: 1000,
+        pauseOnHover: false,
+        draggable: true,
+        delay: 50,
+      });
+    }
+  }, [errors]);
 
-  const onSubmit = (values) => console.log(values);
+  useEffect(() => {
+    tourDetail?.price && setValue("totalPrice", tourDetail.price * passenger);
+  }, [passenger, setValue, tourDetail.price]);
+
+  const onSubmit = (values) => {
+    if (!user || !user.email) {
+      toast.warning("Please login before booking!", { autoClose: 1000 });
+      navigate("/sign-in");
+    } else {
+      const request = {
+        tour: {
+          id,
+        },
+        user: {
+          email: user.email,
+        },
+        ...values,
+        passenger,
+      };
+      console.log("TCL: onSubmit -> request", request);
+      axiosPrivate
+        .post(`/booking/create`, request)
+        .then((response) => console.log(response));
+      toast.success("Please check your email to active booking!", {
+        autoClose: 2000,
+      });
+      // navigate("../");
+    }
+  };
   return (
     <WrapperTour>
       <div className="mb-5 grid grid-cols-3 rounded-md">
@@ -187,6 +266,10 @@ const TourBooking = () => {
                     className="mt-5"
                   >
                     <p>Total</p>
+                    <input
+                      className="hidden text-xl font-bold text-[#ffbd00]"
+                      {...register("totalPrice")}
+                    />
                     <span className="text-xl font-bold text-[#ffbd00]">
                       {(tourDetail.price * passenger).toLocaleString("vi-VN", {
                         style: "currency",

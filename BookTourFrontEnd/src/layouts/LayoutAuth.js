@@ -8,7 +8,7 @@ const LayoutAuth = ({ title, heading, children, textCenter }) => {
   const navigate = useNavigate();
   useEffect(() => {
     if (user && user.email) {
-      navigate("/");
+      navigate(-1);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
